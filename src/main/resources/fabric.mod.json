@@ -1,25 +1,23 @@
 {
   "schemaVersion": 1,
-  "id": "%s",
+  "id": "derggycraft",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "DerggyCraft",
+  "description": "DerggyCraft mod for Minecraft Beta 1.7.3",
   "authors": [
-    "Me!"
+    "Derggy"
   ],
   "contact": {
-    "homepage": "https://glass-launcher.net/",
-    "sources": "https://github.com/calmilamsy/stationapi-example-mod"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/%s/icon.png",
+  "icon": "assets/derggycraft/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "stationapi:event_bus": [
-      "%s.events.init.InitListener"
+      "net.derggy.craft.derggycraft.events.init.InitListener"
     ],
     "stationapi:event_bus_client": [
     ],
@@ -27,7 +25,7 @@
     ]
   },
   "mixins": [
-    "%s.mixins.json"
+    "derggycraft.mixins.json"
   ],
 
   "depends": {

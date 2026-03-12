@@ -1,0 +1,24 @@
+- Player compass, craftable with 4 gold and a diamond. It points toward whatever player you right click on while holding.
+    - The compass item texture can be custom depending on the player.
+- Torches burn out immediately when placed.
+- Server has synced music across clients
+- Remove max string limit for in game chat.
+- Stamina Bar, allows an equivelent to modern sprinting for five seconds.
+- Fighting enemies takes Stamina
+- Place chests on top of each other
+- Allow slabs to be placed as just top slabs
+- "Collar" slots (3)
+ - Can be used to make place certain items such as clocks, compasses, as "widgets" on screen.
+- When crafting the compass (now called iron compass), it will not point anywhere until you right click on a block; then it will always point to that block.
+- Death messages
+- Graves
+- More common slimes
+- Drop all items in a stack using CTRL+Q
+- Drop items from within the inventory using Q while hovering over an item.
+- Addition of rotten flesh 
+- rotten flesh can be smelted into leather scraps
+- 9 leather scraps can make 3 leather
+- Drag items in inventory
+ - while right click dragging while holding a stack of items, deposit one item into each slot as the cursor passes over it
+ - while left click dragging while holding a stack of items, divide the stack of items among the covered slots.
+- A collar that can be crafted with 3 leather and one iron. Can be put into a collar slot, and will play jingle sounds when the player wearing it walks.  
