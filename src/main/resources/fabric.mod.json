@@ -17,7 +17,8 @@
   "environment": "*",
   "entrypoints": {
     "stationapi:event_bus": [
-      "net.derggy.craft.derggycraft.events.init.InitListener"
+      "net.derggy.craft.derggycraft.events.init.InitListener",
+      "net.derggy.craft.derggycraft.config.DerggyCraftConfig"
     ],
     "stationapi:event_bus_client": [
     ],
@@ -29,6 +30,8 @@
   ],
 
   "depends": {
-    "minecraft": "1.0.0-beta.7.3"
+    "minecraft": "1.0.0-beta.7.3",
+    "gcapi3": "*",
+    "stationapi": "*"
   }
 }

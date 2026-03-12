@@ -4,11 +4,16 @@
   "package": "net.derggy.craft.derggycraft.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "ExampleMixin"
+    "PlayerEntityStaminaMixin",
+    "PlayerAttackMixin"
   ],
   "server": [
   ],
   "client": [
+    "client.InGameHudMixin",
+    "client.KeyboardInputMixin",
+    "client.ClientPlayerEntityMixin",
+    "client.HeldItemRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
