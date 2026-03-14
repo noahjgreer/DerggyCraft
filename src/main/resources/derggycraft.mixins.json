@@ -1,35 +1,13 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.derggy.craft.derggycraft.mixin",
+  "package": "net.noahsarch.derggycraft.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "PlayerEntityStaminaMixin",
-    "PlayerAttackMixin",
-    "ZombieDropMixin",
-    "server.ChatLimitPacketMixin",
-    "server.SlimeSpawnMixin",
-    "server.TorchPlacementMixin",
-    "server.ChestStackingMixin",
-    "ScreenHandlerDropMixin",
-    "ScreenHandlerDragMixin"
   ],
   "server": [
-    "server.ChatLimitServerMixin",
-    "server.ServerPlayerDeathMixin",
-    "server.ServerTickMixin",
-    "server.MusicSyncMixin"
   ],
   "client": [
-    "client.InGameHudMixin",
-    "client.KeyboardInputMixin",
-    "client.ClientPlayerEntityMixin",
-    "client.HeldItemRendererMixin",
-    "client.ChatScreenMixin",
-    "client.StackDropMixin",
-    "client.ContainerDropMixin",
-    "client.MusicClientMixin",
-    "client.HandledScreenDragMixin"
   ],
   "injectors": {
     "defaultRequire": 1
