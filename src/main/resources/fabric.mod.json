@@ -18,9 +18,15 @@
   "entrypoints": {
     "stationapi:event_bus": [
       "net.derggy.craft.derggycraft.events.init.InitListener",
-      "net.derggy.craft.derggycraft.config.DerggyCraftConfig"
+      "net.derggy.craft.derggycraft.config.DerggyCraftConfig",
+      "net.derggy.craft.derggycraft.events.init.ItemInit",
+      "net.derggy.craft.derggycraft.events.init.BlockInit",
+      "net.derggy.craft.derggycraft.events.init.RecipeInit",
+      "net.derggy.craft.derggycraft.network.CompassNetworkInit",
+      "net.derggy.craft.derggycraft.network.MusicNetworkInit"
     ],
     "stationapi:event_bus_client": [
+      "net.derggy.craft.derggycraft.events.init.TextureInit"
     ],
     "stationapi:event_bus_server": [
     ]

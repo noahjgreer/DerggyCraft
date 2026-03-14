@@ -1,1 +1,6 @@
 # @ is a shorthand for the current mod id, which is derggycraft. E.g: tile.@.redclay.name
+item.@.rottenFlesh.name=Rotten Flesh
+item.@.leatherScrap.name=Leather Scrap
+tile.@.extinguishedTorch.name=Extinguished Torch
+item.@.ironCompass.name=Iron Compass
+item.@.goldenCompass.name=Golden Compass
