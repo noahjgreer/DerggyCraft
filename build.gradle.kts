@@ -14,6 +14,9 @@ base.archivesName = project.properties["archives_base_name"] as String
 version = project.properties["mod_version"] as String
 group = project.properties["maven_group"] as String
 
+val enableBhCreative = (project.findProperty("dev_enable_bhcreative") as String?)?.toBoolean() ?: false
+val enableAlwaysMoreItems = (project.findProperty("dev_enable_alwaysmoreitems") as String?)?.toBoolean() ?: false
+
 loom {
 //	accessWidenerPath = file("src/main/resources/examplemod.accesswidener")
 
@@ -39,6 +42,24 @@ repositories {
 	maven("https://maven.glass-launcher.net/babric")
 	maven("https://maven.minecraftforge.net/")
 	maven("https://jitpack.io/")
+	ivy {
+		url = URI("https://github.com/paulevsGitch/BHCreative/releases/download")
+		patternLayout {
+			artifact("[revision]/[artifact]-[revision].[ext]")
+		}
+		metadataSources {
+			artifact()
+		}
+	}
+	ivy {
+		url = URI("https://cdn.modrinth.com/data/sS8EvDNQ/versions")
+		patternLayout {
+			artifact("[revision]/AlwaysMoreItems-[module].[ext]")
+		}
+		metadataSources {
+			artifact()
+		}
+	}
 	mavenCentral()
 	exclusiveContent {
 		forRepository {
@@ -78,8 +99,14 @@ dependencies {
 	modImplementation("net.glasslauncher.mods:GlassConfigAPI:${project.properties["gcapi_version"]}")
 	// https://github.com/calmilamsy/modmenu
 	modImplementation("net.danygames2014:modmenu:${project.properties["modmenu_version"]}")
-	// https://github.com/Glass-Series/Always-More-Items
-	//modImplementation("net.glasslauncher.mods:AlwaysMoreItems:${project.properties["alwaysmoreitems_version"]}")
+	if (enableBhCreative) {
+		// Dev-only helper mod: loaded in runClient, not required as a dependency for users.
+		modLocalRuntime("paulevsgitch:BHCreative:${project.properties["bhcreative_version"]}")
+	}
+	if (enableAlwaysMoreItems) {
+		// Dev-only helper mod from Modrinth CDN: loaded in runClient only.
+		modLocalRuntime("modrinth.ami:${project.properties["alwaysmoreitems_version"]}:${project.properties["alwaysmoreitems_modrinth_version"]}@jar")
+	}
 }
 
 configurations.all {

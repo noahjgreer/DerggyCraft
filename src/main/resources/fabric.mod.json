@@ -17,6 +17,7 @@
   "environment": "*",
   "entrypoints": {
     "stationapi:event_bus": [
+      "net.noahsarch.derggycraft.DerggyCraft"
     ],
     "stationapi:event_bus_client": [
     ],

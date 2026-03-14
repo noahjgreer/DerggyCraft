@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "derggycraft:rotten_flesh"
+  },
+  "result": {
+    "item": "derggycraft:leather_scrap"
+  }
+}
