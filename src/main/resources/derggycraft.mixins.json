@@ -32,7 +32,8 @@
     "client.InteractionManagerMixin",
     "client.ItemCompassTooltipMixin",
     "client.ScreenAccessor",
-    "client.SoundManagerCollarJingleMixin"
+    "client.SoundManagerCollarJingleMixin",
+    "client.SoundManagerMusicSyncMixin"
   ],
   "injectors": {
     "defaultRequire": 1

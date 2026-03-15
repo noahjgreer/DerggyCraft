@@ -3,13 +3,16 @@ package net.noahsarch.derggycraft.mixin.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
+import net.noahsarch.derggycraft.client.music.ClientMusicSyncManager;
 import net.noahsarch.derggycraft.client.screen.DerggyCraftLogoScreen;
 import net.noahsarch.derggycraft.client.screen.DerggyCraftUpdateScreen;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Minecraft.class)
 public class MinecraftMixin {
@@ -41,5 +44,10 @@ public class MinecraftMixin {
         }
 
         return originalScreen;
+    }
+
+    @Inject(method = "tick()V", at = @At("TAIL"))
+    private void derggycraft$tickMusicSyncScheduler(CallbackInfo ci) {
+        ClientMusicSyncManager.tick((Minecraft) (Object) this);
     }
 }
