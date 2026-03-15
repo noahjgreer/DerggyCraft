@@ -19,7 +19,8 @@ public class MinecraftMixin {
             value = "INVOKE",
             target = "Lnet/minecraft/client/Minecraft;isWorldRemote()Z",
             ordinal = 0
-        )
+        ),
+        require = 0
     )
     private boolean redirectIsWorldRemote(Minecraft instance) {
         // return instance.isWorldRemote() || instance.isIntegratedServerRunning();
