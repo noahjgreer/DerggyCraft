@@ -1,0 +1,95 @@
+name: Release DerggyCraft
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (example: v1.2.0)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve tag
+        id: tag
+        shell: bash
+        run: |
+          if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
+            TAG="${{ inputs.tag }}"
+          else
+            TAG="${GITHUB_REF_NAME}"
+          fi
+
+          if [[ -z "$TAG" ]]; then
+            echo "Tag is empty."
+            exit 1
+          fi
+
+          VERSION="${TAG#v}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Build
+        shell: bash
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon clean build
+
+      - name: Resolve release files
+        id: files
+        shell: bash
+        run: |
+          VERSION="${{ steps.tag.outputs.version }}"
+          MAIN_JAR="build/libs/derggycraft-${VERSION}.jar"
+          SOURCES_JAR="build/libs/derggycraft-${VERSION}-sources.jar"
+
+          if [[ ! -f "$MAIN_JAR" ]]; then
+            MAIN_JAR=$(ls -t build/libs/derggycraft-*.jar | grep -v -- '-sources.jar' | head -n1)
+          fi
+
+          if [[ ! -f "$SOURCES_JAR" ]]; then
+            SOURCES_JAR=$(ls -t build/libs/derggycraft-*-sources.jar | head -n1)
+          fi
+
+          if [[ -z "$MAIN_JAR" || ! -f "$MAIN_JAR" ]]; then
+            echo "Main release jar was not found."
+            exit 1
+          fi
+
+          if [[ -z "$SOURCES_JAR" || ! -f "$SOURCES_JAR" ]]; then
+            echo "Sources jar was not found."
+            exit 1
+          fi
+
+          echo "main_jar=$MAIN_JAR" >> "$GITHUB_OUTPUT"
+          echo "sources_jar=$SOURCES_JAR" >> "$GITHUB_OUTPUT"
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: DerggyCraft ${{ steps.tag.outputs.tag }}
+          generate_release_notes: true
+          files: |
+            ${{ steps.files.outputs.main_jar }}
+            ${{ steps.files.outputs.sources_jar }}
