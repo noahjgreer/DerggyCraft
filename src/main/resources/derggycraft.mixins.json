@@ -4,6 +4,7 @@
   "package": "net.noahsarch.derggycraft.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ChatMessagePacketMixin",
     "ChestBlockMixin",
     "EntityCollarJingleMixin",
     "EntityPersistentIdMixin",
@@ -16,13 +17,20 @@
     "server.ZombieEntityMixin"
   ],
   "server": [
+    "server.ServerPlayNetworkHandlerChatMixin",
     "server.ServerPlayerInteractionManagerMixin"
   ],
   "client": [
     "client.ArsenicCompassMixin",
+    "client.ChatScreenMixin",
+    "client.ClientPlayerEntityChatMixin",
+    "client.DrawContextInvoker",
+    "client.HandledScreenDragMixin",
+    "client.InGameHudChatLayoutMixin",
     "client.InventoryScreenMixin",
     "client.InteractionManagerMixin",
     "client.ItemCompassTooltipMixin",
+    "client.ScreenAccessor",
     "client.SoundManagerCollarJingleMixin"
   ],
   "injectors": {
