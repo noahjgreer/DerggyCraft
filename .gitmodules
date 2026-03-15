@@ -1,0 +1,12 @@
+[submodule "DerggyCraft.wiki"]
+	path = DerggyCraft.wiki
+	url = https://github.com/noahjgreer/DerggyCraft.wiki.git
+[submodule "NyaWiki"]
+	path = NyaWiki
+	url = https://github.com/DanyGames2014/NyaWiki
+[submodule "StationAPI.wiki"]
+	path = StationAPI.wiki
+	url = https://github.com/modificationStation/StationAPI.wiki.git
+[submodule "glass-config-api"]
+	path = glass-config-api
+	url = https://github.com/Glass-Series/glass-config-api

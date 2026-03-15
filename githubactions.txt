@@ -1,0 +1,201 @@
+2026-03-15T20:32:51.8170353Z Current runner version: '2.332.0'
+2026-03-15T20:32:51.8193464Z ##[group]Runner Image Provisioner
+2026-03-15T20:32:51.8194228Z Hosted Compute Agent
+2026-03-15T20:32:51.8194878Z Version: 20260213.493
+2026-03-15T20:32:51.8195608Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-03-15T20:32:51.8196306Z Build Date: 2026-02-13T00:28:41Z
+2026-03-15T20:32:51.8196971Z Worker ID: {056c92e6-5e07-4119-a474-8ec532645f55}
+2026-03-15T20:32:51.8197705Z Azure Region: westus3
+2026-03-15T20:32:51.8198218Z ##[endgroup]
+2026-03-15T20:32:51.8199682Z ##[group]Operating System
+2026-03-15T20:32:51.8200307Z Ubuntu
+2026-03-15T20:32:51.8200735Z 24.04.3
+2026-03-15T20:32:51.8201230Z LTS
+2026-03-15T20:32:51.8201703Z ##[endgroup]
+2026-03-15T20:32:51.8202189Z ##[group]Runner Image
+2026-03-15T20:32:51.8202680Z Image: ubuntu-24.04
+2026-03-15T20:32:51.8203258Z Version: 20260302.42.1
+2026-03-15T20:32:51.8204417Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260302.42/images/ubuntu/Ubuntu2404-Readme.md
+2026-03-15T20:32:51.8206126Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260302.42
+2026-03-15T20:32:51.8207021Z ##[endgroup]
+2026-03-15T20:32:51.8208057Z ##[group]GITHUB_TOKEN Permissions
+2026-03-15T20:32:51.8210052Z Contents: write
+2026-03-15T20:32:51.8210565Z Metadata: read
+2026-03-15T20:32:51.8211192Z ##[endgroup]
+2026-03-15T20:32:51.8213253Z Secret source: Actions
+2026-03-15T20:32:51.8213964Z Prepare workflow directory
+2026-03-15T20:32:51.8597007Z Prepare all required actions
+2026-03-15T20:32:51.8634740Z Getting action download info
+2026-03-15T20:32:52.2655665Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-03-15T20:32:52.3890708Z Download action repository 'actions/setup-java@v4' (SHA:c1e323688fd81a25caa38c78aa6df2d33d3e20d9)
+2026-03-15T20:32:53.4016388Z Download action repository 'softprops/action-gh-release@v2' (SHA:b25b93d384199fc0fc8c2e126b2d937a0cbeb2ae)
+2026-03-15T20:32:54.1984533Z Complete job name: build-and-release
+2026-03-15T20:32:54.2685063Z ##[group]Run actions/checkout@v4
+2026-03-15T20:32:54.2685997Z with:
+2026-03-15T20:32:54.2686485Z   fetch-depth: 0
+2026-03-15T20:32:54.2686865Z   repository: noahjgreer/DerggyCraft
+2026-03-15T20:32:54.2687456Z   token: ***
+2026-03-15T20:32:54.2687753Z   ssh-strict: true
+2026-03-15T20:32:54.2688038Z   ssh-user: git
+2026-03-15T20:32:54.2688339Z   persist-credentials: true
+2026-03-15T20:32:54.2688672Z   clean: true
+2026-03-15T20:32:54.2688969Z   sparse-checkout-cone-mode: true
+2026-03-15T20:32:54.2689320Z   fetch-tags: false
+2026-03-15T20:32:54.2689612Z   show-progress: true
+2026-03-15T20:32:54.2689926Z   lfs: false
+2026-03-15T20:32:54.2690208Z   submodules: false
+2026-03-15T20:32:54.2690511Z   set-safe-directory: true
+2026-03-15T20:32:54.2691134Z ##[endgroup]
+2026-03-15T20:32:54.3755496Z Syncing repository: noahjgreer/DerggyCraft
+2026-03-15T20:32:54.3757031Z ##[group]Getting Git version info
+2026-03-15T20:32:54.3757634Z Working directory is '/home/runner/work/DerggyCraft/DerggyCraft'
+2026-03-15T20:32:54.3758420Z [command]/usr/bin/git version
+2026-03-15T20:32:54.3873719Z git version 2.53.0
+2026-03-15T20:32:54.3900393Z ##[endgroup]
+2026-03-15T20:32:54.3916306Z Temporarily overriding HOME='/home/runner/work/_temp/d59476da-667f-46cf-a11c-6694bdeabc65' before making global git config changes
+2026-03-15T20:32:54.3918065Z Adding repository directory to the temporary git global config as a safe directory
+2026-03-15T20:32:54.3923072Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/DerggyCraft/DerggyCraft
+2026-03-15T20:32:54.3963455Z Deleting the contents of '/home/runner/work/DerggyCraft/DerggyCraft'
+2026-03-15T20:32:54.3967615Z ##[group]Initializing the repository
+2026-03-15T20:32:54.3972221Z [command]/usr/bin/git init /home/runner/work/DerggyCraft/DerggyCraft
+2026-03-15T20:32:54.4093062Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-03-15T20:32:54.4094214Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-03-15T20:32:54.4095181Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-03-15T20:32:54.4096008Z hint: call:
+2026-03-15T20:32:54.4096516Z hint:
+2026-03-15T20:32:54.4097267Z hint: 	git config --global init.defaultBranch <name>
+2026-03-15T20:32:54.4097725Z hint:
+2026-03-15T20:32:54.4098274Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-03-15T20:32:54.4099449Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-03-15T20:32:54.4100401Z hint:
+2026-03-15T20:32:54.4100972Z hint: 	git branch -m <name>
+2026-03-15T20:32:54.4101592Z hint:
+2026-03-15T20:32:54.4102416Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-03-15T20:32:54.4103790Z Initialized empty Git repository in /home/runner/work/DerggyCraft/DerggyCraft/.git/
+2026-03-15T20:32:54.4110825Z [command]/usr/bin/git remote add origin https://github.com/noahjgreer/DerggyCraft
+2026-03-15T20:32:54.4147673Z ##[endgroup]
+2026-03-15T20:32:54.4148628Z ##[group]Disabling automatic garbage collection
+2026-03-15T20:32:54.4152854Z [command]/usr/bin/git config --local gc.auto 0
+2026-03-15T20:32:54.4182176Z ##[endgroup]
+2026-03-15T20:32:54.4183115Z ##[group]Setting up auth
+2026-03-15T20:32:54.4190240Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-03-15T20:32:54.4221592Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-03-15T20:32:54.4573342Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-03-15T20:32:54.4604574Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-03-15T20:32:54.4835890Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-03-15T20:32:54.4867591Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-03-15T20:32:54.5103283Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-03-15T20:32:54.5139938Z ##[endgroup]
+2026-03-15T20:32:54.5140930Z ##[group]Fetching the repository
+2026-03-15T20:32:54.5149722Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-03-15T20:32:56.4929926Z From https://github.com/noahjgreer/DerggyCraft
+2026-03-15T20:32:56.4930729Z  * [new branch]        main       -> origin/main
+2026-03-15T20:32:56.4931275Z  * [new tag]           1.1.0b     -> 1.1.0b
+2026-03-15T20:32:56.4978921Z [command]/usr/bin/git branch --list --remote origin/main
+2026-03-15T20:32:56.5004236Z   origin/main
+2026-03-15T20:32:56.5014847Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+2026-03-15T20:32:56.5041028Z a368bc7a68c3e78acda5d7a3ff05dba2bfd318a2
+2026-03-15T20:32:56.5049813Z ##[endgroup]
+2026-03-15T20:32:56.5050425Z ##[group]Determining the checkout info
+2026-03-15T20:32:56.5051123Z ##[endgroup]
+2026-03-15T20:32:56.5056036Z [command]/usr/bin/git sparse-checkout disable
+2026-03-15T20:32:56.5095737Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-03-15T20:32:56.5123172Z ##[group]Checking out the ref
+2026-03-15T20:32:56.5128002Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-03-15T20:32:57.6457723Z Updating files:  99% (25362/25405)
+2026-03-15T20:32:57.6458348Z Updating files: 100% (25405/25405)
+2026-03-15T20:32:57.6458806Z Updating files: 100% (25405/25405), done.
+2026-03-15T20:32:57.6708608Z Switched to a new branch 'main'
+2026-03-15T20:32:57.6711763Z branch 'main' set up to track 'origin/main'.
+2026-03-15T20:32:57.6740957Z ##[endgroup]
+2026-03-15T20:32:57.6783175Z [command]/usr/bin/git log -1 --format=%H
+2026-03-15T20:32:57.6807930Z a368bc7a68c3e78acda5d7a3ff05dba2bfd318a2
+2026-03-15T20:32:57.7005222Z ##[group]Run if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
+2026-03-15T20:32:57.7006028Z [36;1mif [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then[0m
+2026-03-15T20:32:57.7006376Z [36;1m  TAG="1.1.0"[0m
+2026-03-15T20:32:57.7006578Z [36;1melse[0m
+2026-03-15T20:32:57.7006784Z [36;1m  TAG="${GITHUB_REF_NAME}"[0m
+2026-03-15T20:32:57.7007023Z [36;1mfi[0m
+2026-03-15T20:32:57.7007192Z [36;1m[0m
+2026-03-15T20:32:57.7007380Z [36;1mif [[ -z "$TAG" ]]; then[0m
+2026-03-15T20:32:57.7007643Z [36;1m  echo "Tag is empty."[0m
+2026-03-15T20:32:57.7007866Z [36;1m  exit 1[0m
+2026-03-15T20:32:57.7008031Z [36;1mfi[0m
+2026-03-15T20:32:57.7008187Z [36;1m[0m
+2026-03-15T20:32:57.7008342Z [36;1mVERSION="${TAG#v}"[0m
+2026-03-15T20:32:57.7008582Z [36;1mecho "tag=$TAG" >> "$GITHUB_OUTPUT"[0m
+2026-03-15T20:32:57.7008887Z [36;1mecho "version=$VERSION" >> "$GITHUB_OUTPUT"[0m
+2026-03-15T20:32:57.7060561Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-03-15T20:32:57.7060957Z ##[endgroup]
+2026-03-15T20:32:57.7269133Z ##[group]Run actions/setup-java@v4
+2026-03-15T20:32:57.7269417Z with:
+2026-03-15T20:32:57.7269592Z   distribution: temurin
+2026-03-15T20:32:57.7269796Z   java-version: 21
+2026-03-15T20:32:57.7269974Z   java-package: jdk
+2026-03-15T20:32:57.7270162Z   check-latest: false
+2026-03-15T20:32:57.7270348Z   server-id: github
+2026-03-15T20:32:57.7270535Z   server-username: GITHUB_ACTOR
+2026-03-15T20:32:57.7270771Z   server-password: GITHUB_TOKEN
+2026-03-15T20:32:57.7270998Z   overwrite-settings: true
+2026-03-15T20:32:57.7271209Z   job-status: success
+2026-03-15T20:32:57.7271509Z   token: ***
+2026-03-15T20:32:57.7271685Z ##[endgroup]
+2026-03-15T20:32:57.9230693Z ##[group]Installed distributions
+2026-03-15T20:32:57.9324671Z Resolved Java 21.0.10+7 from tool-cache
+2026-03-15T20:32:57.9325659Z Setting Java 21.0.10+7 as the default
+2026-03-15T20:32:57.9338305Z Creating toolchains.xml for JDK version 21 from temurin
+2026-03-15T20:32:57.9413320Z Writing to /home/runner/.m2/toolchains.xml
+2026-03-15T20:32:57.9413838Z 
+2026-03-15T20:32:57.9414258Z Java configuration:
+2026-03-15T20:32:57.9415658Z   Distribution: temurin
+2026-03-15T20:32:57.9505667Z   Version: 21.0.10+7
+2026-03-15T20:32:57.9506640Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.10-7/x64
+2026-03-15T20:32:57.9507123Z 
+2026-03-15T20:32:57.9507603Z ##[endgroup]
+2026-03-15T20:32:57.9525037Z Creating settings.xml with server-id: github
+2026-03-15T20:32:57.9525826Z Writing to /home/runner/.m2/settings.xml
+2026-03-15T20:32:57.9561136Z ##[group]Run chmod +x gradlew
+2026-03-15T20:32:57.9561431Z [36;1mchmod +x gradlew[0m
+2026-03-15T20:32:57.9561675Z [36;1m./gradlew --no-daemon clean build[0m
+2026-03-15T20:32:57.9611257Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-03-15T20:32:57.9611583Z env:
+2026-03-15T20:32:57.9611862Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.10-7/x64
+2026-03-15T20:32:57.9612342Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.10-7/x64
+2026-03-15T20:32:57.9612688Z ##[endgroup]
+2026-03-15T20:32:59.6867472Z Downloading https://services.gradle.org/distributions/gradle-9.3.0-bin.zip
+2026-03-15T20:33:02.4431258Z .............10%.............20%.............30%.............40%.............50%.............60%.............70%.............80%.............90%.............100%
+2026-03-15T20:33:04.6146371Z 
+2026-03-15T20:33:04.6146914Z Welcome to Gradle 9.3.0!
+2026-03-15T20:33:04.6147233Z 
+2026-03-15T20:33:04.6167311Z Here are the highlights of this release:
+2026-03-15T20:33:04.6168216Z  - Test reporting improvements
+2026-03-15T20:33:04.6168836Z  - Error and warning improvements
+2026-03-15T20:33:04.6169291Z  - Build authoring improvements
+2026-03-15T20:33:04.6169582Z 
+2026-03-15T20:33:04.6169979Z For more details see https://docs.gradle.org/9.3.0/release-notes.html
+2026-03-15T20:33:04.6170472Z 
+2026-03-15T20:33:04.6442607Z 
+2026-03-15T20:33:04.6453965Z FAILURE: Build failed with an exception.
+2026-03-15T20:33:04.6454799Z 
+2026-03-15T20:33:04.6455132Z * What went wrong:
+2026-03-15T20:33:04.6456733Z Value 'C:\Program Files\Eclipse Adoptium\jdk-21.0.10.7-hotspot' given for org.gradle.java.home Gradle property is invalid (Java home supplied is invalid)
+2026-03-15T20:33:04.6457768Z 
+2026-03-15T20:33:04.6457920Z * Try:
+2026-03-15T20:33:04.6458325Z > Run with --stacktrace option to get the stack trace.
+2026-03-15T20:33:04.6458968Z > Run with --info or --debug option to get more log output.
+2026-03-15T20:33:04.6459747Z > Run with --scan to get full insights from a Build Scan (powered by Develocity).
+2026-03-15T20:33:04.6460487Z > Get more help at https://help.gradle.org.
+2026-03-15T20:33:04.6699425Z ##[error]Process completed with exit code 1.
+2026-03-15T20:33:04.6811124Z Post job cleanup.
+2026-03-15T20:33:04.8588259Z Post job cleanup.
+2026-03-15T20:33:04.9548019Z [command]/usr/bin/git version
+2026-03-15T20:33:04.9584967Z git version 2.53.0
+2026-03-15T20:33:04.9627357Z Temporarily overriding HOME='/home/runner/work/_temp/183daa98-064f-4deb-a2c1-338453bc0e31' before making global git config changes
+2026-03-15T20:33:04.9628753Z Adding repository directory to the temporary git global config as a safe directory
+2026-03-15T20:33:04.9632647Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/DerggyCraft/DerggyCraft
+2026-03-15T20:33:04.9668186Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-03-15T20:33:04.9701184Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-03-15T20:33:04.9951303Z fatal: No url found for submodule path 'DerggyCraft.wiki' in .gitmodules
+2026-03-15T20:33:04.9991722Z ##[warning]The process '/usr/bin/git' failed with exit code 128
+2026-03-15T20:33:05.0069996Z Cleaning up orphan processes
+2026-03-15T20:33:05.0316529Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4, actions/setup-java@v4. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
