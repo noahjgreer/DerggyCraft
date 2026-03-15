@@ -10,7 +10,7 @@ import net.modificationstation.stationapi.api.util.Namespace;
 import net.noahsarch.derggycraft.item.CollarItem;
 import net.noahsarch.derggycraft.item.LeatherScrapItem;
 import net.noahsarch.derggycraft.item.RottenFleshItem;
-import net.noahsarch.derggycraft.item.GoldenCompass;
+import net.noahsarch.derggycraft.item.GoldenCompassItem;
 
 public class DerggyCraft {
     // Namespace Utility Field
@@ -34,7 +34,7 @@ public class DerggyCraft {
                 .setTranslationKey(NAMESPACE, "rotten_flesh");
         LEATHER_SCRAP_ITEM = new LeatherScrapItem(NAMESPACE.id("leather_scrap"))
                 .setTranslationKey(NAMESPACE, "leather_scrap");
-        GOLDEN_COMPASS_ITEM = new GoldenCompass(NAMESPACE.id("golden_compass"))
+        GOLDEN_COMPASS_ITEM = new GoldenCompassItem(NAMESPACE.id("golden_compass"))
                 .setTranslationKey(NAMESPACE, "golden_compass");
     }
 }

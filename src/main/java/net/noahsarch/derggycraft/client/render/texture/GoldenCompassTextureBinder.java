@@ -3,9 +3,13 @@ package net.noahsarch.derggycraft.client.render.texture;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resource.pack.TexturePack;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3i;
 import net.modificationstation.stationapi.api.client.texture.atlas.Atlas;
 import net.modificationstation.stationapi.api.client.texture.binder.StationTextureBinder;
+import net.noahsarch.derggycraft.DerggyCraft;
+import net.noahsarch.derggycraft.item.GoldenCompassItem;
 
 public class GoldenCompassTextureBinder extends StationTextureBinder {
     private static final int VANILLA_PRIMARY_DIAL_COLOR = 0xFF1414;
@@ -41,7 +45,6 @@ public class GoldenCompassTextureBinder extends StationTextureBinder {
         Atlas.Sprite staticReference = getStaticReference();
         int width = staticReference.getWidth();
         int height = staticReference.getHeight();
-
         for (int i = 0; i < width * height; ++i) {
             int r = this.baseTexture[i] & 255;
             int g = this.baseTexture[i] >> 8 & 255;
@@ -62,37 +65,7 @@ public class GoldenCompassTextureBinder extends StationTextureBinder {
             this.pixels[i * 4 + 3] = (byte) a;
         }
 
-        double targetRotation = 0.0D;
-        if (this.minecraft.world != null && this.minecraft.player != null) {
-            Vec3i spawnPos = this.minecraft.world.getSpawnPos();
-            double dx = (double) spawnPos.x - this.minecraft.player.x;
-            double dz = (double) spawnPos.z - this.minecraft.player.z;
-            targetRotation = (double) (this.minecraft.player.yaw - 90.0F) * Math.PI / 180.0D - Math.atan2(dz, dx);
-            if (this.minecraft.world.dimension.isNether) {
-                targetRotation = Math.random() * (double) ((float) Math.PI) * 2.0D;
-            }
-        }
-
-        double delta = targetRotation - this.currentRotation;
-        while (delta < -Math.PI) {
-            delta += Math.PI * 2.0D;
-        }
-
-        while (delta >= Math.PI) {
-            delta -= Math.PI * 2.0D;
-        }
-
-        if (delta < -1.0D) {
-            delta = -1.0D;
-        }
-
-        if (delta > 1.0D) {
-            delta = 1.0D;
-        }
-
-        this.rotationDelay += delta * 0.1D;
-        this.rotationDelay *= 0.8D;
-        this.currentRotation += this.rotationDelay;
+        updateRotation(resolveTargetRotation());
         double sin = Math.sin(this.currentRotation);
         double cos = Math.cos(this.currentRotation);
 
@@ -116,6 +89,64 @@ public class GoldenCompassTextureBinder extends StationTextureBinder {
             int color = i >= 0 ? PRIMARY_DIAL_COLOR : SECONDARY_DIAL_COLOR;
             setDialPixel(index, color);
         }
+    }
+
+    private double resolveTargetRotation() {
+        if (this.minecraft.world == null || this.minecraft.player == null) {
+            return this.currentRotation + (Math.random() - 0.5D) * 0.2D;
+        }
+
+        LivingEntity trackedEntity = getTrackedEntityFromSelectedCompass();
+        if (trackedEntity != null && trackedEntity.world == this.minecraft.world) {
+            double dx = trackedEntity.x - this.minecraft.player.x;
+            double dz = trackedEntity.z - this.minecraft.player.z;
+            return (double) (this.minecraft.player.yaw - 90.0F) * Math.PI / 180.0D - Math.atan2(dz, dx);
+        }
+
+        Vec3i spawnPos = this.minecraft.world.getSpawnPos();
+        double dx = (double) spawnPos.x - this.minecraft.player.x;
+        double dz = (double) spawnPos.z - this.minecraft.player.z;
+        double targetRotation = (double) (this.minecraft.player.yaw - 90.0F) * Math.PI / 180.0D - Math.atan2(dz, dx);
+        if (this.minecraft.world.dimension.isNether) {
+            targetRotation = Math.random() * Math.PI * 2.0D;
+        }
+        return targetRotation;
+    }
+
+    private LivingEntity getTrackedEntityFromSelectedCompass() {
+        ItemStack selected = this.minecraft.player.inventory.getSelectedItem();
+        if (selected == null || DerggyCraft.GOLDEN_COMPASS_ITEM == null || selected.itemId != DerggyCraft.GOLDEN_COMPASS_ITEM.id) {
+            return null;
+        }
+
+        if (DerggyCraft.GOLDEN_COMPASS_ITEM instanceof GoldenCompassItem goldenCompassItem) {
+            return goldenCompassItem.getTrackedEntity(selected, this.minecraft.world);
+        }
+
+        return null;
+    }
+
+    private void updateRotation(double targetRotation) {
+        double delta = targetRotation - this.currentRotation;
+        while (delta < -Math.PI) {
+            delta += Math.PI * 2.0D;
+        }
+
+        while (delta >= Math.PI) {
+            delta -= Math.PI * 2.0D;
+        }
+
+        if (delta < -1.0D) {
+            delta = -1.0D;
+        }
+
+        if (delta > 1.0D) {
+            delta = 1.0D;
+        }
+
+        this.rotationDelay += delta * 0.1D;
+        this.rotationDelay *= 0.8D;
+        this.currentRotation += this.rotationDelay;
     }
 
     private void setDialPixel(int index, int rgbColor) {
