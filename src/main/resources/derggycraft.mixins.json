@@ -10,6 +10,7 @@
     "EntityPersistentIdMixin",
     "ItemMixin",
     "PlayerInventoryMixin",
+    "ScreenHandlerPickupAllMixin",
     "PlayerScreenHandlerMixin",
     "client.DynamicTextureAccessor",
     "client.ItemRendererMixin",

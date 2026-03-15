@@ -16,6 +16,7 @@ group = project.properties["maven_group"] as String
 
 val enableBhCreative = (project.findProperty("dev_enable_bhcreative") as String?)?.toBoolean() ?: false
 val enableAlwaysMoreItems = (project.findProperty("dev_enable_alwaysmoreitems") as String?)?.toBoolean() ?: false
+val enableGcapi3 = (project.findProperty("dev_enable_gcapi3") as String?)?.toBoolean() ?: false
 
 loom {
 //	accessWidenerPath = file("src/main/resources/examplemod.accesswidener")
@@ -104,6 +105,10 @@ dependencies {
 	if (enableAlwaysMoreItems) {
 		// Dev-only helper mod from Modrinth CDN: loaded in runClient only.
 		modLocalRuntime("modrinth.ami:${project.properties["alwaysmoreitems_version"]}:${project.properties["alwaysmoreitems_modrinth_version"]}@jar")
+	}
+	if (enableGcapi3) {
+		// Dev-only helper dependency for mods that require gcapi3 during development runs.
+		modLocalRuntime("net.glasslauncher.mods:GlassConfigAPI:${project.properties["gcapi_version"]}")
 	}
 }
 
