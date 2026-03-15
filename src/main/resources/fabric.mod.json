@@ -20,6 +20,7 @@
       "net.noahsarch.derggycraft.DerggyCraft"
     ],
     "stationapi:event_bus_client": [
+      "net.noahsarch.derggycraft.client.TextureRegistry"
     ],
     "stationapi:event_bus_server": [
     ]
