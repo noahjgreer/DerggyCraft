@@ -4,38 +4,123 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.Tessellator;
 import net.noahsarch.derggycraft.DerggyCraft;
 import net.noahsarch.derggycraft.sound.IntroLogoSound;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 public class DerggyCraftLogoScreen extends Screen {
     private static final String ICON_TEXTURE_PATH = "/assets/derggycraft/icon.png";
 
-    private static final double ICON_FADE_IN_START_SECONDS = 3.0;
-    private static final double ICON_FADE_DURATION_SECONDS = 0.85;
-    private static final double ICON_FADE_OUT_START_SECONDS = 9.0;
+    private static final int BLEND_ONE = 1;
+    private static final int BLEND_SRC_ALPHA = 770;
+    private static final int BLEND_ONE_MINUS_SRC_ALPHA = 771;
 
-    private static final double TITLE_TRANSITION_START_SECONDS = 12.0;
-    private static final double TITLE_TRANSITION_DURATION_SECONDS = 0.85;
+    private static final int PARAM_COUNT = 18;
 
-    private static final float JITTER_X_AMPLITUDE_PIXELS = 0.75F;
-    private static final float JITTER_Y_AMPLITUDE_PIXELS = 0.5F;
-    private static final float JITTER_PRIMARY_FREQUENCY_HZ = 1F;
-    private static final float JITTER_SECONDARY_FREQUENCY_HZ = 1.75F;
-    private static final float JITTER_SECONDARY_WEIGHT = 0.35F;
-    private static final float JITTER_PHASE_OFFSET_RADIANS = 1.2F;
+    private static final double DEFAULT_ICON_FADE_IN_START_SECONDS = 3.0;
+    private static final double DEFAULT_ICON_FADE_DURATION_SECONDS = 0.85;
+    private static final double DEFAULT_ICON_FADE_OUT_START_SECONDS = 9.0;
 
-    private static final double FLASH_ONE_START_SECONDS = 5.8;
-    private static final double FLASH_DURATION_SECONDS = 0.3;
-    private static final double FLASH_GAP_SECONDS = 0.3;
-    private static final float FLASH_ATTACK_RATIO = 0.78F;
-    private static final float FLASH_INTENSITY = 1.0F;
+    private static final double DEFAULT_TITLE_TRANSITION_START_SECONDS = 12.0;
+    private static final double DEFAULT_TITLE_TRANSITION_DURATION_SECONDS = 0.85;
 
-    private static final double FINAL_FLASH_START_SECONDS = ICON_FADE_OUT_START_SECONDS - 0.5;
-    private static final double FINAL_FLASH_DURATION_SECONDS = 0.5;
-    private static final float FINAL_FLASH_ATTACK_RATIO = 0.72F;
-    private static final float FINAL_FLASH_INTENSITY = 1.0F;
+    private static final float DEFAULT_JITTER_X_AMPLITUDE_PIXELS = 0.75F;
+    private static final float DEFAULT_JITTER_Y_AMPLITUDE_PIXELS = 0.5F;
+    private static final float DEFAULT_JITTER_PRIMARY_FREQUENCY_HZ = 1.0F;
+    private static final float DEFAULT_JITTER_SECONDARY_FREQUENCY_HZ = 1.75F;
+    private static final float DEFAULT_JITTER_SECONDARY_WEIGHT = 0.35F;
+    private static final float DEFAULT_JITTER_PHASE_OFFSET_RADIANS = 1.2F;
 
-    private static final int EXPOSURE_LAYER_COUNT = 3;
-    private static final float EXPOSURE_LAYER_DECAY = 0.72F;
+    private static final double DEFAULT_FLASH_ONE_START_SECONDS = 5.8;
+    private static final double DEFAULT_FLASH_DURATION_SECONDS = 0.3;
+    private static final double DEFAULT_FLASH_GAP_SECONDS = 0.3;
+    private static final float DEFAULT_FLASH_ATTACK_RATIO = 0.78F;
+    private static final float DEFAULT_FLASH_INTENSITY = 1.0F;
+
+    private static final double DEFAULT_FINAL_FLASH_OFFSET_FROM_FADE_OUT_SECONDS = 0.5;
+    private static final double DEFAULT_FINAL_FLASH_DURATION_SECONDS = 0.5;
+    private static final float DEFAULT_FINAL_FLASH_ATTACK_RATIO = 0.72F;
+    private static final float DEFAULT_FINAL_FLASH_INTENSITY = 1.0F;
+
+    private static final int DEFAULT_EXPOSURE_LAYER_COUNT = 4;
+    private static final float DEFAULT_EXPOSURE_LAYER_DECAY = 0.78F;
+
+    private static final float DEFAULT_CHROMA_SPLIT_PIXELS = 1.25F;
+    private static final float DEFAULT_CHROMA_ALPHA = 0.22F;
+
+    private static final float DEFAULT_TEAR_CHANCE = 0.18F;
+    private static final float DEFAULT_TEAR_MAX_OFFSET_PIXELS = 6.5F;
+    private static final float DEFAULT_TEAR_BAND_HEIGHT_PIXELS = 18.0F;
+
+    private static final float DEFAULT_GHOST_ALPHA = 0.18F;
+    private static final float DEFAULT_GHOST_OFFSET_X_PIXELS = 1.8F;
+    private static final float DEFAULT_GHOST_OFFSET_Y_PIXELS = 0.8F;
+
+    private static final float DEFAULT_BLOOM_ALPHA = 0.26F;
+    private static final float DEFAULT_BLOOM_SCALE = 1.06F;
+    private static final float DEFAULT_BLOOM_PULSE_HZ = 1.8F;
+    private static final float DEFAULT_BLOOM_PULSE_AMOUNT = 0.4F;
+
+    private static final int DEFAULT_SCANLINE_SPACING_PIXELS = 2;
+    private static final float DEFAULT_SCANLINE_ALPHA = 0.09F;
+    private static final float DEFAULT_SCANLINE_SCROLL_SPEED = 17.0F;
+
+    private static final float DEFAULT_NOISE_ALPHA = 0.06F;
+    private static final float DEFAULT_NOISE_DENSITY = 0.55F;
+    private static final int DEFAULT_NOISE_MAX_BLOCK_SIZE = 3;
+
+    private static final double DEBUG_LOOP_DURATION_SECONDS = DEFAULT_TITLE_TRANSITION_START_SECONDS + DEFAULT_TITLE_TRANSITION_DURATION_SECONDS;
+
+    private static double iconFadeInStartSeconds = DEFAULT_ICON_FADE_IN_START_SECONDS;
+    private static double iconFadeDurationSeconds = DEFAULT_ICON_FADE_DURATION_SECONDS;
+    private static double iconFadeOutStartSeconds = DEFAULT_ICON_FADE_OUT_START_SECONDS;
+
+    private static double titleTransitionStartSeconds = DEFAULT_TITLE_TRANSITION_START_SECONDS;
+    private static double titleTransitionDurationSeconds = DEFAULT_TITLE_TRANSITION_DURATION_SECONDS;
+
+    private static float jitterXAmplitudePixels = DEFAULT_JITTER_X_AMPLITUDE_PIXELS;
+    private static float jitterYAmplitudePixels = DEFAULT_JITTER_Y_AMPLITUDE_PIXELS;
+    private static float jitterPrimaryFrequencyHz = DEFAULT_JITTER_PRIMARY_FREQUENCY_HZ;
+    private static float jitterSecondaryFrequencyHz = DEFAULT_JITTER_SECONDARY_FREQUENCY_HZ;
+    private static float jitterSecondaryWeight = DEFAULT_JITTER_SECONDARY_WEIGHT;
+    private static float jitterPhaseOffsetRadians = DEFAULT_JITTER_PHASE_OFFSET_RADIANS;
+
+    private static double flashOneStartSeconds = DEFAULT_FLASH_ONE_START_SECONDS;
+    private static double flashDurationSeconds = DEFAULT_FLASH_DURATION_SECONDS;
+    private static double flashGapSeconds = DEFAULT_FLASH_GAP_SECONDS;
+    private static float flashAttackRatio = DEFAULT_FLASH_ATTACK_RATIO;
+    private static float flashIntensity = DEFAULT_FLASH_INTENSITY;
+
+    private static double finalFlashOffsetFromFadeOutSeconds = DEFAULT_FINAL_FLASH_OFFSET_FROM_FADE_OUT_SECONDS;
+    private static double finalFlashDurationSeconds = DEFAULT_FINAL_FLASH_DURATION_SECONDS;
+    private static float finalFlashAttackRatio = DEFAULT_FINAL_FLASH_ATTACK_RATIO;
+    private static float finalFlashIntensity = DEFAULT_FINAL_FLASH_INTENSITY;
+
+    private static int exposureLayerCount = DEFAULT_EXPOSURE_LAYER_COUNT;
+    private static float exposureLayerDecay = DEFAULT_EXPOSURE_LAYER_DECAY;
+
+    private static float chromaSplitPixels = DEFAULT_CHROMA_SPLIT_PIXELS;
+    private static float chromaAlpha = DEFAULT_CHROMA_ALPHA;
+
+    private static float tearChance = DEFAULT_TEAR_CHANCE;
+    private static float tearMaxOffsetPixels = DEFAULT_TEAR_MAX_OFFSET_PIXELS;
+    private static float tearBandHeightPixels = DEFAULT_TEAR_BAND_HEIGHT_PIXELS;
+
+    private static float ghostAlpha = DEFAULT_GHOST_ALPHA;
+    private static float ghostOffsetXPixels = DEFAULT_GHOST_OFFSET_X_PIXELS;
+    private static float ghostOffsetYPixels = DEFAULT_GHOST_OFFSET_Y_PIXELS;
+
+    private static float bloomAlpha = DEFAULT_BLOOM_ALPHA;
+    private static float bloomScale = DEFAULT_BLOOM_SCALE;
+    private static float bloomPulseHz = DEFAULT_BLOOM_PULSE_HZ;
+    private static float bloomPulseAmount = DEFAULT_BLOOM_PULSE_AMOUNT;
+
+    private static int scanlineSpacingPixels = DEFAULT_SCANLINE_SPACING_PIXELS;
+    private static float scanlineAlpha = DEFAULT_SCANLINE_ALPHA;
+    private static float scanlineScrollSpeed = DEFAULT_SCANLINE_SCROLL_SPEED;
+
+    private static float noiseAlpha = DEFAULT_NOISE_ALPHA;
+    private static float noiseDensity = DEFAULT_NOISE_DENSITY;
+    private static int noiseMaxBlockSize = DEFAULT_NOISE_MAX_BLOCK_SIZE;
 
     private static boolean introSoundPlayed;
     private static long introSoundStartNanos;
@@ -44,6 +129,9 @@ public class DerggyCraftLogoScreen extends Screen {
     private long soundStartNanos;
     private boolean introSoundStarted;
     private boolean nextScreenInitialized;
+    private boolean debugOverlayEnabled;
+    private boolean debugLoopEnabled;
+    private int selectedParameter;
     private int iconTextureId = -1;
 
     public DerggyCraftLogoScreen(Screen nextScreen) {
@@ -52,6 +140,9 @@ public class DerggyCraftLogoScreen extends Screen {
 
     @Override
     public void init() {
+        this.debugOverlayEnabled = false;
+        this.debugLoopEnabled = false;
+        this.selectedParameter = 0;
         this.soundStartNanos = this.resolveSharedSoundStartTime();
         this.startIntroSound();
         this.iconTextureId = this.minecraft.textureManager.getTextureId(ICON_TEXTURE_PATH);
@@ -63,6 +154,51 @@ public class DerggyCraftLogoScreen extends Screen {
     }
 
     @Override
+    protected void keyPressed(char character, int keyCode) {
+        if (keyCode == Keyboard.KEY_F6) {
+            this.debugOverlayEnabled = !this.debugOverlayEnabled;
+            return;
+        }
+
+        if (keyCode == Keyboard.KEY_F7) {
+            this.debugLoopEnabled = !this.debugLoopEnabled;
+            if (this.debugLoopEnabled) {
+                this.restartDebugLoopCycle();
+            }
+            return;
+        }
+
+        if (keyCode == Keyboard.KEY_R) {
+            resetAllParametersToDefaults();
+            return;
+        }
+
+        if (!this.debugOverlayEnabled) {
+            return;
+        }
+
+        if (keyCode == Keyboard.KEY_UP) {
+            this.selectedParameter = (this.selectedParameter - 1 + PARAM_COUNT) % PARAM_COUNT;
+            return;
+        }
+
+        if (keyCode == Keyboard.KEY_DOWN) {
+            this.selectedParameter = (this.selectedParameter + 1) % PARAM_COUNT;
+            return;
+        }
+
+        boolean coarse = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
+        if (keyCode == Keyboard.KEY_LEFT) {
+            this.adjustSelectedParameter(-1, coarse);
+            return;
+        }
+
+        if (keyCode == Keyboard.KEY_RIGHT) {
+            this.adjustSelectedParameter(1, coarse);
+        }
+    }
+
+    @Override
     public void render(int mouseX, int mouseY, float delta) {
         if (!this.introSoundStarted) {
             this.startIntroSound();
@@ -70,11 +206,16 @@ public class DerggyCraftLogoScreen extends Screen {
 
         double elapsedSeconds = this.getElapsedSeconds();
 
-        if (elapsedSeconds >= TITLE_TRANSITION_START_SECONDS) {
+        if (this.debugLoopEnabled && elapsedSeconds >= DEBUG_LOOP_DURATION_SECONDS) {
+            this.restartDebugLoopCycle();
+            elapsedSeconds = this.getElapsedSeconds();
+        }
+
+        if (!this.debugLoopEnabled && elapsedSeconds >= titleTransitionStartSeconds) {
             this.ensureNextScreenInitialized();
             this.nextScreen.render(mouseX, mouseY, delta);
 
-            float transitionProgress = clamp01((float) ((elapsedSeconds - TITLE_TRANSITION_START_SECONDS) / TITLE_TRANSITION_DURATION_SECONDS));
+            float transitionProgress = clamp01((float) ((elapsedSeconds - titleTransitionStartSeconds) / titleTransitionDurationSeconds));
             float blackAlpha = 1.0F - transitionProgress;
             this.fillBlackOverlay(blackAlpha);
 
@@ -91,23 +232,309 @@ public class DerggyCraftLogoScreen extends Screen {
             int iconSize = Math.max(128, Math.min(256, Math.min(this.width, this.height) / 3));
             float jitterX = this.computeJitterX(elapsedSeconds);
             float jitterY = this.computeJitterY(elapsedSeconds);
-            int x = (this.width - iconSize) / 2 + Math.round(jitterX);
-            int y = (this.height - iconSize) / 2 + Math.round(jitterY);
+            float centerX = this.width * 0.5F + jitterX;
+            float centerY = this.height * 0.5F + jitterY;
 
-            this.renderIcon(x, y, iconSize, iconAlpha, 770, 771);
+            this.renderLogoEffects(elapsedSeconds, iconAlpha, centerX, centerY, iconSize);
+        }
 
-            float exposureAlpha = this.computeExposureAlpha(elapsedSeconds);
-            if (exposureAlpha > 0.0F) {
-                this.renderExposure(x, y, iconSize, iconAlpha, exposureAlpha);
-            }
+        this.renderScanlines(elapsedSeconds);
+        this.renderNoiseOverlay(elapsedSeconds);
+
+        if (this.debugOverlayEnabled) {
+            this.renderDebugOverlay(elapsedSeconds);
         }
     }
 
-    private void renderExposure(int x, int y, int iconSize, float iconAlpha, float exposureAlpha) {
+    private void renderLogoEffects(double elapsedSeconds, float iconAlpha, float centerX, float centerY, int iconSize) {
+        float bloomPulse = 0.5F + 0.5F * (float) Math.sin(2.0 * Math.PI * bloomPulseHz * elapsedSeconds);
+        float bloomMultiplier = 1.0F + (bloomPulse - 0.5F) * 2.0F * bloomPulseAmount;
+
+        float ghostPassAlpha = clamp01(iconAlpha * ghostAlpha);
+        if (ghostPassAlpha > 0.0F) {
+            this.renderIconPass(centerX + ghostOffsetXPixels, centerY + ghostOffsetYPixels, iconSize, 1.0F, 1.0F, 1.0F, 1.0F, ghostPassAlpha, BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA);
+        }
+
+        float bloomPassAlpha = clamp01(iconAlpha * bloomAlpha * bloomMultiplier);
+        if (bloomPassAlpha > 0.0F) {
+            this.renderIconPass(centerX, centerY, iconSize, bloomScale, 1.0F, 1.0F, 1.0F, bloomPassAlpha, BLEND_SRC_ALPHA, BLEND_ONE);
+        }
+
+        this.renderIconPass(centerX, centerY, iconSize, 1.0F, 1.0F, 1.0F, 1.0F, iconAlpha, BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA);
+
+        float chromaPassAlpha = clamp01(iconAlpha * chromaAlpha);
+        if (chromaPassAlpha > 0.0F) {
+            this.renderIconPass(centerX - chromaSplitPixels, centerY, iconSize, 1.0F, 0.25F, 1.0F, 1.0F, chromaPassAlpha, BLEND_SRC_ALPHA, BLEND_ONE);
+            this.renderIconPass(centerX + chromaSplitPixels, centerY, iconSize, 1.0F, 1.0F, 0.35F, 0.35F, chromaPassAlpha, BLEND_SRC_ALPHA, BLEND_ONE);
+        }
+
+        float exposureAlpha = this.computeExposureAlpha(elapsedSeconds);
+        if (exposureAlpha > 0.0F) {
+            this.renderExposure(centerX, centerY, iconSize, iconAlpha, exposureAlpha);
+        }
+
+        this.renderTearBand(elapsedSeconds, centerX, centerY, iconSize, iconAlpha);
+    }
+
+    private void renderExposure(float centerX, float centerY, int iconSize, float iconAlpha, float exposureAlpha) {
         float layerAlpha = clamp01(iconAlpha * exposureAlpha);
-        for (int i = 0; i < EXPOSURE_LAYER_COUNT && layerAlpha > 0.01F; ++i) {
-            this.renderIcon(x, y, iconSize, layerAlpha, 770, 1);
-            layerAlpha *= EXPOSURE_LAYER_DECAY;
+        for (int i = 0; i < exposureLayerCount && layerAlpha > 0.01F; ++i) {
+            this.renderIconPass(centerX, centerY, iconSize, 1.0F + i * 0.01F, 1.0F, 1.0F, 1.0F, layerAlpha, BLEND_SRC_ALPHA, BLEND_ONE);
+            layerAlpha *= exposureLayerDecay;
+        }
+    }
+
+    private void renderTearBand(double elapsedSeconds, float centerX, float centerY, int iconSize, float iconAlpha) {
+        if (tearChance <= 0.0F || iconAlpha <= 0.0F) {
+            return;
+        }
+
+        if (noiseHash01((int) (elapsedSeconds * 1000.0), 97) > tearChance) {
+            return;
+        }
+
+        float bandHeight = clamp(tearBandHeightPixels, 4.0F, iconSize * 0.6F);
+        float topPx = noiseHash01((int) (elapsedSeconds * 770.0), 1337) * Math.max(1.0F, iconSize - bandHeight);
+        float offset = (noiseHash01((int) (elapsedSeconds * 1300.0), 777) * 2.0F - 1.0F) * tearMaxOffsetPixels;
+        this.renderIconSlicePass(centerX + offset, centerY, iconSize, topPx, bandHeight, iconAlpha * 0.9F);
+
+        int iconTop = Math.round(centerY - iconSize * 0.5F);
+        int yLine = iconTop + Math.round(topPx);
+        int alpha = (int) (clamp01(iconAlpha * 0.25F) * 255.0F);
+        this.fill(Math.round(centerX - iconSize * 0.5F), yLine, Math.round(centerX + iconSize * 0.5F), yLine + 1, (alpha << 24) | 0xFFFFFF);
+    }
+
+    private void renderIconSlicePass(float centerX, float centerY, int iconSize, float topPx, float bandHeight, float alpha) {
+        if (alpha <= 0.0F || bandHeight <= 0.0F) {
+            return;
+        }
+
+        float left = centerX - iconSize * 0.5F;
+        float top = centerY - iconSize * 0.5F;
+        float right = left + iconSize;
+        float y1 = top + topPx;
+        float y2 = y1 + bandHeight;
+
+        float v1 = topPx / iconSize;
+        float v2 = (topPx + bandHeight) / iconSize;
+
+        GL11.glEnable(3042);
+        GL11.glBlendFunc(BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, clamp01(alpha));
+        GL11.glBindTexture(3553, this.iconTextureId);
+
+        Tessellator tessellator = Tessellator.INSTANCE;
+        tessellator.startQuads();
+        tessellator.vertex(left, y2, this.zOffset, 0.0, v2);
+        tessellator.vertex(right, y2, this.zOffset, 1.0, v2);
+        tessellator.vertex(right, y1, this.zOffset, 1.0, v1);
+        tessellator.vertex(left, y1, this.zOffset, 0.0, v1);
+        tessellator.draw();
+
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glDisable(3042);
+    }
+
+    private void renderScanlines(double elapsedSeconds) {
+        if (scanlineAlpha <= 0.0F) {
+            return;
+        }
+
+        int spacing = Math.max(1, scanlineSpacingPixels);
+        for (int y = 0; y < this.height; y += spacing) {
+            float wave = 0.75F + 0.25F * (float) Math.sin(elapsedSeconds * scanlineScrollSpeed + y * 0.14F);
+            int alpha = (int) (clamp01(scanlineAlpha * wave) * 255.0F);
+            this.fill(0, y, this.width, y + 1, alpha << 24);
+        }
+    }
+
+    private void renderNoiseOverlay(double elapsedSeconds) {
+        if (noiseAlpha <= 0.0F || noiseDensity <= 0.0F) {
+            return;
+        }
+
+        int frame = (int) (elapsedSeconds * 60.0);
+        int samples = Math.max(1, (int) (noiseDensity * 140.0F));
+        int maxSize = Math.max(1, noiseMaxBlockSize);
+
+        for (int i = 0; i < samples; ++i) {
+            float gate = noiseHash01(frame, i * 23 + 11);
+            if (gate < 0.6F) {
+                continue;
+            }
+
+            int x = (int) (noiseHash01(frame, i * 41 + 3) * this.width);
+            int y = (int) (noiseHash01(frame, i * 59 + 17) * this.height);
+            int size = 1 + (int) (noiseHash01(frame, i * 83 + 9) * maxSize);
+            int alpha = (int) (clamp01(noiseAlpha * (0.35F + 0.65F * gate)) * 255.0F);
+            int color = (alpha << 24) | 0xFFFFFF;
+            this.fill(x, y, x + size, y + size, color);
+        }
+    }
+
+    private void renderDebugOverlay(double elapsedSeconds) {
+        if (this.textRenderer == null) {
+            return;
+        }
+
+        int y = 6;
+        this.drawTextWithShadow(this.textRenderer, "Logo Debug: F6 overlay  F7 loop  Arrows select/edit  Shift=coarse  R reset", 6, y, 0x90FF90);
+        y += 10;
+        this.drawTextWithShadow(this.textRenderer, String.format("t=%.2fs  loop=%s", elapsedSeconds, this.debugLoopEnabled ? "on" : "off"), 6, y, 0xFFFFFF);
+        y += 10;
+
+        for (int i = 0; i < PARAM_COUNT; ++i) {
+            int color = i == this.selectedParameter ? 0xFFE066 : 0xC8C8C8;
+            this.drawTextWithShadow(this.textRenderer, this.getParameterLine(i), 6, y, color);
+            y += 9;
+        }
+    }
+
+    private String getParameterLine(int index) {
+        switch (index) {
+            case 0: return String.format("Jitter X amp: %.2f", jitterXAmplitudePixels);
+            case 1: return String.format("Jitter Y amp: %.2f", jitterYAmplitudePixels);
+            case 2: return String.format("Jitter primary Hz: %.2f", jitterPrimaryFrequencyHz);
+            case 3: return String.format("Jitter secondary Hz: %.2f", jitterSecondaryFrequencyHz);
+            case 4: return String.format("Flash intensity: %.2f", flashIntensity);
+            case 5: return String.format("Final flash intensity: %.2f", finalFlashIntensity);
+            case 6: return String.format("Chroma split px: %.2f", chromaSplitPixels);
+            case 7: return String.format("Chroma alpha: %.2f", chromaAlpha);
+            case 8: return String.format("Tear chance: %.2f", tearChance);
+            case 9: return String.format("Tear max offset: %.2f", tearMaxOffsetPixels);
+            case 10: return String.format("Ghost alpha: %.2f", ghostAlpha);
+            case 11: return String.format("Bloom alpha: %.2f", bloomAlpha);
+            case 12: return String.format("Bloom scale: %.3f", bloomScale);
+            case 13: return String.format("Scanline alpha: %.2f", scanlineAlpha);
+            case 14: return String.format("Scanline spacing: %d", scanlineSpacingPixels);
+            case 15: return String.format("Noise alpha: %.2f", noiseAlpha);
+            case 16: return String.format("Noise density: %.2f", noiseDensity);
+            case 17: return String.format("Exposure layers: %d", exposureLayerCount);
+            default: return "n/a";
+        }
+    }
+
+    private void adjustSelectedParameter(int direction, boolean coarse) {
+        float mult = coarse ? 5.0F : 1.0F;
+        switch (this.selectedParameter) {
+            case 0:
+                jitterXAmplitudePixels = clamp(jitterXAmplitudePixels + direction * 0.1F * mult, 0.0F, 12.0F);
+                break;
+            case 1:
+                jitterYAmplitudePixels = clamp(jitterYAmplitudePixels + direction * 0.1F * mult, 0.0F, 12.0F);
+                break;
+            case 2:
+                jitterPrimaryFrequencyHz = clamp(jitterPrimaryFrequencyHz + direction * 0.1F * mult, 0.0F, 50.0F);
+                break;
+            case 3:
+                jitterSecondaryFrequencyHz = clamp(jitterSecondaryFrequencyHz + direction * 0.1F * mult, 0.0F, 70.0F);
+                break;
+            case 4:
+                flashIntensity = clamp(flashIntensity + direction * 0.05F * mult, 0.0F, 1.0F);
+                break;
+            case 5:
+                finalFlashIntensity = clamp(finalFlashIntensity + direction * 0.05F * mult, 0.0F, 1.0F);
+                break;
+            case 6:
+                chromaSplitPixels = clamp(chromaSplitPixels + direction * 0.1F * mult, 0.0F, 18.0F);
+                break;
+            case 7:
+                chromaAlpha = clamp(chromaAlpha + direction * 0.02F * mult, 0.0F, 1.0F);
+                break;
+            case 8:
+                tearChance = clamp(tearChance + direction * 0.02F * mult, 0.0F, 1.0F);
+                break;
+            case 9:
+                tearMaxOffsetPixels = clamp(tearMaxOffsetPixels + direction * 0.2F * mult, 0.0F, 64.0F);
+                break;
+            case 10:
+                ghostAlpha = clamp(ghostAlpha + direction * 0.02F * mult, 0.0F, 1.0F);
+                break;
+            case 11:
+                bloomAlpha = clamp(bloomAlpha + direction * 0.02F * mult, 0.0F, 1.0F);
+                break;
+            case 12:
+                bloomScale = clamp(bloomScale + direction * 0.005F * mult, 1.0F, 1.5F);
+                break;
+            case 13:
+                scanlineAlpha = clamp(scanlineAlpha + direction * 0.01F * mult, 0.0F, 1.0F);
+                break;
+            case 14:
+                scanlineSpacingPixels = (int) clamp(scanlineSpacingPixels + direction * mult, 1.0F, 8.0F);
+                break;
+            case 15:
+                noiseAlpha = clamp(noiseAlpha + direction * 0.01F * mult, 0.0F, 1.0F);
+                break;
+            case 16:
+                noiseDensity = clamp(noiseDensity + direction * 0.02F * mult, 0.0F, 1.0F);
+                break;
+            case 17:
+                exposureLayerCount = (int) clamp(exposureLayerCount + direction * mult, 1.0F, 10.0F);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private static void resetAllParametersToDefaults() {
+        iconFadeInStartSeconds = DEFAULT_ICON_FADE_IN_START_SECONDS;
+        iconFadeDurationSeconds = DEFAULT_ICON_FADE_DURATION_SECONDS;
+        iconFadeOutStartSeconds = DEFAULT_ICON_FADE_OUT_START_SECONDS;
+        titleTransitionStartSeconds = DEFAULT_TITLE_TRANSITION_START_SECONDS;
+        titleTransitionDurationSeconds = DEFAULT_TITLE_TRANSITION_DURATION_SECONDS;
+
+        jitterXAmplitudePixels = DEFAULT_JITTER_X_AMPLITUDE_PIXELS;
+        jitterYAmplitudePixels = DEFAULT_JITTER_Y_AMPLITUDE_PIXELS;
+        jitterPrimaryFrequencyHz = DEFAULT_JITTER_PRIMARY_FREQUENCY_HZ;
+        jitterSecondaryFrequencyHz = DEFAULT_JITTER_SECONDARY_FREQUENCY_HZ;
+        jitterSecondaryWeight = DEFAULT_JITTER_SECONDARY_WEIGHT;
+        jitterPhaseOffsetRadians = DEFAULT_JITTER_PHASE_OFFSET_RADIANS;
+
+        flashOneStartSeconds = DEFAULT_FLASH_ONE_START_SECONDS;
+        flashDurationSeconds = DEFAULT_FLASH_DURATION_SECONDS;
+        flashGapSeconds = DEFAULT_FLASH_GAP_SECONDS;
+        flashAttackRatio = DEFAULT_FLASH_ATTACK_RATIO;
+        flashIntensity = DEFAULT_FLASH_INTENSITY;
+
+        finalFlashOffsetFromFadeOutSeconds = DEFAULT_FINAL_FLASH_OFFSET_FROM_FADE_OUT_SECONDS;
+        finalFlashDurationSeconds = DEFAULT_FINAL_FLASH_DURATION_SECONDS;
+        finalFlashAttackRatio = DEFAULT_FINAL_FLASH_ATTACK_RATIO;
+        finalFlashIntensity = DEFAULT_FINAL_FLASH_INTENSITY;
+
+        exposureLayerCount = DEFAULT_EXPOSURE_LAYER_COUNT;
+        exposureLayerDecay = DEFAULT_EXPOSURE_LAYER_DECAY;
+
+        chromaSplitPixels = DEFAULT_CHROMA_SPLIT_PIXELS;
+        chromaAlpha = DEFAULT_CHROMA_ALPHA;
+
+        tearChance = DEFAULT_TEAR_CHANCE;
+        tearMaxOffsetPixels = DEFAULT_TEAR_MAX_OFFSET_PIXELS;
+        tearBandHeightPixels = DEFAULT_TEAR_BAND_HEIGHT_PIXELS;
+
+        ghostAlpha = DEFAULT_GHOST_ALPHA;
+        ghostOffsetXPixels = DEFAULT_GHOST_OFFSET_X_PIXELS;
+        ghostOffsetYPixels = DEFAULT_GHOST_OFFSET_Y_PIXELS;
+
+        bloomAlpha = DEFAULT_BLOOM_ALPHA;
+        bloomScale = DEFAULT_BLOOM_SCALE;
+        bloomPulseHz = DEFAULT_BLOOM_PULSE_HZ;
+        bloomPulseAmount = DEFAULT_BLOOM_PULSE_AMOUNT;
+
+        scanlineSpacingPixels = DEFAULT_SCANLINE_SPACING_PIXELS;
+        scanlineAlpha = DEFAULT_SCANLINE_ALPHA;
+        scanlineScrollSpeed = DEFAULT_SCANLINE_SCROLL_SPEED;
+
+        noiseAlpha = DEFAULT_NOISE_ALPHA;
+        noiseDensity = DEFAULT_NOISE_DENSITY;
+        noiseMaxBlockSize = DEFAULT_NOISE_MAX_BLOCK_SIZE;
+    }
+
+    private void restartDebugLoopCycle() {
+        introSoundStartNanos = System.nanoTime();
+        this.soundStartNanos = introSoundStartNanos;
+        this.minecraft.soundManager.playSound(IntroLogoSound.PLAYBACK_ID, 0.0F, 0.0F, 0.0F, 2.0F, 1.0F);
+        if (DerggyCraft.LOGGER != null) {
+            DerggyCraft.LOGGER.info("Restarting logo debug loop and replaying intro id {}", IntroLogoSound.PLAYBACK_ID);
         }
     }
 
@@ -136,41 +563,45 @@ public class DerggyCraftLogoScreen extends Screen {
     }
 
     private float computeIconAlpha(double elapsedSeconds) {
-        if (elapsedSeconds < ICON_FADE_IN_START_SECONDS) {
+        if (elapsedSeconds < iconFadeInStartSeconds) {
             return 0.0F;
         }
 
-        if (elapsedSeconds < ICON_FADE_IN_START_SECONDS + ICON_FADE_DURATION_SECONDS) {
-            return clamp01((float) ((elapsedSeconds - ICON_FADE_IN_START_SECONDS) / ICON_FADE_DURATION_SECONDS));
+        if (elapsedSeconds < iconFadeInStartSeconds + iconFadeDurationSeconds) {
+            return clamp01((float) ((elapsedSeconds - iconFadeInStartSeconds) / iconFadeDurationSeconds));
         }
 
-        if (elapsedSeconds < ICON_FADE_OUT_START_SECONDS) {
+        if (elapsedSeconds < iconFadeOutStartSeconds) {
             return 1.0F;
         }
 
-        if (elapsedSeconds < ICON_FADE_OUT_START_SECONDS + ICON_FADE_DURATION_SECONDS) {
-            float fadeOut = (float) ((elapsedSeconds - ICON_FADE_OUT_START_SECONDS) / ICON_FADE_DURATION_SECONDS);
+        if (elapsedSeconds < iconFadeOutStartSeconds + iconFadeDurationSeconds) {
+            float fadeOut = (float) ((elapsedSeconds - iconFadeOutStartSeconds) / iconFadeDurationSeconds);
             return 1.0F - clamp01(fadeOut);
         }
 
         return 0.0F;
     }
 
-    private void renderIcon(int x, int y, int iconSize, float alpha, int blendSrc, int blendDst) {
+    private void renderIconPass(float centerX, float centerY, int iconSize, float scale, float red, float green, float blue, float alpha, int blendSrc, int blendDst) {
         if (alpha <= 0.0F) {
             return;
         }
 
+        float scaledSize = iconSize * scale;
+        float x = centerX - scaledSize * 0.5F;
+        float y = centerY - scaledSize * 0.5F;
+
         GL11.glEnable(3042);
         GL11.glBlendFunc(blendSrc, blendDst);
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
+        GL11.glColor4f(red, green, blue, clamp01(alpha));
         GL11.glBindTexture(3553, this.iconTextureId);
 
         Tessellator tessellator = Tessellator.INSTANCE;
         tessellator.startQuads();
-        tessellator.vertex(x, y + iconSize, this.zOffset, 0.0, 1.0);
-        tessellator.vertex(x + iconSize, y + iconSize, this.zOffset, 1.0, 1.0);
-        tessellator.vertex(x + iconSize, y, this.zOffset, 1.0, 0.0);
+        tessellator.vertex(x, y + scaledSize, this.zOffset, 0.0, 1.0);
+        tessellator.vertex(x + scaledSize, y + scaledSize, this.zOffset, 1.0, 1.0);
+        tessellator.vertex(x + scaledSize, y, this.zOffset, 1.0, 0.0);
         tessellator.vertex(x, y, this.zOffset, 0.0, 0.0);
         tessellator.draw();
 
@@ -179,40 +610,42 @@ public class DerggyCraftLogoScreen extends Screen {
     }
 
     private float computeJitterX(double elapsedSeconds) {
-        double primary = Math.sin(2.0 * Math.PI * JITTER_PRIMARY_FREQUENCY_HZ * elapsedSeconds);
-        double secondary = Math.sin(2.0 * Math.PI * JITTER_SECONDARY_FREQUENCY_HZ * elapsedSeconds + JITTER_PHASE_OFFSET_RADIANS);
-        return (float) ((primary + secondary * JITTER_SECONDARY_WEIGHT) * JITTER_X_AMPLITUDE_PIXELS);
+        double primary = Math.sin(2.0 * Math.PI * jitterPrimaryFrequencyHz * elapsedSeconds);
+        double secondary = Math.sin(2.0 * Math.PI * jitterSecondaryFrequencyHz * elapsedSeconds + jitterPhaseOffsetRadians);
+        return (float) ((primary + secondary * jitterSecondaryWeight) * jitterXAmplitudePixels);
     }
 
     private float computeJitterY(double elapsedSeconds) {
-        double primary = Math.cos(2.0 * Math.PI * JITTER_PRIMARY_FREQUENCY_HZ * elapsedSeconds + JITTER_PHASE_OFFSET_RADIANS * 0.5);
-        double secondary = Math.cos(2.0 * Math.PI * JITTER_SECONDARY_FREQUENCY_HZ * elapsedSeconds);
-        return (float) ((primary + secondary * JITTER_SECONDARY_WEIGHT) * JITTER_Y_AMPLITUDE_PIXELS);
+        double primary = Math.cos(2.0 * Math.PI * jitterPrimaryFrequencyHz * elapsedSeconds + jitterPhaseOffsetRadians * 0.5);
+        double secondary = Math.cos(2.0 * Math.PI * jitterSecondaryFrequencyHz * elapsedSeconds);
+        return (float) ((primary + secondary * jitterSecondaryWeight) * jitterYAmplitudePixels);
     }
 
     private float computeExposureAlpha(double elapsedSeconds) {
+        double finalFlashStartSeconds = iconFadeOutStartSeconds - finalFlashOffsetFromFadeOutSeconds;
+
         float first = computePulse(
                 elapsedSeconds,
-                FLASH_ONE_START_SECONDS,
-                FLASH_DURATION_SECONDS,
-                FLASH_ATTACK_RATIO,
-                FLASH_INTENSITY
+            flashOneStartSeconds,
+            flashDurationSeconds,
+            flashAttackRatio,
+            flashIntensity
         );
 
         float second = computePulse(
                 elapsedSeconds,
-                FLASH_ONE_START_SECONDS + FLASH_DURATION_SECONDS + FLASH_GAP_SECONDS,
-                FLASH_DURATION_SECONDS,
-                FLASH_ATTACK_RATIO,
-                FLASH_INTENSITY
+            flashOneStartSeconds + flashDurationSeconds + flashGapSeconds,
+            flashDurationSeconds,
+            flashAttackRatio,
+            flashIntensity
         );
 
         float finalBurst = computePulse(
                 elapsedSeconds,
-                FINAL_FLASH_START_SECONDS,
-                FINAL_FLASH_DURATION_SECONDS,
-                FINAL_FLASH_ATTACK_RATIO,
-                FINAL_FLASH_INTENSITY
+            finalFlashStartSeconds,
+            finalFlashDurationSeconds,
+            finalFlashAttackRatio,
+            finalFlashIntensity
         );
 
         return Math.max(first, Math.max(second, finalBurst));
@@ -248,6 +681,13 @@ public class DerggyCraftLogoScreen extends Screen {
         return (float) Math.pow(2.0, 10.0 * (t - 1.0F));
     }
 
+    private static float noiseHash01(int seedA, int seedB) {
+        int n = seedA * 374761393 + seedB * 668265263;
+        n = (n ^ (n >>> 13)) * 1274126177;
+        n = n ^ (n >>> 16);
+        return (n & 0x7fffffff) / (float) 0x7fffffff;
+    }
+
     private void fillBlackOverlay(float alpha) {
         int overlayAlpha = (int) (clamp01(alpha) * 255.0F);
         int color = overlayAlpha << 24;
@@ -269,6 +709,16 @@ public class DerggyCraftLogoScreen extends Screen {
         }
         if (value > 1.0F) {
             return 1.0F;
+        }
+        return value;
+    }
+
+    private static float clamp(float value, float min, float max) {
+        if (value < min) {
+            return min;
+        }
+        if (value > max) {
+            return max;
         }
         return value;
     }
