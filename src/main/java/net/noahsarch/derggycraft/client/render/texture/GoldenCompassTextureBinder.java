@@ -5,11 +5,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resource.pack.TexturePack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Vec3i;
 import net.modificationstation.stationapi.api.client.texture.atlas.Atlas;
 import net.modificationstation.stationapi.api.client.texture.binder.StationTextureBinder;
 import net.noahsarch.derggycraft.DerggyCraft;
 import net.noahsarch.derggycraft.item.GoldenCompassItem;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class GoldenCompassTextureBinder extends StationTextureBinder {
     private static final int VANILLA_PRIMARY_DIAL_COLOR = 0xFF1414;
@@ -18,10 +21,12 @@ public class GoldenCompassTextureBinder extends StationTextureBinder {
     // Change these two hex values to recolor the dial.
     private static final int PRIMARY_DIAL_COLOR = 0x00F3F6;
     private static final int SECONDARY_DIAL_COLOR = 0x125D5E;
+    private static final String CALI_COMPASS_TEXTURE_PATH = "/assets/derggycraft/stationapi/textures/item/cali_compass.png";
+    private static final String FINNI_COMPASS_TEXTURE_PATH = "/assets/derggycraft/stationapi/textures/item/finni_compass.png";
 
-    @SuppressWarnings("deprecation")
-    private final Minecraft minecraft = (Minecraft) FabricLoader.getInstance().getGameInstance();
-    private int[] baseTexture;
+    private int[] defaultBaseTexture;
+    private int[] caliBaseTexture;
+    private int[] finniBaseTexture;
     private double currentRotation;
     private double rotationDelay;
 
@@ -36,20 +41,27 @@ public class GoldenCompassTextureBinder extends StationTextureBinder {
         int height = staticReference.getHeight();
         int pixelCount = width * height;
 
-        baseTexture = staticReference.getSprite().getContents().getBaseFrame().makePixelArray();
+        defaultBaseTexture = staticReference.getSprite().getContents().getBaseFrame().makePixelArray();
+        caliBaseTexture = loadTextureAsAbgr(CALI_COMPASS_TEXTURE_PATH, width, height);
+        finniBaseTexture = loadTextureAsAbgr(FINNI_COMPASS_TEXTURE_PATH, width, height);
         pixels = new byte[pixelCount * 4];
     }
 
     @Override
     public void tick() {
+        if (this.defaultBaseTexture == null || this.pixels == null) {
+            return;
+        }
+
         Atlas.Sprite staticReference = getStaticReference();
         int width = staticReference.getWidth();
         int height = staticReference.getHeight();
+        int[] activeBaseTexture = getActiveBaseTexture();
         for (int i = 0; i < width * height; ++i) {
-            int r = this.baseTexture[i] & 255;
-            int g = this.baseTexture[i] >> 8 & 255;
-            int b = this.baseTexture[i] >> 16 & 255;
-            int a = this.baseTexture[i] >> 24 & 255;
+            int r = activeBaseTexture[i] & 255;
+            int g = activeBaseTexture[i] >> 8 & 255;
+            int b = activeBaseTexture[i] >> 16 & 255;
+            int a = activeBaseTexture[i] >> 24 & 255;
             if (this.anaglyph) {
                 int r2 = (r * 30 + g * 59 + b * 11) / 100;
                 int g2 = (r * 30 + g * 70) / 100;
@@ -66,6 +78,7 @@ public class GoldenCompassTextureBinder extends StationTextureBinder {
         }
 
         updateRotation(resolveTargetRotation());
+        publishMainhandSnapshot();
         double sin = Math.sin(this.currentRotation);
         double cos = Math.cos(this.currentRotation);
 
@@ -91,39 +104,111 @@ public class GoldenCompassTextureBinder extends StationTextureBinder {
         }
     }
 
+    @SuppressWarnings("deprecation")
+    private Minecraft getMinecraft() {
+        return (Minecraft) FabricLoader.getInstance().getGameInstance();
+    }
+
     private double resolveTargetRotation() {
-        if (this.minecraft.world == null || this.minecraft.player == null) {
+        Minecraft minecraft = getMinecraft();
+        if (minecraft == null || minecraft.world == null || minecraft.player == null) {
             return this.currentRotation + (Math.random() - 0.5D) * 0.2D;
         }
 
-        LivingEntity trackedEntity = getTrackedEntityFromSelectedCompass();
-        if (trackedEntity != null && trackedEntity.world == this.minecraft.world) {
-            double dx = trackedEntity.x - this.minecraft.player.x;
-            double dz = trackedEntity.z - this.minecraft.player.z;
-            return (double) (this.minecraft.player.yaw - 90.0F) * Math.PI / 180.0D - Math.atan2(dz, dx);
+        ItemStack selected = minecraft.player.inventory.getSelectedItem();
+        if (selected == null || DerggyCraft.GOLDEN_COMPASS_ITEM == null
+                || selected.itemId != DerggyCraft.GOLDEN_COMPASS_ITEM.id
+                || !(DerggyCraft.GOLDEN_COMPASS_ITEM instanceof GoldenCompassItem goldenCompassItem)) {
+            return Math.random() * Math.PI * 2.0D;
         }
 
-        Vec3i spawnPos = this.minecraft.world.getSpawnPos();
-        double dx = (double) spawnPos.x - this.minecraft.player.x;
-        double dz = (double) spawnPos.z - this.minecraft.player.z;
-        double targetRotation = (double) (this.minecraft.player.yaw - 90.0F) * Math.PI / 180.0D - Math.atan2(dz, dx);
-        if (this.minecraft.world.dimension.isNether) {
-            targetRotation = Math.random() * Math.PI * 2.0D;
+        LivingEntity trackedEntity = goldenCompassItem.getTrackedEntity(selected, minecraft.world);
+        if (trackedEntity != null && trackedEntity.world == minecraft.world) {
+            double dx = trackedEntity.x - minecraft.player.x;
+            double dz = trackedEntity.z - minecraft.player.z;
+            return (double) (minecraft.player.yaw - 90.0F) * Math.PI / 180.0D - Math.atan2(dz, dx);
         }
-        return targetRotation;
+
+        if (goldenCompassItem.hasTrackedLastPosition(selected)
+                && goldenCompassItem.isTrackedLastPositionInWorld(selected, minecraft.world)) {
+            double dx = goldenCompassItem.getTrackedLastX(selected) - minecraft.player.x;
+            double dz = goldenCompassItem.getTrackedLastZ(selected) - minecraft.player.z;
+            return (double) (minecraft.player.yaw - 90.0F) * Math.PI / 180.0D - Math.atan2(dz, dx);
+        }
+
+        return Math.random() * Math.PI * 2.0D;
     }
 
-    private LivingEntity getTrackedEntityFromSelectedCompass() {
-        ItemStack selected = this.minecraft.player.inventory.getSelectedItem();
-        if (selected == null || DerggyCraft.GOLDEN_COMPASS_ITEM == null || selected.itemId != DerggyCraft.GOLDEN_COMPASS_ITEM.id) {
+    private void publishMainhandSnapshot() {
+        Minecraft minecraft = getMinecraft();
+        if (minecraft == null || minecraft.player == null || DerggyCraft.GOLDEN_COMPASS_ITEM == null) {
+            GoldenCompassRenderState.clearMainhandSnapshot();
+            return;
+        }
+
+        ItemStack selected = minecraft.player.inventory.getSelectedItem();
+        if (selected == null || selected.itemId != DerggyCraft.GOLDEN_COMPASS_ITEM.id) {
+            GoldenCompassRenderState.clearMainhandSnapshot();
+            return;
+        }
+
+        GoldenCompassRenderState.updateMainhandSnapshot(selected, this.currentRotation);
+    }
+
+    private int[] getActiveBaseTexture() {
+        if (this.caliBaseTexture == null) {
+            return this.defaultBaseTexture;
+        }
+
+        if (this.finniBaseTexture == null) {
+            return this.defaultBaseTexture;
+        }
+
+        Minecraft minecraft = getMinecraft();
+        if (minecraft == null || minecraft.player == null || DerggyCraft.GOLDEN_COMPASS_ITEM == null
+                || !(DerggyCraft.GOLDEN_COMPASS_ITEM instanceof GoldenCompassItem goldenCompassItem)) {
+            return this.defaultBaseTexture;
+        }
+
+        ItemStack selected = minecraft.player.inventory.getSelectedItem();
+        if (selected == null || selected.itemId != DerggyCraft.GOLDEN_COMPASS_ITEM.id) {
+            return this.defaultBaseTexture;
+        }
+
+        String trackedEntityName = goldenCompassItem.getTrackedEntityName(selected);
+        if ("NotANaN".equals(trackedEntityName)) {
+            return this.caliBaseTexture;
+        }
+        if ("FinniTheFox".equals(trackedEntityName)) {
+            return this.finniBaseTexture;
+        }
+
+        return this.defaultBaseTexture;
+    }
+
+    private static int[] loadTextureAsAbgr(String resourcePath, int expectedWidth, int expectedHeight) {
+        try {
+            BufferedImage image = ImageIO.read(GoldenCompassTextureBinder.class.getResource(resourcePath));
+            if (image == null || image.getWidth() != expectedWidth || image.getHeight() != expectedHeight) {
+                return null;
+            }
+
+            int[] argb = new int[expectedWidth * expectedHeight];
+            image.getRGB(0, 0, expectedWidth, expectedHeight, argb, 0, expectedWidth);
+            int[] abgr = new int[argb.length];
+            for (int i = 0; i < argb.length; ++i) {
+                int color = argb[i];
+                int a = (color >>> 24) & 255;
+                int r = (color >>> 16) & 255;
+                int g = (color >>> 8) & 255;
+                int b = color & 255;
+                abgr[i] = (a << 24) | (b << 16) | (g << 8) | r;
+            }
+
+            return abgr;
+        } catch (IOException | IllegalArgumentException ignored) {
             return null;
         }
-
-        if (DerggyCraft.GOLDEN_COMPASS_ITEM instanceof GoldenCompassItem goldenCompassItem) {
-            return goldenCompassItem.getTrackedEntity(selected, this.minecraft.world);
-        }
-
-        return null;
     }
 
     private void updateRotation(double targetRotation) {

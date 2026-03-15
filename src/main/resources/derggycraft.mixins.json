@@ -4,12 +4,26 @@
   "package": "net.noahsarch.derggycraft.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ChestBlockMixin",
+    "EntityCollarJingleMixin",
+    "EntityPersistentIdMixin",
+    "ItemMixin",
+    "PlayerInventoryMixin",
+    "PlayerScreenHandlerMixin",
+    "client.DynamicTextureAccessor",
+    "client.ItemRendererMixin",
     "client.MinecraftMixin",
     "server.ZombieEntityMixin"
   ],
   "server": [
+    "server.ServerPlayerInteractionManagerMixin"
   ],
   "client": [
+    "client.ArsenicCompassMixin",
+    "client.InventoryScreenMixin",
+    "client.InteractionManagerMixin",
+    "client.ItemCompassTooltipMixin",
+    "client.SoundManagerCollarJingleMixin"
   ],
   "injectors": {
     "defaultRequire": 1
