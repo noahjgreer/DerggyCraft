@@ -8,13 +8,13 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 public class DerggyCraftLogoScreen extends Screen {
-    private static final String ICON_TEXTURE_PATH = "/assets/derggycraft/icon.png";
+    private static final String ICON_TEXTURE_PATH = "/assets/derggycraft/intro.png";
 
     private static final int BLEND_ONE = 1;
     private static final int BLEND_SRC_ALPHA = 770;
     private static final int BLEND_ONE_MINUS_SRC_ALPHA = 771;
 
-    private static final int PARAM_COUNT = 18;
+    private static final int PARAM_COUNT = 22;
 
     private static final double DEFAULT_ICON_FADE_IN_START_SECONDS = 3.0;
     private static final double DEFAULT_ICON_FADE_DURATION_SECONDS = 0.85;
@@ -23,10 +23,10 @@ public class DerggyCraftLogoScreen extends Screen {
     private static final double DEFAULT_TITLE_TRANSITION_START_SECONDS = 12.0;
     private static final double DEFAULT_TITLE_TRANSITION_DURATION_SECONDS = 0.85;
 
-    private static final float DEFAULT_JITTER_X_AMPLITUDE_PIXELS = 0.75F;
-    private static final float DEFAULT_JITTER_Y_AMPLITUDE_PIXELS = 0.5F;
-    private static final float DEFAULT_JITTER_PRIMARY_FREQUENCY_HZ = 1.0F;
-    private static final float DEFAULT_JITTER_SECONDARY_FREQUENCY_HZ = 1.75F;
+    private static final float DEFAULT_JITTER_X_AMPLITUDE_PIXELS = 0.40F;
+    private static final float DEFAULT_JITTER_Y_AMPLITUDE_PIXELS = 0.20F;
+    private static final float DEFAULT_JITTER_PRIMARY_FREQUENCY_HZ = 1.5F;
+    private static final float DEFAULT_JITTER_SECONDARY_FREQUENCY_HZ = 1.25F;
     private static final float DEFAULT_JITTER_SECONDARY_WEIGHT = 0.35F;
     private static final float DEFAULT_JITTER_PHASE_OFFSET_RADIANS = 1.2F;
 
@@ -41,32 +41,42 @@ public class DerggyCraftLogoScreen extends Screen {
     private static final float DEFAULT_FINAL_FLASH_ATTACK_RATIO = 0.72F;
     private static final float DEFAULT_FINAL_FLASH_INTENSITY = 1.0F;
 
-    private static final int DEFAULT_EXPOSURE_LAYER_COUNT = 4;
+    private static final int DEFAULT_EXPOSURE_LAYER_COUNT = 10;
     private static final float DEFAULT_EXPOSURE_LAYER_DECAY = 0.78F;
 
-    private static final float DEFAULT_CHROMA_SPLIT_PIXELS = 1.25F;
-    private static final float DEFAULT_CHROMA_ALPHA = 0.22F;
+    private static final float DEFAULT_CHROMA_SPLIT_PIXELS = 0.95F;
+    private static final float DEFAULT_CHROMA_ALPHA = 0.30F;
 
-    private static final float DEFAULT_TEAR_CHANCE = 0.18F;
-    private static final float DEFAULT_TEAR_MAX_OFFSET_PIXELS = 6.5F;
+    private static final float DEFAULT_TEAR_CHANCE = 0.02F;
+    private static final float DEFAULT_TEAR_MAX_OFFSET_PIXELS = 10.10F;
     private static final float DEFAULT_TEAR_BAND_HEIGHT_PIXELS = 18.0F;
 
     private static final float DEFAULT_GHOST_ALPHA = 0.18F;
     private static final float DEFAULT_GHOST_OFFSET_X_PIXELS = 1.8F;
     private static final float DEFAULT_GHOST_OFFSET_Y_PIXELS = 0.8F;
 
-    private static final float DEFAULT_BLOOM_ALPHA = 0.26F;
-    private static final float DEFAULT_BLOOM_SCALE = 1.06F;
+    private static final float DEFAULT_BLOOM_ALPHA = 0.16F;
+    private static final float DEFAULT_BLOOM_SCALE = 1.175F;
     private static final float DEFAULT_BLOOM_PULSE_HZ = 1.8F;
     private static final float DEFAULT_BLOOM_PULSE_AMOUNT = 0.4F;
 
     private static final int DEFAULT_SCANLINE_SPACING_PIXELS = 2;
-    private static final float DEFAULT_SCANLINE_ALPHA = 0.09F;
+    private static final float DEFAULT_SCANLINE_ALPHA = 0.20F;
     private static final float DEFAULT_SCANLINE_SCROLL_SPEED = 17.0F;
 
-    private static final float DEFAULT_NOISE_ALPHA = 0.06F;
-    private static final float DEFAULT_NOISE_DENSITY = 0.55F;
+    private static final float DEFAULT_NOISE_ALPHA = 0.11F;
+    private static final float DEFAULT_NOISE_DENSITY = 0.14F;
     private static final int DEFAULT_NOISE_MAX_BLOCK_SIZE = 3;
+
+    private static final double DEFAULT_GHOST_BURST_DURATION_SECONDS = 0.325;
+    private static final float DEFAULT_GHOST_BURST_INTENSITY = 1.00F;
+    private static final float DEFAULT_GHOST_BURST_RANGE_MIN_PIXELS = 13.20F;
+    private static final float DEFAULT_GHOST_BURST_RANGE_MAX_PIXELS = 20.40F;
+    private static final double DEFAULT_GHOST_BURST_BEFORE_FIRST_FLASH_SECONDS = 0.08;
+
+    private static final double DEFAULT_SMEAR_BURST_DELAY_AFTER_FIRST_FLASH_SECONDS = 0.5;
+    private static final double DEFAULT_SMEAR_BURST_DURATION_SECONDS = 0.40;
+    private static final float DEFAULT_SMEAR_BURST_INTENSITY = 0.52F;
 
     private static final double DEBUG_LOOP_DURATION_SECONDS = DEFAULT_TITLE_TRANSITION_START_SECONDS + DEFAULT_TITLE_TRANSITION_DURATION_SECONDS;
 
@@ -121,6 +131,16 @@ public class DerggyCraftLogoScreen extends Screen {
     private static float noiseAlpha = DEFAULT_NOISE_ALPHA;
     private static float noiseDensity = DEFAULT_NOISE_DENSITY;
     private static int noiseMaxBlockSize = DEFAULT_NOISE_MAX_BLOCK_SIZE;
+
+    private static double ghostBurstDurationSeconds = DEFAULT_GHOST_BURST_DURATION_SECONDS;
+    private static float ghostBurstIntensity = DEFAULT_GHOST_BURST_INTENSITY;
+    private static float ghostBurstRangeMinPixels = DEFAULT_GHOST_BURST_RANGE_MIN_PIXELS;
+    private static float ghostBurstRangeMaxPixels = DEFAULT_GHOST_BURST_RANGE_MAX_PIXELS;
+    private static double ghostBurstBeforeFirstFlashSeconds = DEFAULT_GHOST_BURST_BEFORE_FIRST_FLASH_SECONDS;
+
+    private static double smearBurstDelayAfterFirstFlashSeconds = DEFAULT_SMEAR_BURST_DELAY_AFTER_FIRST_FLASH_SECONDS;
+    private static double smearBurstDurationSeconds = DEFAULT_SMEAR_BURST_DURATION_SECONDS;
+    private static float smearBurstIntensity = DEFAULT_SMEAR_BURST_INTENSITY;
 
     private static boolean introSoundPlayed;
     private static long introSoundStartNanos;
@@ -229,7 +249,7 @@ public class DerggyCraftLogoScreen extends Screen {
 
         float iconAlpha = this.computeIconAlpha(elapsedSeconds);
         if (iconAlpha > 0.0F) {
-            int iconSize = Math.max(128, Math.min(256, Math.min(this.width, this.height) / 3));
+            int iconSize = Math.max(128, Math.min(256, Math.min(this.width, this.height) / 2));
             float jitterX = this.computeJitterX(elapsedSeconds);
             float jitterY = this.computeJitterY(elapsedSeconds);
             float centerX = this.width * 0.5F + jitterX;
@@ -250,9 +270,19 @@ public class DerggyCraftLogoScreen extends Screen {
         float bloomPulse = 0.5F + 0.5F * (float) Math.sin(2.0 * Math.PI * bloomPulseHz * elapsedSeconds);
         float bloomMultiplier = 1.0F + (bloomPulse - 0.5F) * 2.0F * bloomPulseAmount;
 
+        float[] burstOffset = this.computeGhostBurstOffset(elapsedSeconds);
+        float burstX = burstOffset[0];
+        float burstY = burstOffset[1];
+        float burstStrength = burstOffset[2];
+
+        centerX += burstX;
+        centerY += burstY;
+
         float ghostPassAlpha = clamp01(iconAlpha * ghostAlpha);
         if (ghostPassAlpha > 0.0F) {
-            this.renderIconPass(centerX + ghostOffsetXPixels, centerY + ghostOffsetYPixels, iconSize, 1.0F, 1.0F, 1.0F, 1.0F, ghostPassAlpha, BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA);
+            float burstGhostX = burstX * (0.6F + 0.4F * burstStrength);
+            float burstGhostY = burstY * (0.6F + 0.4F * burstStrength);
+            this.renderIconPass(centerX + ghostOffsetXPixels + burstGhostX, centerY + ghostOffsetYPixels + burstGhostY, iconSize, 1.0F, 1.0F, 1.0F, 1.0F, ghostPassAlpha, BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA);
         }
 
         float bloomPassAlpha = clamp01(iconAlpha * bloomAlpha * bloomMultiplier);
@@ -273,7 +303,62 @@ public class DerggyCraftLogoScreen extends Screen {
             this.renderExposure(centerX, centerY, iconSize, iconAlpha, exposureAlpha);
         }
 
+        float smearAlpha = this.computeSmearBurstAlpha(elapsedSeconds);
+        if (smearAlpha > 0.0F) {
+            this.renderVerticalSmear(centerX, centerY, iconSize, iconAlpha, smearAlpha);
+        }
+
         this.renderTearBand(elapsedSeconds, centerX, centerY, iconSize, iconAlpha);
+    }
+
+    private float[] computeGhostBurstOffset(double elapsedSeconds) {
+        double firstStart = flashOneStartSeconds - ghostBurstBeforeFirstFlashSeconds;
+        double finalFlashStartSeconds = iconFadeOutStartSeconds - finalFlashOffsetFromFadeOutSeconds;
+
+        float burst1 = computePulse(elapsedSeconds, firstStart, ghostBurstDurationSeconds, 0.62F, ghostBurstIntensity);
+        float burst2 = computePulse(elapsedSeconds, finalFlashStartSeconds, ghostBurstDurationSeconds, 0.62F, ghostBurstIntensity);
+
+        if (burst1 <= 0.0F && burst2 <= 0.0F) {
+            return new float[]{0.0F, 0.0F, 0.0F};
+        }
+
+        float rangeMin = Math.min(ghostBurstRangeMinPixels, ghostBurstRangeMaxPixels);
+        float rangeMax = Math.max(ghostBurstRangeMinPixels, ghostBurstRangeMaxPixels);
+        float rangeA = lerp(rangeMin, rangeMax, noiseHash01(271, 17));
+        float rangeB = lerp(rangeMin, rangeMax, noiseHash01(271, 31));
+
+        float signX1 = noiseHash01(271, 43) < 0.5F ? -1.0F : 1.0F;
+        float signY1 = noiseHash01(271, 59) < 0.5F ? -1.0F : 1.0F;
+        float signX2 = noiseHash01(887, 43) < 0.5F ? -1.0F : 1.0F;
+        float signY2 = noiseHash01(887, 59) < 0.5F ? -1.0F : 1.0F;
+
+        float dx = signX1 * rangeA * burst1 + signX2 * rangeB * burst2;
+        float dy = signY1 * rangeA * 0.92F * burst1 + signY2 * rangeB * 0.92F * burst2;
+        float strength = Math.max(burst1, burst2);
+
+        return new float[]{dx, dy, strength};
+    }
+
+    private float computeSmearBurstAlpha(double elapsedSeconds) {
+        double smearStart = flashOneStartSeconds + smearBurstDelayAfterFirstFlashSeconds;
+        return computePulse(elapsedSeconds, smearStart, smearBurstDurationSeconds, 0.68F, smearBurstIntensity);
+    }
+
+    private void renderVerticalSmear(float centerX, float centerY, int iconSize, float iconAlpha, float smearAlpha) {
+        float baseAlpha = clamp01(iconAlpha * smearAlpha);
+        if (baseAlpha <= 0.0F) {
+            return;
+        }
+
+        int streakCount = 6 + Math.round(smearBurstIntensity * 8.0F);
+        for (int i = 0; i < streakCount; ++i) {
+            float progress = i / (float) Math.max(1, streakCount - 1);
+            float stretch = 1.0F + 0.35F * smearBurstIntensity + progress * 1.15F * smearBurstIntensity;
+            float alpha = baseAlpha * (1.0F - progress) * 0.75F;
+            float offsetY = (progress - 0.5F) * iconSize * 0.48F * smearBurstIntensity;
+            float offsetX = (noiseHash01((int) (progress * 2000), 913) - 0.5F) * 2.0F;
+            this.renderIconPass(centerX + offsetX, centerY + offsetY, iconSize, 1.0F, stretch, 1.0F, 1.0F, 1.0F, alpha, BLEND_SRC_ALPHA, BLEND_ONE);
+        }
     }
 
     private void renderExposure(float centerX, float centerY, int iconSize, float iconAlpha, float exposureAlpha) {
@@ -410,6 +495,10 @@ public class DerggyCraftLogoScreen extends Screen {
             case 15: return String.format("Noise alpha: %.2f", noiseAlpha);
             case 16: return String.format("Noise density: %.2f", noiseDensity);
             case 17: return String.format("Exposure layers: %d", exposureLayerCount);
+            case 18: return String.format("Smear burst intensity: %.2f", smearBurstIntensity);
+            case 19: return String.format("Ghost burst range min: %.2f", ghostBurstRangeMinPixels);
+            case 20: return String.format("Ghost burst range max: %.2f", ghostBurstRangeMaxPixels);
+            case 21: return String.format("Ghost burst intensity: %.2f", ghostBurstIntensity);
             default: return "n/a";
         }
     }
@@ -471,8 +560,26 @@ public class DerggyCraftLogoScreen extends Screen {
             case 17:
                 exposureLayerCount = (int) clamp(exposureLayerCount + direction * mult, 1.0F, 10.0F);
                 break;
+            case 18:
+                smearBurstIntensity = clamp(smearBurstIntensity + direction * 0.03F * mult, 0.0F, 1.0F);
+                break;
+            case 19:
+                ghostBurstRangeMinPixels = clamp(ghostBurstRangeMinPixels + direction * 0.2F * mult, 0.0F, 64.0F);
+                break;
+            case 20:
+                ghostBurstRangeMaxPixels = clamp(ghostBurstRangeMaxPixels + direction * 0.2F * mult, 0.0F, 80.0F);
+                break;
+            case 21:
+                ghostBurstIntensity = clamp(ghostBurstIntensity + direction * 0.03F * mult, 0.0F, 1.0F);
+                break;
             default:
                 break;
+        }
+
+        if (ghostBurstRangeMinPixels > ghostBurstRangeMaxPixels) {
+            float tmp = ghostBurstRangeMinPixels;
+            ghostBurstRangeMinPixels = ghostBurstRangeMaxPixels;
+            ghostBurstRangeMaxPixels = tmp;
         }
     }
 
@@ -527,6 +634,16 @@ public class DerggyCraftLogoScreen extends Screen {
         noiseAlpha = DEFAULT_NOISE_ALPHA;
         noiseDensity = DEFAULT_NOISE_DENSITY;
         noiseMaxBlockSize = DEFAULT_NOISE_MAX_BLOCK_SIZE;
+
+        ghostBurstDurationSeconds = DEFAULT_GHOST_BURST_DURATION_SECONDS;
+        ghostBurstIntensity = DEFAULT_GHOST_BURST_INTENSITY;
+        ghostBurstRangeMinPixels = DEFAULT_GHOST_BURST_RANGE_MIN_PIXELS;
+        ghostBurstRangeMaxPixels = DEFAULT_GHOST_BURST_RANGE_MAX_PIXELS;
+        ghostBurstBeforeFirstFlashSeconds = DEFAULT_GHOST_BURST_BEFORE_FIRST_FLASH_SECONDS;
+
+        smearBurstDelayAfterFirstFlashSeconds = DEFAULT_SMEAR_BURST_DELAY_AFTER_FIRST_FLASH_SECONDS;
+        smearBurstDurationSeconds = DEFAULT_SMEAR_BURST_DURATION_SECONDS;
+        smearBurstIntensity = DEFAULT_SMEAR_BURST_INTENSITY;
     }
 
     private void restartDebugLoopCycle() {
@@ -583,14 +700,15 @@ public class DerggyCraftLogoScreen extends Screen {
         return 0.0F;
     }
 
-    private void renderIconPass(float centerX, float centerY, int iconSize, float scale, float red, float green, float blue, float alpha, int blendSrc, int blendDst) {
+    private void renderIconPass(float centerX, float centerY, int iconSize, float scaleX, float scaleY, float red, float green, float blue, float alpha, int blendSrc, int blendDst) {
         if (alpha <= 0.0F) {
             return;
         }
 
-        float scaledSize = iconSize * scale;
-        float x = centerX - scaledSize * 0.5F;
-        float y = centerY - scaledSize * 0.5F;
+        float scaledWidth = iconSize * scaleX;
+        float scaledHeight = iconSize * scaleY;
+        float x = centerX - scaledWidth * 0.5F;
+        float y = centerY - scaledHeight * 0.5F;
 
         GL11.glEnable(3042);
         GL11.glBlendFunc(blendSrc, blendDst);
@@ -599,14 +717,18 @@ public class DerggyCraftLogoScreen extends Screen {
 
         Tessellator tessellator = Tessellator.INSTANCE;
         tessellator.startQuads();
-        tessellator.vertex(x, y + scaledSize, this.zOffset, 0.0, 1.0);
-        tessellator.vertex(x + scaledSize, y + scaledSize, this.zOffset, 1.0, 1.0);
-        tessellator.vertex(x + scaledSize, y, this.zOffset, 1.0, 0.0);
+        tessellator.vertex(x, y + scaledHeight, this.zOffset, 0.0, 1.0);
+        tessellator.vertex(x + scaledWidth, y + scaledHeight, this.zOffset, 1.0, 1.0);
+        tessellator.vertex(x + scaledWidth, y, this.zOffset, 1.0, 0.0);
         tessellator.vertex(x, y, this.zOffset, 0.0, 0.0);
         tessellator.draw();
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glDisable(3042);
+    }
+
+    private void renderIconPass(float centerX, float centerY, int iconSize, float scale, float red, float green, float blue, float alpha, int blendSrc, int blendDst) {
+        this.renderIconPass(centerX, centerY, iconSize, scale, scale, red, green, blue, alpha, blendSrc, blendDst);
     }
 
     private float computeJitterX(double elapsedSeconds) {
@@ -686,6 +808,10 @@ public class DerggyCraftLogoScreen extends Screen {
         n = (n ^ (n >>> 13)) * 1274126177;
         n = n ^ (n >>> 16);
         return (n & 0x7fffffff) / (float) 0x7fffffff;
+    }
+
+    private static float lerp(float a, float b, float t) {
+        return a + (b - a) * clamp01(t);
     }
 
     private void fillBlackOverlay(float alpha) {
