@@ -5,7 +5,9 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.play.ChatMessagePacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
+import net.minecraft.world.ServerWorld;
 import net.noahsarch.derggycraft.network.server.ServerMusicSync;
+import net.noahsarch.derggycraft.server.gamerule.DerggyCraftGameRules;
 import net.noahsarch.derggycraft.sound.VanillaMusicTracks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -32,10 +34,20 @@ public abstract class ServerPlayNetworkHandlerChatMixin {
     }
 
     @Inject(method = "handleCommand", at = @At("HEAD"), cancellable = true)
-    private void derggycraft$handleMusicSyncCommand(String message, CallbackInfo ci) {
+    private void derggycraft$handleCustomCommands(String message, CallbackInfo ci) {
         String trimmed = message == null ? "" : message.trim();
         String[] args = trimmed.split("\\s+");
-        if (args.length == 0 || !"/dcmusic".equalsIgnoreCase(args[0])) {
+        if (args.length == 0) {
+            return;
+        }
+
+        if ("/gamerule".equalsIgnoreCase(args[0])) {
+            this.derggycraft$handleGameRuleCommand(args);
+            ci.cancel();
+            return;
+        }
+
+        if (!"/dcmusic".equalsIgnoreCase(args[0])) {
             return;
         }
 
@@ -65,10 +77,10 @@ public abstract class ServerPlayNetworkHandlerChatMixin {
         int recipients = ServerMusicSync.broadcastSynchronizedPlayback(
                 this.player,
                 leadMillis,
-            true,
+                true,
                 1.0F,
                 1.0F,
-            VanillaMusicTracks.TRACK_KEYS
+                VanillaMusicTracks.TRACK_KEYS
         );
 
         if (recipients > 0) {
@@ -78,5 +90,45 @@ public abstract class ServerPlayNetworkHandlerChatMixin {
         }
 
         ci.cancel();
+    }
+
+    private void derggycraft$handleGameRuleCommand(String[] args) {
+        if (this.server == null || this.server.playerManager == null || this.player == null) {
+            this.sendPacket(new ChatMessagePacket("\u00a7cGamerule command unavailable right now."));
+            return;
+        }
+
+        ServerWorld overworld = this.server.getWorld(0);
+        DerggyCraftGameRules.ensureLoaded(overworld);
+
+        if (!this.server.playerManager.isOperator(this.player.name)) {
+            this.sendPacket(new ChatMessagePacket("\u00a7cYou don't have permission to use /gamerule."));
+            return;
+        }
+
+        if (args.length == 1) {
+            this.sendPacket(new ChatMessagePacket("\u00a7e" + DerggyCraftGameRules.formatAllRules()));
+            return;
+        }
+
+        DerggyCraftGameRules.Rule rule = DerggyCraftGameRules.parseRule(args[1]);
+        if (rule == null) {
+            this.sendPacket(new ChatMessagePacket("\u00a7cUnknown gamerule. Available: sendDeathMessages, keepInventory, extinguishTorches"));
+            return;
+        }
+
+        if (args.length == 2) {
+            this.sendPacket(new ChatMessagePacket("\u00a7e" + DerggyCraftGameRules.formatRuleName(rule) + " = " + DerggyCraftGameRules.get(overworld, rule)));
+            return;
+        }
+
+        Boolean value = DerggyCraftGameRules.parseBoolean(args[2]);
+        if (value == null) {
+            this.sendPacket(new ChatMessagePacket("\u00a7cInvalid value. Use true or false."));
+            return;
+        }
+
+        DerggyCraftGameRules.set(overworld, rule, value);
+        this.sendPacket(new ChatMessagePacket("\u00a7aSet " + DerggyCraftGameRules.formatRuleName(rule) + " = " + value));
     }
 }

@@ -12,13 +12,16 @@
     "PlayerInventoryMixin",
     "ScreenHandlerPickupAllMixin",
     "PlayerScreenHandlerMixin",
+    "TorchBlockExtinguishMixin",
     "client.DynamicTextureAccessor",
     "client.ItemRendererMixin",
     "client.MinecraftMixin",
     "server.ZombieEntityMixin"
   ],
   "server": [
+    "server.ServerPlayerEntityDeathMixin",
     "server.ServerPlayNetworkHandlerChatMixin",
+    "server.ServerWorldGamerulesInitMixin",
     "server.ServerPlayerInteractionManagerMixin"
   ],
   "client": [
