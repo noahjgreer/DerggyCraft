@@ -36,6 +36,7 @@ public abstract class PlayerEntityStaminaMixin implements StaminaAccessor {
         boolean inWater = player.isSubmergedInWater() || player.isInFluid(Material.WATER);
         boolean moving = Math.abs(player.velocityX) + Math.abs(player.velocityZ) > 0.03;
         boolean activelySwimming = inWater && (moving || player.velocityY > 0.02);
+        boolean climbingLadder = player.isOnLadder() && (Math.abs(player.velocityY) > 0.02 || moving);
 
         if (this.derggycraft$sprinting && moving) {
             this.derggycraft$drain(StaminaConfig.SPRINT_DRAIN_PER_TICK);
@@ -49,6 +50,8 @@ public abstract class PlayerEntityStaminaMixin implements StaminaAccessor {
                     player.velocityY = StaminaConfig.SINK_MAX_DOWNWARD_SPEED;
                 }
             }
+        } else if (climbingLadder) {
+            this.derggycraft$drain(StaminaConfig.LADDER_DRAIN_PER_TICK);
         } else if (inWater && !moving && this.derggycraft$regenDelay <= 0) {
             this.derggycraft$stamina += StaminaConfig.IDLE_WATER_REGEN_PER_TICK;
         }
@@ -95,6 +98,8 @@ public abstract class PlayerEntityStaminaMixin implements StaminaAccessor {
     @Inject(method = "jump", at = @At("TAIL"))
     private void derggycraft$applySprintJumpMomentum(CallbackInfo ci) {
         PlayerEntity player = (PlayerEntity) (Object) this;
+        this.derggycraft$drain(StaminaConfig.JUMP_DRAIN_PER_JUMP);
+
         if (!this.derggycraft$sprinting) {
             return;
         }
@@ -104,6 +109,7 @@ public abstract class PlayerEntityStaminaMixin implements StaminaAccessor {
         }
 
         float yawRadians = player.yaw * (float) Math.PI / 180.0F;
+        player.velocityY += StaminaConfig.SPRINT_JUMP_VERTICAL_BOOST;
         player.velocityX -= MathHelper.sin(yawRadians) * StaminaConfig.SPRINT_JUMP_HORIZONTAL_BOOST;
         player.velocityZ += MathHelper.cos(yawRadians) * StaminaConfig.SPRINT_JUMP_HORIZONTAL_BOOST;
     }
@@ -115,22 +121,20 @@ public abstract class PlayerEntityStaminaMixin implements StaminaAccessor {
         boolean canStartSprint = canMaintainSprint && player.onGround;
         boolean movingForward = StaminaSprintState.isForwardDown() || Math.abs(player.velocityX) + Math.abs(player.velocityZ) > 0.03;
 
+        boolean sprintHeld = StaminaSprintState.isSprintHeld();
+
         if (this.derggycraft$sprinting) {
-            if (!canMaintainSprint || !movingForward) {
+            if (!canMaintainSprint || !movingForward || !sprintHeld) {
                 this.derggycraft$sprinting = false;
             }
             return;
         }
 
-        if (!canStartSprint || !movingForward) {
+        if (!canStartSprint || !movingForward || !sprintHeld) {
             return;
         }
 
-        boolean sprintInput = StaminaSprintState.consumeSprintRequest() || StaminaSprintState.isSprintHeld();
-
-        if (sprintInput) {
-            this.derggycraft$sprinting = true;
-        }
+        this.derggycraft$sprinting = true;
     }
 
     @Unique

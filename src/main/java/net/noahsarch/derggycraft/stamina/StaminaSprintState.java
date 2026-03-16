@@ -1,21 +1,10 @@
 package net.noahsarch.derggycraft.stamina;
 
 public final class StaminaSprintState {
-    private static boolean sprintRequested;
     private static boolean sprintHeld;
     private static boolean forwardDown;
 
     private StaminaSprintState() {
-    }
-
-    public static void requestSprint() {
-        sprintRequested = true;
-    }
-
-    public static boolean consumeSprintRequest() {
-        boolean requested = sprintRequested;
-        sprintRequested = false;
-        return requested;
     }
 
     public static void setSprintHeld(boolean held) {
@@ -35,7 +24,6 @@ public final class StaminaSprintState {
     }
 
     public static void reset() {
-        sprintRequested = false;
         sprintHeld = false;
         forwardDown = false;
     }
