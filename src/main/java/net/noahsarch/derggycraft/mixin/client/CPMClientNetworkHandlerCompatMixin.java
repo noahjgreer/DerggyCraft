@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.lang.reflect.Method;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 
@@ -20,16 +21,31 @@ public abstract class CPMClientNetworkHandlerCompatMixin {
     @Inject(method = "cpm$getConnectedServer", at = @At("HEAD"), cancellable = true, remap = false, require = 0)
     private void derggycraft$fixCpmConnectedServerLookup(CallbackInfoReturnable<String> cir) {
         SocketAddress address = this.derggycraft$resolveSocketAddress();
-        if (address instanceof InetSocketAddress inetSocketAddress) {
-            String host = inetSocketAddress.getHostString();
-            if (host == null || host.isEmpty()) {
-                host = inetSocketAddress.getHostName();
-            }
-            cir.setReturnValue(host);
+        if (!(address instanceof InetSocketAddress inetSocketAddress)) {
             return;
         }
 
-        cir.setReturnValue(null);
+        InetAddress inetAddress = inetSocketAddress.getAddress();
+        if (inetAddress != null && (inetAddress.isAnyLocalAddress() || inetAddress.isLoopbackAddress())) {
+            cir.setReturnValue(null);
+            return;
+        }
+
+        String host = inetSocketAddress.getHostString();
+        if (host == null || host.isEmpty()) {
+            host = inetSocketAddress.getHostName();
+        }
+
+        if (host == null || host.isEmpty()) {
+            return;
+        }
+
+        if ("localhost".equalsIgnoreCase(host) || "127.0.0.1".equals(host) || "::1".equals(host)) {
+            cir.setReturnValue(null);
+            return;
+        }
+
+        cir.setReturnValue(host);
     }
 
     private SocketAddress derggycraft$resolveSocketAddress() {
