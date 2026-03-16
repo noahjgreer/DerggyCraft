@@ -9,6 +9,8 @@ public final class StaminaConfig {
     public static final double IDLE_WATER_REGEN_PER_TICK = MAX_STAMINA / (30.0 * 20.0);
     public static final int REGEN_DELAY_TICKS = 20;
     public static final double SPRINT_SPEED_MULTIPLIER = 1.3;
+    public static final double SPRINT_AIR_CONTROL_MULTIPLIER = 1.2;
+    public static final double SPRINT_JUMP_HORIZONTAL_BOOST = 0.2;
     public static final double SINK_ACCELERATION_PER_TICK = 0.03;
     public static final double SINK_MAX_DOWNWARD_SPEED = -0.25;
     public static final int DOUBLE_TAP_WINDOW_TICKS = 7;

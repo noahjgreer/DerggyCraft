@@ -13,8 +13,13 @@ public abstract class EntitySprintAccelerationMixin {
     @ModifyVariable(method = "moveNonSolid", at = @At("HEAD"), ordinal = 2, argsOnly = true)
     private float derggycraft$boostPlayerAcceleration(float acceleration) {
         Object self = this;
-        if (self instanceof PlayerEntity && self instanceof StaminaAccessor stamina && stamina.derggycraft$isSprinting()) {
-            return (float) (acceleration * StaminaConfig.SPRINT_SPEED_MULTIPLIER);
+        if (self instanceof PlayerEntity player && self instanceof StaminaAccessor stamina && stamina.derggycraft$isSprinting()) {
+            double multiplier = StaminaConfig.SPRINT_SPEED_MULTIPLIER;
+            if (!player.onGround) {
+                multiplier *= StaminaConfig.SPRINT_AIR_CONTROL_MULTIPLIER;
+            }
+
+            return (float) (acceleration * multiplier);
         }
         return acceleration;
     }

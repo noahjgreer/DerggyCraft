@@ -2,16 +2,11 @@ package net.noahsarch.derggycraft.mixin;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.noahsarch.derggycraft.DerggyCraft;
-import net.noahsarch.derggycraft.inventory.CollarInventoryAccess;
-import net.noahsarch.derggycraft.sound.CollarJingleSounds;
+import net.noahsarch.derggycraft.sound.CollarJingleHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.concurrent.ThreadLocalRandom;
 
 @Mixin(Entity.class)
 public abstract class EntityCollarJingleMixin {
@@ -29,33 +24,10 @@ public abstract class EntityCollarJingleMixin {
             return;
         }
 
-        if (DerggyCraft.COLLAR_ITEM == null || !(player.inventory instanceof CollarInventoryAccess access)) {
+        if (!CollarJingleHelper.hasCollarEquipped(player)) {
             return;
         }
 
-        boolean hasCollarEquipped = false;
-        for (int i = 0; i < access.derggycraft$getCollarSize(); ++i) {
-            ItemStack stack = access.derggycraft$getCollarStack(i);
-            if (stack == null || stack.itemId != DerggyCraft.COLLAR_ITEM.id) {
-                continue;
-            }
-
-            hasCollarEquipped = true;
-            break;
-        }
-
-        if (!hasCollarEquipped) {
-            return;
-        }
-
-        String[] jingleSoundIds = CollarJingleSounds.PLAYBACK_IDS;
-        if (jingleSoundIds.length == 0) {
-            return;
-        }
-
-        String soundId = jingleSoundIds[ThreadLocalRandom.current().nextInt(jingleSoundIds.length)];
-        float volume = 0.12F + ThreadLocalRandom.current().nextFloat() * 0.08F;
-        float pitch = 0.92F + ThreadLocalRandom.current().nextFloat() * 0.16F;
-        entity.world.playSound(entity, soundId, volume, pitch);
+        CollarJingleHelper.playRandomNearbyJingle(entity, 0.45F, 0.65F, 0.92F, 1.08F);
     }
 }

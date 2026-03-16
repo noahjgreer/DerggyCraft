@@ -176,10 +176,10 @@ public class GoldenCompassTextureBinder extends StationTextureBinder {
         }
 
         String trackedEntityName = goldenCompassItem.getTrackedEntityName(selected);
-        if ("NotANaN".equals(trackedEntityName)) {
+        if ("NotANaN".equalsIgnoreCase(trackedEntityName)) {
             return this.caliBaseTexture;
         }
-        if ("FinniTheFox".equals(trackedEntityName)) {
+        if ("FinniTheFox".equalsIgnoreCase(trackedEntityName)) {
             return this.finniBaseTexture;
         }
 

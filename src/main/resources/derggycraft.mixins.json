@@ -10,6 +10,7 @@
     "EntityPersistentIdMixin",
     "EntitySprintAccelerationMixin",
     "ItemMixin",
+    "PlayerEntityCollarJingleJumpMixin",
     "PlayerInventoryMixin",
     "PlayerEntityStaminaMixin",
     "ScreenHandlerPickupAllMixin",
@@ -29,6 +30,7 @@
   "client": [
     "client.ArsenicCompassMixin",
     "client.ChatScreenMixin",
+    "client.ClientDropShortcutMixin",
     "client.ClientPlayerEntityChatMixin",
     "client.DrawContextInvoker",
     "client.HandledScreenDragMixin",

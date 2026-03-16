@@ -45,7 +45,7 @@ public abstract class ItemRendererMixin {
         }
 
         String trackedEntityName = goldenCompassItem.getTrackedEntityName(stack);
-        String texturePath = "NotANaN".equals(trackedEntityName) ? CALI_COMPASS_TEXTURE_PATH : "FinniTheFox".equals(trackedEntityName) ? FINNI_COMPASS_TEXTURE_PATH : GOLDEN_COMPASS_TEXTURE_PATH;
+        String texturePath = resolveCompassTexturePath(trackedEntityName);
         
 
         GL11.glDisable(GL11.GL_LIGHTING);
@@ -182,5 +182,21 @@ public abstract class ItemRendererMixin {
         tessellator.vertex(x + 1, y, 0.0);
         tessellator.vertex(x, y, 0.0);
         tessellator.draw();
+    }
+
+    private static String resolveCompassTexturePath(String trackedEntityName) {
+        if (trackedEntityName == null) {
+            return GOLDEN_COMPASS_TEXTURE_PATH;
+        }
+
+        if ("NotANaN".equalsIgnoreCase(trackedEntityName)) {
+            return CALI_COMPASS_TEXTURE_PATH;
+        }
+
+        if ("FinniTheFox".equalsIgnoreCase(trackedEntityName)) {
+            return FINNI_COMPASS_TEXTURE_PATH;
+        }
+
+        return GOLDEN_COMPASS_TEXTURE_PATH;
     }
 }

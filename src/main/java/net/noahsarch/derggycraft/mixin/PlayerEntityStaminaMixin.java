@@ -3,6 +3,7 @@ package net.noahsarch.derggycraft.mixin;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.MathHelper;
 import net.noahsarch.derggycraft.stamina.StaminaAccessor;
 import net.noahsarch.derggycraft.stamina.StaminaConfig;
 import net.noahsarch.derggycraft.stamina.StaminaSprintState;
@@ -91,20 +92,37 @@ public abstract class PlayerEntityStaminaMixin implements StaminaAccessor {
         }
     }
 
+    @Inject(method = "jump", at = @At("TAIL"))
+    private void derggycraft$applySprintJumpMomentum(CallbackInfo ci) {
+        PlayerEntity player = (PlayerEntity) (Object) this;
+        if (!this.derggycraft$sprinting) {
+            return;
+        }
+
+        if (player.isSubmergedInWater() || player.isInFluid(Material.WATER)) {
+            return;
+        }
+
+        float yawRadians = player.yaw * (float) Math.PI / 180.0F;
+        player.velocityX -= MathHelper.sin(yawRadians) * StaminaConfig.SPRINT_JUMP_HORIZONTAL_BOOST;
+        player.velocityZ += MathHelper.cos(yawRadians) * StaminaConfig.SPRINT_JUMP_HORIZONTAL_BOOST;
+    }
+
     @Unique
     private void derggycraft$updateSprintState(PlayerEntity player) {
         boolean inWater = player.isSubmergedInWater() || player.isInFluid(Material.WATER);
-        boolean canSprint = player.health > 0 && player.onGround && !player.isSneaking() && !inWater && this.derggycraft$stamina > 0.0;
+        boolean canMaintainSprint = player.health > 0 && !player.isSneaking() && !inWater && this.derggycraft$stamina > 0.0;
+        boolean canStartSprint = canMaintainSprint && player.onGround;
         boolean movingForward = StaminaSprintState.isForwardDown() || Math.abs(player.velocityX) + Math.abs(player.velocityZ) > 0.03;
 
         if (this.derggycraft$sprinting) {
-            if (!canSprint || !movingForward) {
+            if (!canMaintainSprint || !movingForward) {
                 this.derggycraft$sprinting = false;
             }
             return;
         }
 
-        if (!canSprint || !movingForward) {
+        if (!canStartSprint || !movingForward) {
             return;
         }
 
