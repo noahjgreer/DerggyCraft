@@ -1,0 +1,16 @@
+[23:23:35] [CPM Background Loading Pool-37/ERROR] (CPM) Failed to load model
+java.lang.NoSuchMethodError: 'java.net.SocketAddress net.minecraft.class_117.method_1131()'
+	at net.minecraft.class_219.cpm$getConnectedServer(class_219.java:785) ~[client-intermediary.jar:?]
+	at com.tom.cpm.client.MinecraftObject.getConnectedServer(MinecraftObject.java:198) ~[CustomPlayerModels-b1.7.3-0.6.25a.jar:?]
+	at com.tom.cpm.shared.config.PlayerSpecificConfigKey.getValueFor(PlayerSpecificConfigKey.java:331) ~[CustomPlayerModels-b1.7.3-0.6.25a.jar:?]
+	at com.tom.cpm.shared.config.PlayerSpecificConfigKey.checkFor(PlayerSpecificConfigKey.java:269) ~[CustomPlayerModels-b1.7.3-0.6.25a.jar:?]
+	at com.tom.cpm.shared.definition.ModelDefinitionLoader.loadModel(ModelDefinitionLoader.java:174) ~[CustomPlayerModels-b1.7.3-0.6.25a.jar:?]
+	at com.tom.cpm.shared.definition.ModelDefinitionLoader.loadModel(ModelDefinitionLoader.java:164) ~[CustomPlayerModels-b1.7.3-0.6.25a.jar:?]
+	at com.tom.cpm.shared.definition.ModelDefinitionLoader.lambda$loadPlayer$3(ModelDefinitionLoader.java:95) ~[CustomPlayerModels-b1.7.3-0.6.25a.jar:?]
+	at java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:646) [?:?]
+	at java.util.concurrent.CompletableFuture$Completion.exec(CompletableFuture.java:483) [?:?]
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387) [?:?]
+	at java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312) [?:?]
+	at java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843) [?:?]
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808) [?:?]
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188) [?:?]

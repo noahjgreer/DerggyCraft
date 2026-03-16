@@ -10,3 +10,9 @@
 [submodule "glass-config-api"]
 	path = glass-config-api
 	url = https://github.com/Glass-Series/glass-config-api
+[submodule "IPN"]
+	path = IPN
+	url = https://codeberg.org/Inventory-Profiles-Next-Mod/IPN
+[submodule "CustomPlayerModels-b1.7.3"]
+	path = CustomPlayerModels-b1.7.3
+	url = https://github.com/tom5454/CustomPlayerModels/
