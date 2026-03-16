@@ -9,6 +9,8 @@ import net.noahsarch.derggycraft.inventory.CollarInventoryAccess;
 import java.util.concurrent.ThreadLocalRandom;
 
 public final class CollarJingleHelper {
+    public static final byte COLLAR_JINGLE_STATUS = 29;
+
     private CollarJingleHelper() {
     }
 
@@ -28,7 +30,20 @@ public final class CollarJingleHelper {
     }
 
     public static void playRandomNearbyJingle(Entity source, float minVolume, float maxVolume, float minPitch, float maxPitch) {
-        if (source == null || source.world == null || source.world.isRemote) {
+        if (source == null || source.world == null) {
+            return;
+        }
+
+        if (source.world.isRemote) {
+            playRandomNearbyJingleClient(source, minVolume, maxVolume, minPitch, maxPitch);
+            return;
+        }
+
+        source.world.broadcastEntityEvent(source, COLLAR_JINGLE_STATUS);
+    }
+
+    public static void playRandomNearbyJingleClient(Entity source, float minVolume, float maxVolume, float minPitch, float maxPitch) {
+        if (source == null || source.world == null) {
             return;
         }
 

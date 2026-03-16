@@ -131,6 +131,10 @@ public class GoldenCompassTextureBinder extends StationTextureBinder {
 
         if (goldenCompassItem.hasTrackedLastPosition(selected)
                 && goldenCompassItem.isTrackedLastPositionInWorld(selected, minecraft.world)) {
+            if (goldenCompassItem.shouldSpinNearLastPosition(selected, minecraft.world, minecraft.player.x, minecraft.player.z)) {
+                return Math.random() * Math.PI * 2.0D;
+            }
+
             double dx = goldenCompassItem.getTrackedLastX(selected) - minecraft.player.x;
             double dz = goldenCompassItem.getTrackedLastZ(selected) - minecraft.player.z;
             return (double) (minecraft.player.yaw - 90.0F) * Math.PI / 180.0D - Math.atan2(dz, dx);

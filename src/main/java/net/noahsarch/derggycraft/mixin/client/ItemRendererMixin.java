@@ -89,9 +89,13 @@ public abstract class ItemRendererMixin {
             targetRotation = (double) (minecraft.player.yaw - 90.0F) * Math.PI / 180.0D - Math.atan2(dz, dx);
         } else if (goldenCompassItem.hasTrackedLastPosition(stack)
                 && goldenCompassItem.isTrackedLastPositionInWorld(stack, minecraft.world)) {
-            double dx = goldenCompassItem.getTrackedLastX(stack) - minecraft.player.x;
-            double dz = goldenCompassItem.getTrackedLastZ(stack) - minecraft.player.z;
-            targetRotation = (double) (minecraft.player.yaw - 90.0F) * Math.PI / 180.0D - Math.atan2(dz, dx);
+            if (goldenCompassItem.shouldSpinNearLastPosition(stack, minecraft.world, minecraft.player.x, minecraft.player.z)) {
+                targetRotation = Math.random() * Math.PI * 2.0D;
+            } else {
+                double dx = goldenCompassItem.getTrackedLastX(stack) - minecraft.player.x;
+                double dz = goldenCompassItem.getTrackedLastZ(stack) - minecraft.player.z;
+                targetRotation = (double) (minecraft.player.yaw - 90.0F) * Math.PI / 180.0D - Math.atan2(dz, dx);
+            }
         } else {
             targetRotation = Math.random() * Math.PI * 2.0D;
         }

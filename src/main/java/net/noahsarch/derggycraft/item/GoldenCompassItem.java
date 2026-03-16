@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.client.item.CustomTooltipProvider;
 import net.modificationstation.stationapi.api.template.item.TemplateItem;
@@ -129,8 +130,29 @@ public class GoldenCompassItem extends TemplateItem implements CustomTooltipProv
         return stack.getStationNbt().getDouble(TRACKED_LAST_X_KEY);
     }
 
+    public double getTrackedLastY(ItemStack stack) {
+        return stack.getStationNbt().getDouble(TRACKED_LAST_Y_KEY);
+    }
+
     public double getTrackedLastZ(ItemStack stack) {
         return stack.getStationNbt().getDouble(TRACKED_LAST_Z_KEY);
+    }
+
+    public boolean shouldSpinNearLastPosition(ItemStack stack, World world, double seekerX, double seekerZ) {
+        if (!hasTrackedLastPosition(stack) || !isTrackedLastPositionInWorld(stack, world)) {
+            return false;
+        }
+
+        double dx = getTrackedLastX(stack) - seekerX;
+        double dz = getTrackedLastZ(stack) - seekerZ;
+        if (dx * dx + dz * dz > 100.0D * 100.0D) {
+            return false;
+        }
+
+        int lastBlockX = MathHelper.floor(getTrackedLastX(stack));
+        int lastBlockY = MathHelper.floor(getTrackedLastY(stack));
+        int lastBlockZ = MathHelper.floor(getTrackedLastZ(stack));
+        return world.isPosLoaded(lastBlockX, lastBlockY, lastBlockZ);
     }
 
     private static Entity findEntityByRuntimeId(World world, int runtimeEntityId) {

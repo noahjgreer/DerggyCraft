@@ -12,7 +12,9 @@
     "EntitySprintAccelerationMixin",
     "ItemMixin",
     "MonsterEntitySpawnLightMixin",
+    "server.PlayerManagerKeepInventoryRespawnMixin",
     "PlayerEntityCollarJingleJumpMixin",
+    "PlayerEntityDeathMixin",
     "PlayerInventoryMixin",
     "PlayerEntityStaminaMixin",
     "ScreenHandlerShiftCraftingMixin",
@@ -23,10 +25,10 @@
     "client.DynamicTextureAccessor",
     "client.ItemRendererMixin",
     "client.MinecraftMixin",
+    "server.ServerPlayerEntityDeathMixin",
     "server.ZombieEntityMixin"
   ],
   "server": [
-    "server.ServerPlayerEntityDeathMixin",
     "server.ServerPlayNetworkHandlerChatMixin",
     "server.ServerWorldGamerulesInitMixin",
     "server.ServerPlayerInteractionManagerMixin"
@@ -43,6 +45,8 @@
     "client.InventoryScreenMixin",
     "client.InteractionManagerMixin",
     "client.KeyboardInputSprintMixin",
+    "client.LivingEntityCollarJingleStatusMixin",
+    "client.MinecraftKeepInventoryRespawnMixin",
     "client.ItemCompassTooltipMixin",
     "client.ScreenAccessor",
     "client.SoundManagerCollarJingleMixin",
