@@ -8,4 +8,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface DrawContextInvoker {
     @Invoker("fillGradient")
     void derggycraft$invokeFillGradient(int startX, int startY, int endX, int endY, int colorStart, int colorEnd);
+
+    @Invoker("drawTexture")
+    void derggycraft$invokeDrawTexture(int x, int y, int u, int v, int width, int height);
 }
