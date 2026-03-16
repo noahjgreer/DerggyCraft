@@ -39,7 +39,22 @@ public final class CollarJingleHelper {
             return;
         }
 
+        // Singleplayer local worlds do not reliably route this custom status event back into
+        // processServerEntityStatus, so play the jingle directly for the local player entity.
+        if (isSingleplayerClientPlayer(source)) {
+            playRandomNearbyJingleClient(source, minVolume, maxVolume, minPitch, maxPitch);
+            return;
+        }
+
         source.world.broadcastEntityEvent(source, COLLAR_JINGLE_STATUS);
+    }
+
+    private static boolean isSingleplayerClientPlayer(Entity source) {
+        if (!(source instanceof PlayerEntity)) {
+            return false;
+        }
+
+        return "net.minecraft.entity.player.ClientPlayerEntity".equals(source.getClass().getName());
     }
 
     public static void playRandomNearbyJingleClient(Entity source, float minVolume, float maxVolume, float minPitch, float maxPitch) {
