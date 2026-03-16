@@ -120,23 +120,31 @@ public abstract class ItemRendererMixin {
             return rotationState[0];
         }
 
-        LivingEntity trackedEntity = goldenCompassItem.getTrackedEntity(stack, minecraft.world);
         double targetRotation;
-        if (trackedEntity != null && trackedEntity.world == minecraft.world) {
-            double dx = trackedEntity.x - minecraft.player.x;
-            double dz = trackedEntity.z - minecraft.player.z;
-            targetRotation = (double) (minecraft.player.yaw - 90.0F) * Math.PI / 180.0D - Math.atan2(dz, dx);
-        } else if (goldenCompassItem.hasTrackedLastPosition(stack)
+        if (goldenCompassItem.isTrailActive(stack)
+                && goldenCompassItem.hasTrackedLastPosition(stack)
                 && goldenCompassItem.isTrackedLastPositionInWorld(stack, minecraft.world)) {
-            if (goldenCompassItem.shouldSpinNearLastPosition(stack, minecraft.world, minecraft.player.x, minecraft.player.z)) {
-                targetRotation = Math.random() * Math.PI * 2.0D;
-            } else {
-                double dx = goldenCompassItem.getTrackedLastX(stack) - minecraft.player.x;
-                double dz = goldenCompassItem.getTrackedLastZ(stack) - minecraft.player.z;
-                targetRotation = (double) (minecraft.player.yaw - 90.0F) * Math.PI / 180.0D - Math.atan2(dz, dx);
-            }
+            double dx = goldenCompassItem.getTrackedLastX(stack) - minecraft.player.x;
+            double dz = goldenCompassItem.getTrackedLastZ(stack) - minecraft.player.z;
+            targetRotation = (double) (minecraft.player.yaw - 90.0F) * Math.PI / 180.0D - Math.atan2(dz, dx);
         } else {
-            targetRotation = Math.random() * Math.PI * 2.0D;
+            LivingEntity trackedEntity = goldenCompassItem.getTrackedEntity(stack, minecraft.world);
+            if (trackedEntity != null && trackedEntity.world == minecraft.world) {
+                double dx = trackedEntity.x - minecraft.player.x;
+                double dz = trackedEntity.z - minecraft.player.z;
+                targetRotation = (double) (minecraft.player.yaw - 90.0F) * Math.PI / 180.0D - Math.atan2(dz, dx);
+            } else if (goldenCompassItem.hasTrackedLastPosition(stack)
+                && goldenCompassItem.isTrackedLastPositionInWorld(stack, minecraft.world)) {
+                if (goldenCompassItem.shouldSpinNearLastPosition(stack, minecraft.world, minecraft.player.x, minecraft.player.z)) {
+                    targetRotation = Math.random() * Math.PI * 2.0D;
+                } else {
+                    double dx = goldenCompassItem.getTrackedLastX(stack) - minecraft.player.x;
+                    double dz = goldenCompassItem.getTrackedLastZ(stack) - minecraft.player.z;
+                    targetRotation = (double) (minecraft.player.yaw - 90.0F) * Math.PI / 180.0D - Math.atan2(dz, dx);
+                }
+            } else {
+                targetRotation = Math.random() * Math.PI * 2.0D;
+            }
         }
 
         updateRotation(rotationState, targetRotation);

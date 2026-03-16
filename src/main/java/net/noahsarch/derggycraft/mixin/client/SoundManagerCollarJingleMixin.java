@@ -5,6 +5,7 @@ import net.minecraft.client.sound.SoundEntry;
 import net.minecraft.client.sound.SoundManager;
 import net.modificationstation.stationapi.api.client.sound.CustomSoundMap;
 import net.noahsarch.derggycraft.DerggyCraft;
+import net.noahsarch.derggycraft.sound.BackportedVanillaSounds;
 import net.noahsarch.derggycraft.sound.CollarJingleSounds;
 import net.noahsarch.derggycraft.sound.FlareLoopSound;
 import net.noahsarch.derggycraft.sound.IntroLogoSound;
@@ -28,13 +29,17 @@ public abstract class SoundManagerCollarJingleMixin {
     private static boolean derggycraft$introSoundRegistered;
     @Unique
     private static boolean derggycraft$flareLoopRegistered;
+    @Unique
+    private static boolean derggycraft$backportedVanillaSoundsRegistered;
 
     @Inject(method = "loadSounds", at = @At("TAIL"))
     private void derggycraft$registerCollarJingles(GameOptions gameOptions, CallbackInfo ci) {
+        CustomSoundMap soundMap = (CustomSoundMap) this.sounds;
+
         if (!derggycraft$introSoundRegistered) {
             URL introResource = resolveIntroResource();
             if (introResource != null) {
-                ((CustomSoundMap) this.sounds).putSound(IntroLogoSound.REGISTRATION_ID, introResource);
+                soundMap.putSound(IntroLogoSound.REGISTRATION_ID, introResource);
                 derggycraft$introSoundRegistered = true;
                 if (DerggyCraft.LOGGER != null) {
                     DerggyCraft.LOGGER.info("Registered intro logo sound {} from {}", IntroLogoSound.REGISTRATION_ID, introResource);
@@ -47,7 +52,7 @@ public abstract class SoundManagerCollarJingleMixin {
         if (!derggycraft$flareLoopRegistered) {
             URL flareLoopResource = resolveFlareLoopResource();
             if (flareLoopResource != null) {
-                ((CustomSoundMap) this.sounds).putSound(FlareLoopSound.REGISTRATION_ID, flareLoopResource);
+                soundMap.putSound(FlareLoopSound.REGISTRATION_ID, flareLoopResource);
                 derggycraft$flareLoopRegistered = true;
                 if (DerggyCraft.LOGGER != null) {
                     DerggyCraft.LOGGER.info("Registered flare loop sound {} from {}", FlareLoopSound.REGISTRATION_ID, flareLoopResource);
@@ -55,6 +60,11 @@ public abstract class SoundManagerCollarJingleMixin {
             } else if (DerggyCraft.LOGGER != null) {
                 DerggyCraft.LOGGER.warn("Failed to locate flare loop sound resource at /assets/derggycraft/stationapi/sounds/{}", FlareLoopSound.FILE_NAME);
             }
+        }
+
+        if (!derggycraft$backportedVanillaSoundsRegistered) {
+            registerBackportedVanillaSounds(soundMap);
+            derggycraft$backportedVanillaSoundsRegistered = true;
         }
 
         if (derggycraft$collarJinglesRegistered) {
@@ -68,41 +78,53 @@ public abstract class SoundManagerCollarJingleMixin {
                 continue;
             }
 
-            ((CustomSoundMap) this.sounds).putSound(CollarJingleSounds.REGISTRATION_IDS[i], resource);
+            soundMap.putSound(CollarJingleSounds.REGISTRATION_IDS[i], resource);
         }
 
         derggycraft$collarJinglesRegistered = true;
     }
 
     @Unique
-    private static URL resolveJingleResource(String fileName) {
-        String legacyPath = "/assets/derggycraft/stationapi/sounds/collar/jingle/" + fileName;
-        URL legacyResource = SoundManagerCollarJingleMixin.class.getResource(legacyPath);
-        if (legacyResource != null) {
-            return legacyResource;
-        }
+    private static void registerBackportedVanillaSounds(CustomSoundMap soundMap) {
+        registerSoundFileSet(soundMap, BackportedVanillaSounds.CAVE_SOUND_FILES);
+        registerSoundFileSet(soundMap, BackportedVanillaSounds.BUCKET_FILL_SOUND_FILES);
+        registerSoundFileSet(soundMap, BackportedVanillaSounds.BUCKET_FILL_LAVA_SOUND_FILES);
+        registerSoundFileSet(soundMap, BackportedVanillaSounds.BUCKET_EMPTY_SOUND_FILES);
+        registerSoundFileSet(soundMap, BackportedVanillaSounds.BUCKET_EMPTY_LAVA_SOUND_FILES);
+    }
 
-        String channelPath = "/assets/derggycraft/stationapi/sounds/sound/collar/jingle/" + fileName;
-        return SoundManagerCollarJingleMixin.class.getResource(channelPath);
+    @Unique
+    private static void registerSoundFileSet(CustomSoundMap soundMap, String[] fileNames) {
+        for (String fileName : fileNames) {
+            URL resource = resolveSoundResource(fileName);
+            if (resource != null) {
+                soundMap.putSound(fileName, resource);
+            }
+        }
+    }
+
+    @Unique
+    private static URL resolveJingleResource(String fileName) {
+        return resolveSoundResource("collar/jingle/" + fileName);
     }
 
     @Unique
     private static URL resolveIntroResource() {
-        URL direct = SoundManagerCollarJingleMixin.class.getResource("/assets/derggycraft/stationapi/sounds/" + IntroLogoSound.FILE_NAME);
-        if (direct != null) {
-            return direct;
-        }
-
-        return SoundManagerCollarJingleMixin.class.getResource("/assets/derggycraft/stationapi/sounds/sound/" + IntroLogoSound.FILE_NAME);
+        return resolveSoundResource(IntroLogoSound.FILE_NAME);
     }
 
     @Unique
     private static URL resolveFlareLoopResource() {
-        URL direct = SoundManagerCollarJingleMixin.class.getResource("/assets/derggycraft/stationapi/sounds/" + FlareLoopSound.FILE_NAME);
+        return resolveSoundResource(FlareLoopSound.FILE_NAME);
+    }
+
+    @Unique
+    private static URL resolveSoundResource(String fileName) {
+        URL direct = SoundManagerCollarJingleMixin.class.getResource("/assets/derggycraft/stationapi/sounds/" + fileName);
         if (direct != null) {
             return direct;
         }
 
-        return SoundManagerCollarJingleMixin.class.getResource("/assets/derggycraft/stationapi/sounds/sound/" + FlareLoopSound.FILE_NAME);
+        return SoundManagerCollarJingleMixin.class.getResource("/assets/derggycraft/stationapi/sounds/sound/" + fileName);
     }
 }

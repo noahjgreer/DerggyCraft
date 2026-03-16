@@ -53,6 +53,7 @@
     "client.LivingEntityCollarJingleStatusMixin",
     "client.MinecraftKeepInventoryRespawnMixin",
     "client.ItemCompassTooltipMixin",
+    "client.ScreenshotMixin",
     "client.ScreenAccessor",
     "client.SoundManagerCollarJingleMixin",
     "client.SoundManagerMusicSyncMixin"
