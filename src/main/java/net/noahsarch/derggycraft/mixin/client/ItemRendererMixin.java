@@ -6,10 +6,13 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.texture.TextureManager;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.noahsarch.derggycraft.DerggyCraft;
+import net.noahsarch.derggycraft.client.render.FlareThrownModelRenderer;
 import net.noahsarch.derggycraft.client.render.texture.GoldenCompassRenderState;
+import net.noahsarch.derggycraft.flare.FlareRuntime;
 import net.noahsarch.derggycraft.item.GoldenCompassItem;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,6 +33,42 @@ public abstract class ItemRendererMixin {
     private static final int SECONDARY_DIAL_COLOR = 0x125D5E;
     private static final int MAX_ROTATION_STATES = 2048;
     private static final Map<Integer, double[]> ROTATION_STATE_BY_KEY = new HashMap<>();
+
+    @Inject(
+            method = "render(Lnet/minecraft/entity/ItemEntity;DDDFF)V",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    private void derggycraft$renderThrownFlareModel(ItemEntity entity, double x, double y, double z, float g, float h, CallbackInfo ci) {
+        if (entity == null || entity.stack == null || !FlareRuntime.isFlareStack(entity.stack)) {
+            return;
+        }
+
+        Minecraft minecraft = getMinecraft();
+        if (minecraft == null || minecraft.textureManager == null) {
+            return;
+        }
+
+        String texturePath = FlareThrownModelRenderer.getTexturePath(entity.stack);
+        minecraft.textureManager.bindTexture(minecraft.textureManager.getTextureId(texturePath));
+
+        float yaw = entity.prevYaw + (entity.yaw - entity.prevYaw) * h;
+        float pitch = entity.prevPitch + (entity.pitch - entity.prevPitch) * h;
+        float brightness = entity.getBrightnessAtEyes(h);
+
+        GL11.glPushMatrix();
+        GL11.glTranslatef((float) x, (float) y + 0.015F, (float) z);
+        GL11.glRotatef(yaw, 0.0F, 1.0F, 0.0F);
+        GL11.glRotatef(pitch, 0.0F, 0.0F, 1.0F);
+        GL11.glColor4f(brightness, brightness, brightness, 1.0F);
+        GL11.glDisable(GL11.GL_CULL_FACE);
+
+        FlareThrownModelRenderer.renderVariant(entity.stack);
+
+        GL11.glEnable(GL11.GL_CULL_FACE);
+        GL11.glPopMatrix();
+        ci.cancel();
+    }
 
     @Inject(
             method = "renderGuiItem(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/client/texture/TextureManager;Lnet/minecraft/item/ItemStack;II)V",

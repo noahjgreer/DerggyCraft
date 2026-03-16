@@ -17,6 +17,8 @@ public class TextureRegistry {
         DerggyCraft.ROTTEN_FLESH_ITEM.setTexture(DerggyCraft.NAMESPACE.id("item/rotten_flesh"));
         DerggyCraft.LEATHER_SCRAP_ITEM.setTexture(DerggyCraft.NAMESPACE.id("item/leather_scrap"));
         DerggyCraft.GOLDEN_COMPASS_ITEM.setTexture(DerggyCraft.NAMESPACE.id("item/golden_compass"));
+        DerggyCraft.FLARE_1M_ITEM.setTexture(DerggyCraft.NAMESPACE.id("item/flare0"));
+        DerggyCraft.FLARE_10M_ITEM.setTexture(DerggyCraft.NAMESPACE.id("item/flare1"));
         if (DerggyCraft.EXTINGUISHED_TORCH_BLOCK != null) {
             DerggyCraft.EXTINGUISHED_TORCH_BLOCK.textureId = Atlases.getTerrain()
                     .addTexture(DerggyCraft.NAMESPACE.id("block/torch_extinguished"))

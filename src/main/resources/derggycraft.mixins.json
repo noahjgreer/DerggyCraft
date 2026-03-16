@@ -11,6 +11,7 @@
     "EntityPersistentIdMixin",
     "EntitySprintAccelerationMixin",
     "ItemMixin",
+    "ItemEntityFlareMixin",
     "MonsterEntitySpawnLightMixin",
     "server.PlayerManagerKeepInventoryRespawnMixin",
     "PlayerEntityCollarJingleJumpMixin",

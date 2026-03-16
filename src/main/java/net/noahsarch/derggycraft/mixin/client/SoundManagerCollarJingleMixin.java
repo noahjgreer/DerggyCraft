@@ -6,6 +6,7 @@ import net.minecraft.client.sound.SoundManager;
 import net.modificationstation.stationapi.api.client.sound.CustomSoundMap;
 import net.noahsarch.derggycraft.DerggyCraft;
 import net.noahsarch.derggycraft.sound.CollarJingleSounds;
+import net.noahsarch.derggycraft.sound.FlareLoopSound;
 import net.noahsarch.derggycraft.sound.IntroLogoSound;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -25,6 +26,8 @@ public abstract class SoundManagerCollarJingleMixin {
     private static boolean derggycraft$collarJinglesRegistered;
     @Unique
     private static boolean derggycraft$introSoundRegistered;
+    @Unique
+    private static boolean derggycraft$flareLoopRegistered;
 
     @Inject(method = "loadSounds", at = @At("TAIL"))
     private void derggycraft$registerCollarJingles(GameOptions gameOptions, CallbackInfo ci) {
@@ -38,6 +41,19 @@ public abstract class SoundManagerCollarJingleMixin {
                 }
             } else if (DerggyCraft.LOGGER != null) {
                 DerggyCraft.LOGGER.warn("Failed to locate intro logo sound resource at /assets/derggycraft/stationapi/sounds/{}", IntroLogoSound.FILE_NAME);
+            }
+        }
+
+        if (!derggycraft$flareLoopRegistered) {
+            URL flareLoopResource = resolveFlareLoopResource();
+            if (flareLoopResource != null) {
+                ((CustomSoundMap) this.sounds).putSound(FlareLoopSound.REGISTRATION_ID, flareLoopResource);
+                derggycraft$flareLoopRegistered = true;
+                if (DerggyCraft.LOGGER != null) {
+                    DerggyCraft.LOGGER.info("Registered flare loop sound {} from {}", FlareLoopSound.REGISTRATION_ID, flareLoopResource);
+                }
+            } else if (DerggyCraft.LOGGER != null) {
+                DerggyCraft.LOGGER.warn("Failed to locate flare loop sound resource at /assets/derggycraft/stationapi/sounds/{}", FlareLoopSound.FILE_NAME);
             }
         }
 
@@ -78,5 +94,15 @@ public abstract class SoundManagerCollarJingleMixin {
         }
 
         return SoundManagerCollarJingleMixin.class.getResource("/assets/derggycraft/stationapi/sounds/sound/" + IntroLogoSound.FILE_NAME);
+    }
+
+    @Unique
+    private static URL resolveFlareLoopResource() {
+        URL direct = SoundManagerCollarJingleMixin.class.getResource("/assets/derggycraft/stationapi/sounds/" + FlareLoopSound.FILE_NAME);
+        if (direct != null) {
+            return direct;
+        }
+
+        return SoundManagerCollarJingleMixin.class.getResource("/assets/derggycraft/stationapi/sounds/sound/" + FlareLoopSound.FILE_NAME);
     }
 }

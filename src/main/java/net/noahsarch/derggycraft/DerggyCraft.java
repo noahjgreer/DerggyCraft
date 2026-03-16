@@ -10,10 +10,12 @@ import net.modificationstation.stationapi.api.event.registry.ItemRegistryEvent;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.util.Namespace;
 import net.noahsarch.derggycraft.block.ExtinguishedTorchBlock;
+import net.noahsarch.derggycraft.block.FlareLightBlock;
 import net.noahsarch.derggycraft.item.CollarItem;
 import net.noahsarch.derggycraft.item.LeatherScrapItem;
 import net.noahsarch.derggycraft.item.RottenFleshItem;
 import net.noahsarch.derggycraft.item.GoldenCompassItem;
+import net.noahsarch.derggycraft.item.ThrowableFlareItem;
 
 public class DerggyCraft {
     // Namespace Utility Field
@@ -27,9 +29,13 @@ public class DerggyCraft {
     public static Item ROTTEN_FLESH_ITEM;
     public static Item LEATHER_SCRAP_ITEM;
     public static Item GOLDEN_COMPASS_ITEM;
+        public static Item FLARE_1M_ITEM;
+        public static Item FLARE_10M_ITEM;
 
         // Block Fields
         public static Block EXTINGUISHED_TORCH_BLOCK;
+        public static Block FLARE_LIGHT_BLOCK;
+        public static Block FLARE_LIGHT_STRONG_BLOCK;
 
         // Block Registry
         @EventListener
@@ -39,6 +45,11 @@ public class DerggyCraft {
                                 .setSoundGroup(Block.WOOD_SOUND_GROUP)
                                 .setTranslationKey(NAMESPACE, "torch_extinguished")
                                 .ignoreMetaUpdates();
+
+                FLARE_LIGHT_BLOCK = new FlareLightBlock(NAMESPACE.id("flare_light"), 0.9375F)
+                        .setTranslationKey(NAMESPACE, "flare_light");
+                FLARE_LIGHT_STRONG_BLOCK = new FlareLightBlock(NAMESPACE.id("flare_light_strong"), 1.0F)
+                        .setTranslationKey(NAMESPACE, "flare_light_strong");
         }
 
     // Item Registry
@@ -55,5 +66,9 @@ public class DerggyCraft {
                 .setTranslationKey(NAMESPACE, "leather_scrap");
         GOLDEN_COMPASS_ITEM = new GoldenCompassItem(NAMESPACE.id("golden_compass"))
                 .setTranslationKey(NAMESPACE, "golden_compass");
+        FLARE_1M_ITEM = new ThrowableFlareItem(NAMESPACE.id("flare_1m"), 20 * 60)
+                .setTranslationKey(NAMESPACE, "flare_1m");
+        FLARE_10M_ITEM = new ThrowableFlareItem(NAMESPACE.id("flare_10m"), 20 * 60 * 10)
+                .setTranslationKey(NAMESPACE, "flare_10m");
     }
 }
