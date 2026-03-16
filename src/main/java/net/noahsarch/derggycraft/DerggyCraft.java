@@ -44,6 +44,9 @@ public class DerggyCraft {
     // Item Registry
     @EventListener
     public void registerItems(ItemRegistryEvent event) {
+        // Empty buckets are stackable up to 16.
+        Item.BUCKET.setMaxCount(16);
+
         COLLAR_ITEM = new CollarItem(NAMESPACE.id("collar"))
                 .setTranslationKey(NAMESPACE, "collar");
         ROTTEN_FLESH_ITEM = new RottenFleshItem(NAMESPACE.id("rotten_flesh"))
