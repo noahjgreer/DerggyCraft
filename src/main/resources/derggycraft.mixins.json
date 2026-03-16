@@ -13,7 +13,6 @@
     "ItemMixin",
     "ItemEntityFlareMixin",
     "MonsterEntitySpawnLightMixin",
-    "server.PlayerManagerKeepInventoryRespawnMixin",
     "PlayerEntityCollarJingleJumpMixin",
     "PlayerEntityDeathMixin",
     "PlayerInventoryMixin",
@@ -28,11 +27,12 @@
     "client.DynamicTextureAccessor",
     "client.ItemRendererMixin",
     "client.MinecraftMixin",
-    "server.ServerPlayerEntityDeathMixin",
     "server.ZombieEntityMixin"
   ],
   "server": [
+    "server.PlayerManagerKeepInventoryRespawnMixin",
     "server.ServerPlayNetworkHandlerChatMixin",
+    "server.ServerPlayerEntityDeathMixin",
     "server.ServerWorldGamerulesInitMixin",
     "server.ServerPlayerInteractionManagerMixin"
   ],

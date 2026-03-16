@@ -44,7 +44,7 @@ public abstract class HandledScreenSortMixin {
         this.derggycraft$lastMouseX = mouseX;
         this.derggycraft$lastMouseY = mouseY;
 
-        Minecraft minecraft = this.derggycraft$getMinecraft();
+        Minecraft minecraft = this.derggycraft$getMinecraftForSort();
         Screen screen = (Screen) (Object) this;
         if (minecraft == null || minecraft.player == null || this.handler == null) {
             return;
@@ -77,7 +77,7 @@ public abstract class HandledScreenSortMixin {
             return;
         }
 
-        Minecraft minecraft = this.derggycraft$getMinecraft();
+        Minecraft minecraft = this.derggycraft$getMinecraftForSort();
         Screen screen = (Screen) (Object) this;
         if (minecraft == null || minecraft.player == null || minecraft.interactionManager == null || this.handler == null) {
             return;
@@ -113,7 +113,7 @@ public abstract class HandledScreenSortMixin {
             return;
         }
 
-        Minecraft minecraft = this.derggycraft$getMinecraft();
+        Minecraft minecraft = this.derggycraft$getMinecraftForSort();
         if (minecraft == null || minecraft.player == null || minecraft.interactionManager == null || this.handler == null) {
             return;
         }
@@ -134,7 +134,7 @@ public abstract class HandledScreenSortMixin {
 
     private void derggycraft$drawSortButton(int x, int y, int mouseX, int mouseY) {
         DrawContextInvoker drawContext = (DrawContextInvoker) (Object) this;
-        Minecraft minecraft = this.derggycraft$getMinecraft();
+        Minecraft minecraft = this.derggycraft$getMinecraftForSort();
         boolean hovered = this.derggycraft$isPointInside(mouseX, mouseY, x, y, DERGGYCRAFT_BUTTON_SIZE, DERGGYCRAFT_BUTTON_SIZE);
 
         if (minecraft != null && minecraft.textureManager != null) {
@@ -220,7 +220,7 @@ public abstract class HandledScreenSortMixin {
         return mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height;
     }
 
-    private Minecraft derggycraft$getMinecraft() {
+    private Minecraft derggycraft$getMinecraftForSort() {
         return ((ScreenAccessor) (Object) this).derggycraft$getMinecraft();
     }
 }

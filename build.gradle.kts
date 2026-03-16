@@ -17,11 +17,26 @@ group = project.properties["maven_group"] as String
 val enableBhCreative = (project.findProperty("dev_enable_bhcreative") as String?)?.toBoolean() ?: false
 val enableAlwaysMoreItems = (project.findProperty("dev_enable_alwaysmoreitems") as String?)?.toBoolean() ?: false
 val enableGcapi3 = (project.findProperty("dev_enable_gcapi3") as String?)?.toBoolean() ?: false
+val devUsername = (project.findProperty("dev_username") as String?)?.trim().orEmpty()
+val devSession = (project.findProperty("dev_session") as String?)?.trim().orEmpty()
+val devCpmMaxBgThreads = (project.findProperty("dev_cpm_max_bg_threads") as String?)?.trim().orEmpty()
 
 loom {
 //	accessWidenerPath = file("src/main/resources/examplemod.accesswidener")
 
 	runs {
+		named("client") {
+			if (devUsername.isNotEmpty()) {
+				programArgs("--username", devUsername)
+			}
+			if (devSession.isNotEmpty()) {
+				programArgs("--session", devSession)
+			}
+			if (devCpmMaxBgThreads.isNotEmpty()) {
+				vmArgs("-Dmax.bg.threads=$devCpmMaxBgThreads")
+			}
+		}
+
 		// If you want to make a testmod for your mod, right click on src, and create a new folder with the same name as source() below.
 		// Intellij should give suggestions for testmod folders.
 		register("testClient") {
