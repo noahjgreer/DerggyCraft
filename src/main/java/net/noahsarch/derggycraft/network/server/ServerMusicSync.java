@@ -1,6 +1,7 @@
 package net.noahsarch.derggycraft.network.server;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.MinecraftServer;
 import net.modificationstation.stationapi.api.network.packet.MessagePacket;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.noahsarch.derggycraft.network.MusicSyncNetworking;
@@ -21,7 +22,29 @@ public final class ServerMusicSync {
             float pitch,
             String[] candidateTrackIds
     ) {
-        if (source == null || source.server == null || source.server.playerManager == null || candidateTrackIds == null || candidateTrackIds.length == 0) {
+        if (source == null) {
+            return 0;
+        }
+
+        return broadcastSynchronizedPlayback(
+                source.server,
+                leadMillis,
+                streaming,
+                volume,
+                pitch,
+                candidateTrackIds
+        );
+    }
+
+    public static int broadcastSynchronizedPlayback(
+            MinecraftServer server,
+            long leadMillis,
+            boolean streaming,
+            float volume,
+            float pitch,
+            String[] candidateTrackIds
+    ) {
+        if (server == null || server.playerManager == null || candidateTrackIds == null || candidateTrackIds.length == 0) {
             return 0;
         }
 
@@ -37,7 +60,7 @@ public final class ServerMusicSync {
         );
 
         int sent = 0;
-        for (Object playerObj : source.server.playerManager.players) {
+        for (Object playerObj : server.playerManager.players) {
             if (!(playerObj instanceof ServerPlayerEntity player)) {
                 continue;
             }

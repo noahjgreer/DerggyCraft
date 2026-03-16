@@ -34,10 +34,13 @@ public class GoldenCompassItem extends TemplateItem implements CustomTooltipProv
     private static final String TRAIL_STEP_COUNT_KEY = "TrailStepCount";
     private static final int MAX_TRAIL_STEPS = 96;
     private static final double TRAIL_STEP_DISTANCE = 16.0D;
-    private static final double TRAIL_REACHED_DISTANCE_SQ = 9.0D;
+    private static final double TRAIL_WAYPOINT_REACHED_DISTANCE_SQ = 9.0D;
+    private static final double TRAIL_TARGET_REACHED_DISTANCE_SQ = 25.0D;
+    private static final String TRAIL_PARTICLE_TYPE = "reddust";
 
     public GoldenCompassItem(Identifier identifier) {
         super(identifier);
+        this.setMaxCount(1);
         this.setMaxDamage(100);
     }
 
@@ -154,6 +157,10 @@ public class GoldenCompassItem extends TemplateItem implements CustomTooltipProv
 
         if (selected && stationNbt.getBoolean(TRAIL_ACTIVE_KEY) && isTrackedLastPositionInWorld(stack, world)) {
             updateTrailWaypoint(stationNbt, world, player);
+
+            if (world.isRemote) {
+                spawnTrailParticles(stationNbt, world, player);
+            }
         }
     }
 
@@ -396,7 +403,7 @@ public class GoldenCompassItem extends TemplateItem implements CustomTooltipProv
 
         double waypointDx = waypointX - user.x;
         double waypointDz = waypointZ - user.z;
-        if (waypointDx * waypointDx + waypointDz * waypointDz <= TRAIL_REACHED_DISTANCE_SQ) {
+        if (waypointDx * waypointDx + waypointDz * waypointDz <= TRAIL_WAYPOINT_REACHED_DISTANCE_SQ) {
             if (step < stepCount) {
                 stationNbt.putInt(TRAIL_STEP_KEY, step + 1);
             } else {
@@ -407,9 +414,43 @@ public class GoldenCompassItem extends TemplateItem implements CustomTooltipProv
 
         double targetDx = destX - user.x;
         double targetDz = destZ - user.z;
-        if (targetDx * targetDx + targetDz * targetDz <= TRAIL_REACHED_DISTANCE_SQ) {
+        if (targetDx * targetDx + targetDz * targetDz <= TRAIL_TARGET_REACHED_DISTANCE_SQ) {
             writeLastKnownPosition(stationNbt, world.dimension.id, destX, destY, destZ);
             stationNbt.putBoolean(TRAIL_ACTIVE_KEY, false);
+        }
+    }
+
+    private static void spawnTrailParticles(NbtCompound stationNbt, World world, PlayerEntity player) {
+        if (!stationNbt.getBoolean(TRAIL_ACTIVE_KEY)) {
+            return;
+        }
+
+        double startX = player.x;
+        double startY = player.y + 1.0D;
+        double startZ = player.z;
+        double endX = stationNbt.getDouble(TRACKED_LAST_X_KEY);
+        double endY = stationNbt.getDouble(TRACKED_LAST_Y_KEY) + 0.25D;
+        double endZ = stationNbt.getDouble(TRACKED_LAST_Z_KEY);
+
+        double dx = endX - startX;
+        double dy = endY - startY;
+        double dz = endZ - startZ;
+        double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        if (distance < 0.5D) {
+            return;
+        }
+
+        int steps = Math.max(5, Math.min(14, (int) Math.ceil(distance / 1.35D)));
+        for (int i = 1; i <= steps; ++i) {
+            double t = (double) i / (double) steps;
+            double jitterX = (world.random.nextDouble() - 0.5D) * 0.18D;
+            double jitterY = (world.random.nextDouble() - 0.5D) * 0.12D;
+            double jitterZ = (world.random.nextDouble() - 0.5D) * 0.18D;
+            double particleX = startX + dx * t + jitterX;
+            double particleY = startY + dy * t + jitterY;
+            double particleZ = startZ + dz * t + jitterZ;
+
+            world.addParticle(TRAIL_PARTICLE_TYPE, particleX, particleY, particleZ, 0.0D, 0.01D, 0.0D);
         }
     }
 }
