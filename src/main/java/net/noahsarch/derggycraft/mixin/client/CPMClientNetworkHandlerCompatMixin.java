@@ -20,32 +20,38 @@ public abstract class CPMClientNetworkHandlerCompatMixin {
 
     @Inject(method = "cpm$getConnectedServer", at = @At("HEAD"), cancellable = true, remap = false, require = 0)
     private void derggycraft$fixCpmConnectedServerLookup(CallbackInfoReturnable<String> cir) {
-        SocketAddress address = this.derggycraft$resolveSocketAddress();
-        if (!(address instanceof InetSocketAddress inetSocketAddress)) {
-            return;
-        }
+        try {
+            SocketAddress address = this.derggycraft$resolveSocketAddress();
+            if (!(address instanceof InetSocketAddress inetSocketAddress)) {
+                cir.setReturnValue(null);
+                return;
+            }
 
-        InetAddress inetAddress = inetSocketAddress.getAddress();
-        if (inetAddress != null && (inetAddress.isAnyLocalAddress() || inetAddress.isLoopbackAddress())) {
+            InetAddress inetAddress = inetSocketAddress.getAddress();
+            if (inetAddress != null && (inetAddress.isAnyLocalAddress() || inetAddress.isLoopbackAddress())) {
+                cir.setReturnValue(null);
+                return;
+            }
+
+            String host = inetSocketAddress.getHostString();
+            if (host == null || host.isEmpty()) {
+                host = inetSocketAddress.getHostName();
+            }
+
+            if (host == null || host.isEmpty()) {
+                cir.setReturnValue(null);
+                return;
+            }
+
+            if ("localhost".equalsIgnoreCase(host) || "127.0.0.1".equals(host) || "::1".equals(host)) {
+                cir.setReturnValue(null);
+                return;
+            }
+
+            cir.setReturnValue(host);
+        } catch (Throwable ignored) {
             cir.setReturnValue(null);
-            return;
         }
-
-        String host = inetSocketAddress.getHostString();
-        if (host == null || host.isEmpty()) {
-            host = inetSocketAddress.getHostName();
-        }
-
-        if (host == null || host.isEmpty()) {
-            return;
-        }
-
-        if ("localhost".equalsIgnoreCase(host) || "127.0.0.1".equals(host) || "::1".equals(host)) {
-            cir.setReturnValue(null);
-            return;
-        }
-
-        cir.setReturnValue(host);
     }
 
     private SocketAddress derggycraft$resolveSocketAddress() {
@@ -53,34 +59,28 @@ public abstract class CPMClientNetworkHandlerCompatMixin {
             return null;
         }
 
-        try {
-            return this.connection.getAddress();
-        } catch (Throwable ignored) {
+        SocketAddress modern = this.derggycraft$invokeSocketAddressAccessor("getAddress");
+        if (modern != null) {
+            return modern;
         }
 
+        SocketAddress legacy = this.derggycraft$invokeSocketAddressAccessor("method_1131");
+        if (legacy != null) {
+            return legacy;
+        }
+
+        return null;
+    }
+
+    private SocketAddress derggycraft$invokeSocketAddressAccessor(String methodName) {
         try {
-            Method legacy = this.connection.getClass().getMethod("method_1131");
-            Object value = legacy.invoke(this.connection);
+            Method method = this.connection.getClass().getMethod(methodName);
+            Object value = method.invoke(this.connection);
             if (value instanceof SocketAddress socketAddress) {
                 return socketAddress;
             }
         } catch (Throwable ignored) {
         }
-
-        for (Method method : this.connection.getClass().getMethods()) {
-            if (method.getParameterCount() != 0 || !SocketAddress.class.isAssignableFrom(method.getReturnType())) {
-                continue;
-            }
-
-            try {
-                Object value = method.invoke(this.connection);
-                if (value instanceof SocketAddress socketAddress) {
-                    return socketAddress;
-                }
-            } catch (Throwable ignored) {
-            }
-        }
-
         return null;
     }
 }

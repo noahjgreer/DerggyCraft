@@ -18,6 +18,14 @@ import net.noahsarch.derggycraft.item.GoldenCompassItem;
 import net.noahsarch.derggycraft.item.ThrowableFlareItem;
 
 public class DerggyCraft {
+        static {
+                // Keep CPM model loading deterministic across launchers unless user overrides it.
+                String bgThreads = System.getProperty("max.bg.threads");
+                if (bgThreads == null || bgThreads.isBlank()) {
+                        System.setProperty("max.bg.threads", "1");
+                }
+        }
+
     // Namespace Utility Field
     @Entrypoint.Namespace
     public static Namespace NAMESPACE;

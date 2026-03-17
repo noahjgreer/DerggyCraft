@@ -1,0 +1,62 @@
+package net.noahsarch.derggycraft.mixin;
+
+import org.objectweb.asm.tree.ClassNode;
+import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
+import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
+
+import java.util.List;
+import java.util.Set;
+
+public class DerggyCraftMixinPlugin implements IMixinConfigPlugin {
+    private static final String CPM_CONFIG_MIXIN = "net.noahsarch.derggycraft.mixin.client.CPMConfigEntryThreadSafetyMixin";
+    private static final String CPM_CONFIG_ENTRY_CLASS = "com.tom.cpl.config.ConfigEntry";
+
+    @Override
+    public void onLoad(String mixinPackage) {
+    }
+
+    @Override
+    public String getRefMapperConfig() {
+        return null;
+    }
+
+    @Override
+    public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
+        if (CPM_CONFIG_MIXIN.equals(mixinClassName)) {
+            return this.derggycraft$classExists(CPM_CONFIG_ENTRY_CLASS);
+        }
+        return true;
+    }
+
+    @Override
+    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
+    }
+
+    @Override
+    public List<String> getMixins() {
+        return null;
+    }
+
+    @Override
+    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+    }
+
+    @Override
+    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+    }
+
+    private boolean derggycraft$classExists(String className) {
+        ClassLoader contextLoader = Thread.currentThread().getContextClassLoader();
+        try {
+            Class.forName(className, false, contextLoader);
+            return true;
+        } catch (Throwable ignored) {
+            try {
+                Class.forName(className, false, this.getClass().getClassLoader());
+                return true;
+            } catch (Throwable ignoredToo) {
+                return false;
+            }
+        }
+    }
+}
