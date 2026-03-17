@@ -10,6 +10,8 @@ import java.util.Set;
 public class DerggyCraftMixinPlugin implements IMixinConfigPlugin {
     private static final String CPM_CONFIG_MIXIN = "net.noahsarch.derggycraft.mixin.client.CPMConfigEntryThreadSafetyMixin";
     private static final String CPM_CONFIG_ENTRY_CLASS = "com.tom.cpl.config.ConfigEntry";
+    private static final String CPM_SINGLEPLAYER_COMMAND_MIXIN = "net.noahsarch.derggycraft.mixin.client.CPMSinglePlayerCommandSafetyMixin";
+    private static final String CPM_SINGLEPLAYER_COMMAND_CLASS = "com.tom.cpm.client.SinglePlayerCommands";
 
     @Override
     public void onLoad(String mixinPackage) {
@@ -24,6 +26,9 @@ public class DerggyCraftMixinPlugin implements IMixinConfigPlugin {
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         if (CPM_CONFIG_MIXIN.equals(mixinClassName)) {
             return this.derggycraft$classExists(CPM_CONFIG_ENTRY_CLASS);
+        }
+        if (CPM_SINGLEPLAYER_COMMAND_MIXIN.equals(mixinClassName)) {
+            return this.derggycraft$classExists(CPM_SINGLEPLAYER_COMMAND_CLASS);
         }
         return true;
     }

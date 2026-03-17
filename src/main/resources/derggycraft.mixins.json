@@ -42,6 +42,7 @@
     "client.ChatScreenMixin",
     "client.CPMConfigEntryThreadSafetyMixin",
     "client.CPMClientNetworkHandlerCompatMixin",
+    "client.CPMSinglePlayerCommandSafetyMixin",
     "client.ClientDropShortcutMixin",
     "client.ClientPlayerEntityChatMixin",
     "client.DrawContextInvoker",

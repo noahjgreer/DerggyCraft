@@ -1,5 +1,7 @@
 package net.noahsarch.derggycraft;
 
+import java.util.Locale;
+
 import org.apache.logging.log4j.Logger;
 
 import net.mine_diver.unsafeevents.listener.EventListener;
@@ -23,6 +25,17 @@ public class DerggyCraft {
                 String bgThreads = System.getProperty("max.bg.threads");
                 if (bgThreads == null || bgThreads.isBlank()) {
                         System.setProperty("max.bg.threads", "1");
+                }
+
+                // Legacy LWJGL2 + modern multi-DPI Windows can produce mismatched content sizing.
+                String osName = System.getProperty("os.name", "").toLowerCase(Locale.ROOT);
+                if (osName.contains("win")) {
+                        if (System.getProperty("sun.java2d.dpiaware") == null) {
+                                System.setProperty("sun.java2d.dpiaware", "false");
+                        }
+                        if (System.getProperty("sun.java2d.uiScale") == null) {
+                                System.setProperty("sun.java2d.uiScale", "1.0");
+                        }
                 }
         }
 
