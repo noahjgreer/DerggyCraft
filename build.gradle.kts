@@ -25,6 +25,10 @@ loom {
 //	accessWidenerPath = file("src/main/resources/examplemod.accesswidener")
 
 	runs {
+		named("server") {
+			runDir("run/server")
+		}
+
 		named("client") {
 			if (devUsername.isNotEmpty()) {
 				programArgs("--username", devUsername)

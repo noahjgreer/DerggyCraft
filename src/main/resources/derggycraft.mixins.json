@@ -39,6 +39,7 @@
   ],
   "client": [
     "client.ArsenicCompassMixin",
+    "client.ClientNetworkHandlerHandshakeMixin",
     "client.ChatScreenMixin",
     "client.CPMConfigEntryThreadSafetyMixin",
     "client.CPMClientNetworkHandlerCompatMixin",

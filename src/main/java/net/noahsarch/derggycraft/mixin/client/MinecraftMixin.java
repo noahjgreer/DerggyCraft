@@ -15,8 +15,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(Minecraft.class)
+@Mixin(value = Minecraft.class, priority = 2000)
 public class MinecraftMixin {
     @Unique
     private int derggycraft$lastViewportWidth = -1;
@@ -44,6 +45,15 @@ public class MinecraftMixin {
     private void derggycraft$tickMusicSyncScheduler(CallbackInfo ci) {
         ClientMusicSyncManager.tick((Minecraft) (Object) this);
         this.derggycraft$syncViewportToDisplay();
+    }
+
+    @Inject(method = "isCommand(Ljava/lang/String;)Z", at = @At("HEAD"), cancellable = true, require = 0)
+    private void derggycraft$preventMultiplayerChatEcho(String command, CallbackInfoReturnable<Boolean> cir) {
+        Minecraft minecraft = (Minecraft) (Object) this;
+        if (minecraft.isWorldRemote() && command != null && !command.startsWith("/")) {
+            // Let vanilla/network handling own chat dispatch in multiplayer.
+            cir.setReturnValue(false);
+        }
     }
 
     @Unique
