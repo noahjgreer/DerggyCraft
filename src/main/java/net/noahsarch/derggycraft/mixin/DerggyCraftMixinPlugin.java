@@ -1,5 +1,6 @@
 package net.noahsarch.derggycraft.mixin;
 
+import net.fabricmc.loader.api.FabricLoader;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 public class DerggyCraftMixinPlugin implements IMixinConfigPlugin {
+    private static final String CPM_MOD_ID = "cpm";
     private static final String CPM_CONFIG_MIXIN = "net.noahsarch.derggycraft.mixin.client.CPMConfigEntryThreadSafetyMixin";
     private static final String CPM_CONFIG_ENTRY_CLASS = "com.tom.cpl.config.ConfigEntry";
     private static final String CPM_SINGLEPLAYER_COMMAND_MIXIN = "net.noahsarch.derggycraft.mixin.client.CPMSinglePlayerCommandSafetyMixin";
@@ -25,10 +27,10 @@ public class DerggyCraftMixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         if (CPM_CONFIG_MIXIN.equals(mixinClassName)) {
-            return this.derggycraft$classExists(CPM_CONFIG_ENTRY_CLASS);
+            return this.derggycraft$isCpmLoaded() && this.derggycraft$classExists(CPM_CONFIG_ENTRY_CLASS);
         }
         if (CPM_SINGLEPLAYER_COMMAND_MIXIN.equals(mixinClassName)) {
-            return this.derggycraft$classExists(CPM_SINGLEPLAYER_COMMAND_CLASS);
+            return this.derggycraft$isCpmLoaded();
         }
         return true;
     }
@@ -62,6 +64,14 @@ public class DerggyCraftMixinPlugin implements IMixinConfigPlugin {
             } catch (Throwable ignoredToo) {
                 return false;
             }
+        }
+    }
+
+    private boolean derggycraft$isCpmLoaded() {
+        try {
+            return FabricLoader.getInstance().isModLoaded(CPM_MOD_ID);
+        } catch (Throwable ignored) {
+            return this.derggycraft$classExists(CPM_SINGLEPLAYER_COMMAND_CLASS);
         }
     }
 }
