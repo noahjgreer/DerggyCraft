@@ -406,18 +406,9 @@ java.net.SocketException: Socket closed
 2026-03-18 20:05:20 [INFO] <FinniTheFox> Da buckets do!! ^W^
 2026-03-18 20:05:21 [INFO] <FinniTheFox> Also
 2026-03-18 20:06:20 [INFO] <FinniTheFox> We also hab container sorting now :3
-2026-03-18 20:06:50 [INFO] <FinniTheFox> Meowwwww!! ^W^
-2026-03-18 20:06:57 [INFO] <FinniTheFox> Me too :3c
-2026-03-18 20:07:00 [INFO] <FinniTheFox> FOppy fix dat pawby
 [20:07:19] [Server thread/INFO] (derggycraft|Mod) Golden Compass locked target 'NotaNaN' (runtime id 16027).
 [20:07:30] [Server thread/INFO] (derggycraft|Mod) Golden Compass locked target 'NotaNaN' (runtime id 16027).
 2026-03-18 20:07:35 [INFO] <FinniTheFox> owo
-2026-03-18 20:07:37 [INFO] <FinniTheFox> Mrrrewowww
-2026-03-18 20:07:37 [INFO] <FinniTheFox> :3
-2026-03-18 20:07:40 [INFO] <FinniTheFox> As of now
-2026-03-18 20:07:43 [INFO] <FinniTheFox> Only minor bug fixes I fink
-2026-03-18 20:07:44 [INFO] <FinniTheFox> :3
-2026-03-18 20:08:14 [INFO] <FinniTheFox> Dat wus me testing da inventowy owo
 java.lang.NullPointerException: Cannot read the array length because "this.ints" is null
         at knot//net.modificationstation.stationapi.api.network.packet.MessagePacket.method_807(MessagePacket.java:403)
         at knot//net.minecraft.class_169.method_801(class_169.java:170)
@@ -460,20 +451,6 @@ java.net.SocketException: Socket closed
 2026-03-18 20:08:22 [INFO] FinniTheFox [/192.168.1.64:63938] logged in with entity id 19698 at (-22.30000001192093, 15.0, -7.699999988079075)
 2026-03-18 20:08:24 [INFO] <FinniTheFox> X3
 2026-03-18 20:08:29 [INFO] <FinniTheFox> Da end of streams really add to da experience nwn
-2026-03-18 20:08:33 [INFO] <FinniTheFox> Honestly :3c
-2026-03-18 20:08:34 [INFO] <FinniTheFox> I nawt sure
-2026-03-18 20:08:36 [INFO] <FinniTheFox> nwn
-2026-03-18 20:08:41 [INFO] <FinniTheFox> X3
-2026-03-18 20:09:04 [INFO] <FinniTheFox> I wub chu too my wuv ;w; <3
-2026-03-18 20:09:08 [INFO] <FinniTheFox> I sawwy for keeping chu x3
-2026-03-18 20:09:46 [INFO] <FinniTheFox> I wub chu too derggy! ^W^
-2026-03-18 20:09:52 [INFO] <FinniTheFox> Foppy going to twy and get a wittle more sewing done pawby :3
-2026-03-18 20:09:56 [INFO] <FinniTheFox> Maybe I wiww shower and go bed early d
-2026-03-18 20:09:59 [INFO] <FinniTheFox> I nawt sure yet mreww nwn
-2026-03-18 20:10:29 [INFO] <FinniTheFox> Famk you so much my love nwn
-2026-03-18 20:10:33 [INFO] <FinniTheFox> I adore you so much~
-2026-03-18 20:10:52 [INFO] <FinniTheFox> Me too ;w; <3
-2026-03-18 20:10:55 [INFO] <FinniTheFox> I wub you my sweethearmt
 java.net.SocketException: Socket closed
         at java.base/sun.nio.ch.NioSocketImpl.ensureOpenAndConnected(NioSocketImpl.java:163)
         at java.base/sun.nio.ch.NioSocketImpl.beginWrite(NioSocketImpl.java:362)

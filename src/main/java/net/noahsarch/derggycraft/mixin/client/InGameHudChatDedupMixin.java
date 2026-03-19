@@ -13,6 +13,9 @@ import java.util.List;
 
 @Mixin(InGameHud.class)
 public abstract class InGameHudChatDedupMixin {
+    private static final int DERGGYCRAFT_MAX_DEDUP_AGE_TICKS = 40;
+    private static final int DERGGYCRAFT_RECENT_CHAT_SCAN_LIMIT = 8;
+
     @Shadow
     private Minecraft minecraft;
 
@@ -25,19 +28,49 @@ public abstract class InGameHudChatDedupMixin {
             return;
         }
 
+        String normalizedIncoming = derggycraft$normalizeChatText(message);
         String selfPrefix = "<" + this.minecraft.player.name + "> ";
-        if (!message.startsWith(selfPrefix) || this.messages.isEmpty()) {
+        if (!normalizedIncoming.startsWith(selfPrefix) || this.messages.isEmpty()) {
             return;
         }
 
-        Object first = this.messages.get(0);
-        if (!(first instanceof ChatHudLine firstLine)) {
-            return;
+        int scanned = 0;
+        for (Object entry : this.messages) {
+            if (scanned++ >= DERGGYCRAFT_RECENT_CHAT_SCAN_LIMIT) {
+                break;
+            }
+
+            if (!(entry instanceof ChatHudLine line)) {
+                continue;
+            }
+
+            if (line.age > DERGGYCRAFT_MAX_DEDUP_AGE_TICKS) {
+                continue;
+            }
+
+            String normalizedExisting = derggycraft$normalizeChatText(line.text);
+            // CPM can render a local self-message before the server relay arrives; collapse the second copy.
+            if (normalizedIncoming.equals(normalizedExisting)) {
+                ci.cancel();
+                return;
+            }
+        }
+    }
+
+    private static String derggycraft$normalizeChatText(String text) {
+        if (text == null || text.isEmpty()) {
+            return "";
         }
 
-        // CPM adds a local echo before the server message arrives; swallow only the immediate duplicate.
-        if (message.equals(firstLine.text) && firstLine.age <= 2) {
-            ci.cancel();
+        StringBuilder builder = new StringBuilder(text.length());
+        for (int i = 0; i < text.length(); i++) {
+            char current = text.charAt(i);
+            if (current == '\u00A7' && i + 1 < text.length()) {
+                i++;
+                continue;
+            }
+            builder.append(current);
         }
+        return builder.toString().trim();
     }
 }

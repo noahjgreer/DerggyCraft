@@ -15,9 +15,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -127,9 +129,20 @@ public final class DerggyCraftAutoUpdater {
     }
 
     public static void scheduleInstallAndRestart(Path installedJarPath, Path downloadedJarPath) throws IOException {
-        if (!isWindows()) {
-            throw new IOException("Automatic update currently supports Windows only.");
+        if (isWindows()) {
+            scheduleWindowsInstallAndRestart(installedJarPath, downloadedJarPath);
+            return;
         }
+
+        if (isLinux()) {
+            scheduleLinuxInstallAndRestart(installedJarPath, downloadedJarPath);
+            return;
+        }
+
+        throw new IOException("Automatic update currently supports Windows and Linux only.");
+    }
+
+    private static void scheduleWindowsInstallAndRestart(Path installedJarPath, Path downloadedJarPath) throws IOException {
 
         long currentPid = ProcessHandle.current().pid();
         String relaunchCommand = resolveRelaunchCommand();
@@ -161,6 +174,42 @@ public final class DerggyCraftAutoUpdater {
                 "-WindowStyle", "Hidden",
                 "-File", scriptPath.toString()
         ).start();
+    }
+
+    private static void scheduleLinuxInstallAndRestart(Path installedJarPath, Path downloadedJarPath) throws IOException {
+        long currentPid = ProcessHandle.current().pid();
+        String relaunchCommand = resolveRelaunchCommand();
+        if (relaunchCommand == null || relaunchCommand.isBlank()) {
+            throw new IOException("Unable to determine relaunch command for this client.");
+        }
+
+        Path updaterDirectory = downloadedJarPath.getParent();
+        Files.createDirectories(updaterDirectory);
+        Path scriptPath = updaterDirectory.resolve("derggycraft-apply-update.sh");
+        Path logPath = updaterDirectory.resolve("derggycraft-updater.log");
+        Path backupPath = Paths.get(installedJarPath.toString() + ".old");
+
+        String script = buildShellScript(
+                currentPid,
+                installedJarPath,
+                downloadedJarPath,
+                backupPath,
+                relaunchCommand,
+                logPath
+        );
+
+        Files.writeString(scriptPath, script, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE);
+        try {
+            Files.setPosixFilePermissions(scriptPath, EnumSet.of(
+                    PosixFilePermission.OWNER_READ,
+                    PosixFilePermission.OWNER_WRITE,
+                    PosixFilePermission.OWNER_EXECUTE
+            ));
+        } catch (UnsupportedOperationException ignored) {
+            // Ignore if filesystem does not support POSIX permissions.
+        }
+
+        new ProcessBuilder("sh", scriptPath.toString()).start();
     }
 
     private static HttpURLConnection openConnection(String urlString) throws IOException {
@@ -261,6 +310,11 @@ public final class DerggyCraftAutoUpdater {
         return osName.contains("win");
     }
 
+    private static boolean isLinux() {
+        String osName = System.getProperty("os.name", "").toLowerCase(Locale.ROOT);
+        return osName.contains("linux");
+    }
+
     private static String unescapeJsonString(String value) {
         return value
                 .replace("\\/", "/")
@@ -319,8 +373,59 @@ public final class DerggyCraftAutoUpdater {
         );
     }
 
+        private static String buildShellScript(long pid, Path installedJarPath, Path downloadedJarPath, Path backupPath, String relaunchCommand, Path logPath) {
+                return """
+                                #!/bin/sh
+                                set -eu
+                                PID_TO_WAIT=%d
+                                TARGET_JAR='%s'
+                                DOWNLOADED_JAR='%s'
+                                BACKUP_JAR='%s'
+                                RELAUNCH_COMMAND='%s'
+                                LOG_FILE='%s'
+
+                                write_update_log() {
+                                    printf '[%s] %s\\n' "$(date '+%%Y-%%m-%%dT%%H:%%M:%%S')" "$1" >> "$LOG_FILE"
+                                }
+
+                                write_update_log 'Updater helper started.'
+                                while kill -0 "$PID_TO_WAIT" 2>/dev/null; do
+                                    sleep 1
+                                done
+
+                                if [ -f "$BACKUP_JAR" ]; then
+                                    rm -f "$BACKUP_JAR"
+                                fi
+
+                                if [ -f "$TARGET_JAR" ]; then
+                                    mv -f "$TARGET_JAR" "$BACKUP_JAR"
+                                fi
+
+                                mv -f "$DOWNLOADED_JAR" "$TARGET_JAR"
+
+                                if [ -f "$BACKUP_JAR" ]; then
+                                    rm -f "$BACKUP_JAR"
+                                fi
+
+                                write_update_log 'Jar replacement completed.'
+                                nohup sh -lc "$RELAUNCH_COMMAND" >/dev/null 2>&1 &
+                                write_update_log 'Relaunch command launched.'
+                                """.formatted(
+                                pid,
+                                escapeShellSingleQuoted(installedJarPath.toString()),
+                                escapeShellSingleQuoted(downloadedJarPath.toString()),
+                                escapeShellSingleQuoted(backupPath.toString()),
+                                escapeShellSingleQuoted(relaunchCommand),
+                                escapeShellSingleQuoted(logPath.toString())
+                );
+        }
+
     private static String escapePowerShellSingleQuoted(String value) {
         return value.replace("'", "''");
+    }
+
+    private static String escapeShellSingleQuoted(String value) {
+        return value.replace("'", "'\"'\"'");
     }
 
     private static String resolveRelaunchCommand() {
@@ -330,9 +435,14 @@ public final class DerggyCraftAutoUpdater {
         }
 
         String javaHome = System.getProperty("java.home", "");
-        Path javaExecutable = Paths.get(javaHome, "bin", "javaw.exe");
-        if (!Files.exists(javaExecutable)) {
-            javaExecutable = Paths.get(javaHome, "bin", "java.exe");
+        Path javaExecutable;
+        if (isWindows()) {
+            javaExecutable = Paths.get(javaHome, "bin", "javaw.exe");
+            if (!Files.exists(javaExecutable)) {
+                javaExecutable = Paths.get(javaHome, "bin", "java.exe");
+            }
+        } else {
+            javaExecutable = Paths.get(javaHome, "bin", "java");
         }
 
         String classPath = System.getProperty("java.class.path", "");
@@ -352,7 +462,10 @@ public final class DerggyCraftAutoUpdater {
         args.add(classPath);
         args.add(sunCommand);
 
-        return buildWindowsCommandLine(args);
+        if (isWindows()) {
+            return buildWindowsCommandLine(args);
+        }
+        return buildPosixCommandLine(args);
     }
 
     private static String buildWindowsCommandLine(List<String> args) {
@@ -362,6 +475,17 @@ public final class DerggyCraftAutoUpdater {
                 builder.append(' ');
             }
             builder.append(quoteForCommand(args.get(i)));
+        }
+        return builder.toString();
+    }
+
+    private static String buildPosixCommandLine(List<String> args) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < args.size(); ++i) {
+            if (i > 0) {
+                builder.append(' ');
+            }
+            builder.append(quoteForPosixShell(args.get(i)));
         }
         return builder.toString();
     }
@@ -377,6 +501,14 @@ public final class DerggyCraftAutoUpdater {
         }
 
         return "\"" + value.replace("\"", "\\\"") + "\"";
+    }
+
+    private static String quoteForPosixShell(String value) {
+        if (value == null) {
+            return "''";
+        }
+
+        return "'" + escapeShellSingleQuoted(value) + "'";
     }
 
     public interface ProgressListener {
