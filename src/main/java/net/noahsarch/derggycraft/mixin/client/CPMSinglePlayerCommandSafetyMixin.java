@@ -12,6 +12,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class CPMSinglePlayerCommandSafetyMixin {
     @Inject(method = "executeCommand", at = @At("HEAD"), cancellable = true, remap = false, require = 0)
     private static void derggycraft$guardMalformedGiveCommand(Minecraft mc, String command, CallbackInfo ci) {
+        // CPM hooks Minecraft.isCommand on both SP/MP; block local command execution in MP to avoid ghost inventory state.
+        if (mc != null && mc.isWorldRemote()) {
+            ci.cancel();
+            return;
+        }
+
         if (command == null) {
             return;
         }
