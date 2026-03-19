@@ -385,7 +385,7 @@ public final class DerggyCraftAutoUpdater {
                                 LOG_FILE='%s'
 
                                 write_update_log() {
-                                    printf '[%s] %s\\n' "$(date '+%%Y-%%m-%%dT%%H:%%M:%%S')" "$1" >> "$LOG_FILE"
+                                    printf '[%%s] %%s\\n' "$(date '+%%Y-%%m-%%dT%%H:%%M:%%S')" "$1" >> "$LOG_FILE"
                                 }
 
                                 write_update_log 'Updater helper started.'
