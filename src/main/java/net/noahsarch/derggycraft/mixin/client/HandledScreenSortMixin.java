@@ -136,19 +136,32 @@ public abstract class HandledScreenSortMixin {
         DrawContextInvoker drawContext = (DrawContextInvoker) (Object) this;
         Minecraft minecraft = this.derggycraft$getMinecraftForSort();
         boolean hovered = this.derggycraft$isPointInside(mouseX, mouseY, x, y, DERGGYCRAFT_BUTTON_SIZE, DERGGYCRAFT_BUTTON_SIZE);
+        boolean wasLightingEnabled = GL11.glIsEnabled(GL11.GL_LIGHTING);
 
         if (minecraft != null && minecraft.textureManager != null) {
+            if (wasLightingEnabled) {
+                GL11.glDisable(GL11.GL_LIGHTING);
+            }
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             minecraft.textureManager.bindTexture(minecraft.textureManager.getTextureId(DERGGYCRAFT_BUTTON_TEXTURE));
             int v = hovered ? DERGGYCRAFT_BUTTON_TEXTURE_HOVER_V : DERGGYCRAFT_BUTTON_TEXTURE_V;
             drawContext.derggycraft$invokeDrawTexture(x, y, DERGGYCRAFT_BUTTON_TEXTURE_U, v, DERGGYCRAFT_BUTTON_SIZE, DERGGYCRAFT_BUTTON_SIZE);
+            if (wasLightingEnabled) {
+                GL11.glEnable(GL11.GL_LIGHTING);
+            }
             return;
         }
 
+        if (wasLightingEnabled) {
+            GL11.glDisable(GL11.GL_LIGHTING);
+        }
         int outer = hovered ? 0xE0D8D8D8 : 0xB0A8A8A8;
         int inner = hovered ? 0xE04C4C4C : 0xC03A3A3A;
         drawContext.derggycraft$invokeFillGradient(x, y, x + DERGGYCRAFT_BUTTON_SIZE, y + DERGGYCRAFT_BUTTON_SIZE, outer, outer);
         drawContext.derggycraft$invokeFillGradient(x + 1, y + 1, x + DERGGYCRAFT_BUTTON_SIZE - 1, y + DERGGYCRAFT_BUTTON_SIZE - 1, inner, inner);
+        if (wasLightingEnabled) {
+            GL11.glEnable(GL11.GL_LIGHTING);
+        }
     }
 
     private void derggycraft$sendSortAction(Minecraft minecraft, InventorySortRuntime.SortTarget target) {

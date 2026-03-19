@@ -1,0 +1,507 @@
+F:\MuffinMode-Sammy-Beta-404>java -Xmx4G -jar fabric-server-mc.b1.7.3-loader.0.18.4-launcher.1.0.0-babric.2.jar nogui
+[19:43:27] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft Beta 1.7.3 with Fabric Loader 0.18.4
+[19:43:27] [ForkJoinPool-1-worker-2/WARN] (FabricLoader/Metadata) Mod cpm uses the version 0.6.25a which isn't compatible with Loader's extended semantic version format (Could not parse version number component '25a'!), SemVer is recommended for reliably evaluating dependencies and prioritizing newer version
+[19:43:27] [ForkJoinPool-1-worker-6/WARN] (FabricLoader/Metadata) Mod com_github_mineldiver_unsafeevents uses the version e31096e which isn't compatible with Loader's extended semantic version format (Could not parse version number component 'e31096e'!), SemVer is recommended for reliably evaluating dependencies and prioritizing newer version
+[19:43:27] [main/INFO] (FabricLoader) Loading 46 mods:
+        - cpm 0.6.25a
+           \-- com_google_guava_failureaccess 1.0.1
+        - derggycraft 1.3.1-a
+        - fabricloader 0.18.4
+           \-- mixinextras 0.5.0
+        - java 21
+        - minecraft 1.0.0-beta.7.3
+        - stationapi 2.0.0-alpha.5.4
+           |-- com_github_ben-manes_caffeine_caffeine 3.0.5
+           |-- com_github_mineldiver_unsafeevents e31096e
+           |-- com_mojang_datafixerupper 6.0.6
+           |-- it_unimi_dsi_fastutil 8.5.8
+           |-- net_jodah_typetools 0.8.3
+           |-- spasm 0.2.2
+           |-- station-achievements-v0 2.0.0-alpha.5.4
+           |-- station-api-base 2.0.0-alpha.5.4
+           |-- station-api-configuration 2.0.0-alpha.5.4
+           |-- station-armor-api-v0 2.0.0-alpha.5.4
+           |-- station-audio-loader-v0 2.0.0-alpha.5.4
+           |-- station-biome-events-v0 2.0.0-alpha.5.4
+           |-- station-blockentities-v0 2.0.0-alpha.5.4
+           |-- station-blockitems-v0 2.0.0-alpha.5.4
+           |-- station-blocks-v0 2.0.0-alpha.5.4
+           |-- station-container-api-v0 2.0.0-alpha.5.4
+           |-- station-datafixer-v0 2.0.0-alpha.5.4
+           |-- station-dimensions-v0 2.0.0-alpha.5.4
+           |-- station-effects-api-v0 2.0.0-alpha.5.4
+           |-- station-entities-v0 2.0.0-alpha.5.4
+           |-- station-flattening-v0 2.0.0-alpha.5.4
+           |-- station-gui-api-v0 2.0.0-alpha.5.4
+           |-- station-items-v0 2.0.0-alpha.5.4
+           |-- station-keybindings-v0 2.0.0-alpha.5.4
+           |-- station-lifecycle-events-v0 2.0.0-alpha.5.4
+           |-- station-localization-api-v0 2.0.0-alpha.5.4
+           |-- station-maths-v0 2.0.0-alpha.5.4
+           |-- station-nbt-v0 2.0.0-alpha.5.4
+           |-- station-networking-v0 2.0.0-alpha.5.4
+           |-- station-player-api-v0 2.0.0-alpha.5.4
+           |-- station-recipes-v0 2.0.0-alpha.5.4
+           |-- station-registry-api-v0 2.0.0-alpha.5.4
+           |-- station-registry-sync-v0 2.0.0-alpha.5.4
+           |-- station-renderer-api-v0 2.0.0-alpha.5.4
+           |-- station-renderer-arsenic 2.0.0-alpha.5.4
+           |-- station-resource-loader-v0 2.0.0-alpha.5.4
+           |-- station-templates-v0 2.0.0-alpha.5.4
+           |-- station-tools-api-v1 2.0.0-alpha.5.4
+           |-- station-transitive-access-wideners-v0 2.0.0-alpha.5.4
+           |-- station-vanilla-checker-v0 2.0.0-alpha.5.4
+           |-- station-vanilla-fix-v0 2.0.0-alpha.5.4
+           |-- station-world-events-v0 2.0.0-alpha.5.4
+           \-- station-worldgen-api-v0 2.0.0-alpha.5.4
+[19:43:27] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/F:/MuffinMode-Sammy-Beta-404/libraries/net/fabricmc/sponge-mixin/0.17.0+mixin.0.8.7/sponge-mixin-0.17.0+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
+[19:43:28] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
+[19:43:28] [main/WARN] (FabricLoader/Mixin) Error loading class: net/minecraft/class_336 (java.lang.ClassNotFoundException: net/minecraft/class_336)
+[19:43:28] [main/WARN] (FabricLoader/Mixin) @Mixin target net.minecraft.class_336 was not found derggycraft.mixins.json:client.DynamicTextureAccessor from mod derggycraft
+[19:43:28] [main/WARN] (FabricLoader/Mixin) Error loading class: net/minecraft/class_92 (java.lang.ClassNotFoundException: net/minecraft/class_92)
+[19:43:28] [main/WARN] (FabricLoader/Mixin) @Mixin target net.minecraft.class_92 was not found derggycraft.mixins.json:client.ItemRendererMixin from mod derggycraft
+[19:43:28] [main/WARN] (FabricLoader/Mixin) Error loading class: net/minecraft/client/Minecraft (java.lang.ClassNotFoundException: net/minecraft/client/Minecraft)
+[19:43:28] [main/WARN] (FabricLoader/Mixin) @Mixin target net.minecraft.client.Minecraft was not found derggycraft.mixins.json:client.MinecraftMixin from mod derggycraft
+[19:43:29] [main/INFO] (Station|API) Initializing Station API...
+[19:43:29] [main/INFO] (Station|API) Loading entrypoints...
+[19:43:29] [main/INFO] (Station|API) Setting up "derggycraft" "stationapi:event_bus" "net.noahsarch.derggycraft.DerggyCraft" entrypoint...
+[19:43:29] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.0).
+[19:43:29] [main/INFO] (Station|API) Setting up "station-api-base" "stationapi:event_bus" "net.modificationstation.stationapi.impl.mod.DeprecatedInitEventsImpl" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-blockitems-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.block.HasMetaBlockItemImpl" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-blockitems-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.block.HasMetaNamedBlockItemImpl" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-blockitems-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.block.HasCustomBlockItemFactoryImpl" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-blockitems-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.block.BlockFormOnlyHandler" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-effects-api-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.effect.EffectsRegisterListener" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-flattening-v0" "stationapi:event_bus" "net.modificationstation.stationapi.api.block.States" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-flattening-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.block.PlacementStateImpl" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-flattening-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.world.WorldDataVersionImpl" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-flattening-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.block.BlockInteractionImpl" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-items-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.entity.player.ItemCustomReachImpl" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-items-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.dispenser.CustomDispenseBehaviorImpl" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-networking-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.network.packet.StationNetworkingInit" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-recipes-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.recipe.json.JsonRecipeParserRegisterImpl" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-recipes-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.recipe.JsonRecipeParserInit" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-recipes-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.recipe.JsonRecipesLoader" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-recipes-v0" "stationapi:event_bus" "net.modificationstation.stationapi.api.recipe.FuelRegistry" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-registry-api-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.registry.WorldRegistryRemapper" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-registry-api-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.registry.TagReloaderImpl" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-registry-sync-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.network.RegistryNetworkingInit" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-resource-loader-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.resource.DataReloaderImpl" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-tools-api-v1" "stationapi:event_bus" "net.modificationstation.stationapi.impl.item.HijackShearsImplV1" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-vanilla-checker-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.network.VanillaChecker" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-vanilla-fix-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.vanillafix.block.VanillaBlockFixImpl" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-vanilla-fix-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.vanillafix.item.VanillaItemFixImpl" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-vanilla-fix-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.vanillafix.dimension.VanillaDimensionFixImpl" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-vanilla-fix-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.vanillafix.recipe.VanillaFuelItemFixImpl" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-vanilla-fix-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.vanillafix.datafixer.VanillaDataFixerImpl" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "station-worldgen-api-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.worldgen.WorldgenListener" entrypoint...
+[19:43:29] [main/INFO] (Station|API) Setting up "cpm" "stationapi:event_bus_server" "com.tom.cpm.server.CPMServer" entrypoint...
+[19:43:30] [main/INFO] (Station|API) Setting up "station-entities-v0" "stationapi:event_bus_server" "net.modificationstation.stationapi.impl.server.entity.CustomTrackingImpl" entrypoint...
+[19:43:30] [main/INFO] (Station|API) Setting up "station-entities-v0" "stationapi:event_bus_server" "net.modificationstation.stationapi.impl.server.entity.TrackingParametersImpl" entrypoint...
+[19:43:30] [main/INFO] (Station|API) Setting up "station-registry-sync-v0" "stationapi:event_bus_server" "net.modificationstation.stationapi.impl.server.registry.ServerRegistrySender" entrypoint...
+[19:43:30] [main/INFO] (Station|API) Setting up "station-registry-sync-v0" "stationapi:event_bus_server" "net.modificationstation.stationapi.impl.server.registry.ServerRegistrySynchronizer" entrypoint...
+[19:43:30] [main/INFO] (Station|API) Setting up "station-vanilla-checker-v0" "stationapi:event_bus_server" "net.modificationstation.stationapi.impl.server.network.ServerVanillaChecker" entrypoint...
+[19:43:30] [main/INFO] (Station|API) Invoking Init event...
+[19:43:30] [main/INFO] (Station|API) Searching for JSON recipes...
+[19:43:30] [main/INFO] (Station|API) Gathering mods that require client verification...
+[19:43:30] [main/INFO] (Station|API) Finished Station API setup.
+[19:43:31] [main/INFO] (Station|API) Added vanilla blocks to the registry.
+[19:43:31] [main/INFO] (Station|API) Added vanilla items to the registry.
+156 recipes
+16 achievements
+[19:43:31] [main/INFO] (CPM) Customizable Player Models Initialized
+[19:43:31] [main/INFO] (CPM) Loaded plugins: (0)
+
+2026-03-18 19:43:31 [INFO] Starting minecraft server version Beta 1.7.3
+2026-03-18 19:43:31 [INFO] Loading properties
+2026-03-18 19:43:31 [INFO] Starting Minecraft server on *:25566
+2026-03-18 19:43:31 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2026-03-18 19:43:31 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2026-03-18 19:43:31 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2026-03-18 19:43:31 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+[19:43:31] [Server thread/INFO] (Station|API) Reloading ResourceManager: vanilla, Fabric Mods
+[19:43:32] [Server thread/INFO] (Station|API) Resource reload finished after 115 ms
+[19:43:32] [Server thread/INFO] (Station|API) TagManagerLoader took approximately 110 ms (96 ms preparing, 14 ms applying)
+[19:43:32] [Server thread/INFO] (Station|API) Total blocking time: 14 ms
+2026-03-18 19:43:32 [INFO] Preparing level "world"
+[19:43:32] [Server thread/INFO] (Station|API) Remapping "stationapi:dimensions" registry...
+[19:43:32] [Server thread/INFO] (Station|API) Remapping "stationapi:dimensions" registry...
+[19:43:32] [Server thread/INFO] (Station|API) Remapping "stationapi:dimensions" registry...
+[19:43:32] [Server thread/INFO] (Station|API) Remapping "stationapi:dimensions" registry...
+[19:43:32] [Server thread/INFO] (Station|API) Remapping "stationapi:dimensions" registry...
+[19:43:32] [Server thread/INFO] (Station|API) Remapping "stationapi:dimensions" registry...
+[19:43:32] [Server thread/INFO] (Station|API) Remapping "stationapi:dimensions" registry...
+[19:43:32] [Server thread/INFO] (Station|API) Remapping "stationapi:dimensions" registry...
+[19:43:32] [Server thread/INFO] (Station|API) Remapping "stationapi:dimensions" registry...
+2026-03-18 19:43:32 [INFO] Preparing start region for level 0
+[19:43:32] [Worker-Bootstrap-2/INFO] (Minecraft) 2 Datafixer optimizations took 22 milliseconds
+2026-03-18 19:43:33 [INFO] Preparing spawn area: 24%
+2026-03-18 19:43:33 [INFO] Preparing start region for level 1
+2026-03-18 19:43:34 [INFO] Preparing spawn area: 44%
+2026-03-18 19:43:34 [INFO] Preparing start region for level 2
+2026-03-18 19:43:35 [INFO] Done (3452625000ns)! For help, type "help" or "?"
+[19:50:06] [Listen thread/WARN] (FabricLoader/Mixin) @Inject(@At("INVOKE")) Shift.BY=2 on station-vanilla-checker-v0.mixins.json:server.ServerLoginNetworkHandlerMixin from mod station-vanilla-checker-v0::handler$zhk000$station-vanilla-checker-v0$stationapi_checkModded exceeds the maximum allowed value: 0. Increase the value of maxShiftBy to suppress this warning.
+[19:50:07] [Server thread/WARN] (FabricLoader/Mixin) @Inject(@At("INVOKE")) Shift.BY=2 on station-items-v0.mixins.json:PlayerInventoryMixin from mod station-items-v0::handler$zfg000$station-items-v0$stationapi_newItemStack exceeds the maximum allowed value: 0. Increase the value of maxShiftBy to suppress this warning.
+[19:50:07] [Server thread/WARN] (FabricLoader/Mixin) @Inject(@At("INVOKE")) Shift.BY=2 on station-recipes-v0.mixins.json:CraftingResultMixin from mod station-recipes-v0::handler$zgk000$station-recipes-v0$stationapi_onCrafted exceeds the maximum allowed value: 0. Increase the value of maxShiftBy to suppress this warning.
+2026-03-18 19:50:07 [INFO] NotaNaN [/71.35.24.222:64036] logged in with entity id 51 at (-21.66798509520152, 16.0, -7.1157722848853115)
+2026-03-18 19:51:31 [INFO] FinniTheFox [/192.168.1.64:64247] logged in with entity id 2817 at (-22.47254394753642, 16.0, -8.620516196458379)
+2026-03-18 19:51:37 [INFO] <FinniTheFox> Derggy :3
+2026-03-18 19:51:43 [INFO] <FinniTheFox> Foppy fixed the cpms :3
+2026-03-18 19:51:57 [INFO] <FinniTheFox> And I also added animations back whcih means I can see that derggy is low on health Qwq
+2026-03-18 19:52:22 [INFO] <FinniTheFox> owo
+2026-03-18 19:52:26 [INFO] <FinniTheFox> foppy cant hear derggy for some weason
+2026-03-18 19:52:29 [INFO] <FinniTheFox> Ooh!
+2026-03-18 19:52:31 [INFO] <FinniTheFox> Now I can :3
+java.lang.NullPointerException: Cannot read the array length because "this.ints" is null
+        at knot//net.modificationstation.stationapi.api.network.packet.MessagePacket.method_807(MessagePacket.java:403)
+        at knot//net.minecraft.class_169.method_801(class_169.java:170)
+        at knot//net.minecraft.class_117.method_1137(class_117.java:166)
+        at knot//net.minecraft.class_117.method_1134(class_117.java:17)
+        at knot//net.minecraft.class_117$1.run(class_117.java:107)
+java.lang.NullPointerException: Cannot read the array length because "this.ints" is null
+        at knot//net.modificationstation.stationapi.api.network.packet.MessagePacket.method_807(MessagePacket.java:403)
+        at knot//net.minecraft.class_169.method_801(class_169.java:170)
+        at knot//net.minecraft.class_117.method_1137(class_117.java:166)
+        at knot//net.minecraft.class_117.method_1134(class_117.java:17)
+        at knot//net.minecraft.class_117$1.run(class_117.java:107)
+java.net.SocketException: Socket closed
+        at java.base/sun.nio.ch.NioSocketImpl.ensureOpenAndConnected(NioSocketImpl.java:163)
+        at java.base/sun.nio.ch.NioSocketImpl.beginWrite(NioSocketImpl.java:362)
+        at java.base/sun.nio.ch.NioSocketImpl.implWrite(NioSocketImpl.java:407)
+        at java.base/sun.nio.ch.NioSocketImpl.write(NioSocketImpl.java:440)
+        at java.base/sun.nio.ch.NioSocketImpl$2.write(NioSocketImpl.java:819)
+        at java.base/java.net.Socket$SocketOutputStream.write(Socket.java:1195)
+        at java.base/java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:125)
+        at java.base/java.io.BufferedOutputStream.implFlush(BufferedOutputStream.java:252)
+        at java.base/java.io.BufferedOutputStream.flush(BufferedOutputStream.java:240)
+        at java.base/java.io.DataOutputStream.flush(DataOutputStream.java:131)
+        at knot//net.minecraft.class_117$1.run(class_117.java:116)
+2026-03-18 19:52:55 [INFO] NotaNaN lost connection: disconnect.genericReason
+java.net.SocketException: Socket closed
+        at java.base/sun.nio.ch.NioSocketImpl.ensureOpenAndConnected(NioSocketImpl.java:163)
+        at java.base/sun.nio.ch.NioSocketImpl.beginWrite(NioSocketImpl.java:362)
+        at java.base/sun.nio.ch.NioSocketImpl.implWrite(NioSocketImpl.java:407)
+        at java.base/sun.nio.ch.NioSocketImpl.write(NioSocketImpl.java:440)
+        at java.base/sun.nio.ch.NioSocketImpl$2.write(NioSocketImpl.java:819)
+        at java.base/java.net.Socket$SocketOutputStream.write(Socket.java:1195)
+        at java.base/java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:125)
+        at java.base/java.io.BufferedOutputStream.implFlush(BufferedOutputStream.java:252)
+        at java.base/java.io.BufferedOutputStream.flush(BufferedOutputStream.java:240)
+        at java.base/java.io.DataOutputStream.flush(DataOutputStream.java:131)
+        at knot//net.minecraft.class_117$1.run(class_117.java:116)
+2026-03-18 19:52:55 [INFO] FinniTheFox lost connection: disconnect.genericReason
+2026-03-18 19:53:00 [INFO] FinniTheFox [/192.168.1.64:64288] logged in with entity id 4521 at (-23.69999998807907, 15.0, -5.461068917656966)
+2026-03-18 19:53:04 [INFO] NotaNaN [/71.35.24.222:64102] logged in with entity id 4737 at (-23.125, 15.0, -7.3125)
+2026-03-18 19:53:08 [INFO] <FinniTheFox> :3c
+2026-03-18 19:53:22 [INFO] <FinniTheFox> Chu do ;w;
+2026-03-18 19:53:29 [INFO] <FinniTheFox> Chu wook incwedibly injured ;w;
+2026-03-18 19:53:35 [INFO] <FinniTheFox> Meowww ;w; <3
+2026-03-18 19:53:37 [INFO] <FinniTheFox> FOppy fix that :3
+2026-03-18 19:54:42 [INFO] <FinniTheFox> yus :3
+2026-03-18 19:54:46 [INFO] <FinniTheFox> It was pwetty simple nwn
+java.lang.NullPointerException: Cannot read the array length because "this.ints" is null
+        at knot//net.modificationstation.stationapi.api.network.packet.MessagePacket.method_807(MessagePacket.java:403)
+        at knot//net.minecraft.class_169.method_801(class_169.java:170)
+        at knot//net.minecraft.class_117.method_1137(class_117.java:166)
+        at knot//net.minecraft.class_117.method_1134(class_117.java:17)
+        at knot//net.minecraft.class_117$1.run(class_117.java:107)
+java.lang.NullPointerException: Cannot read the array length because "this.ints" is null
+        at knot//net.modificationstation.stationapi.api.network.packet.MessagePacket.method_807(MessagePacket.java:403)
+        at knot//net.minecraft.class_169.method_801(class_169.java:170)
+        at knot//net.minecraft.class_117.method_1137(class_117.java:166)
+        at knot//net.minecraft.class_117.method_1134(class_117.java:17)
+        at knot//net.minecraft.class_117$1.run(class_117.java:107)
+java.net.SocketException: Socket closed
+        at java.base/sun.nio.ch.NioSocketImpl.ensureOpenAndConnected(NioSocketImpl.java:163)
+        at java.base/sun.nio.ch.NioSocketImpl.beginWrite(NioSocketImpl.java:362)
+        at java.base/sun.nio.ch.NioSocketImpl.implWrite(NioSocketImpl.java:407)
+        at java.base/sun.nio.ch.NioSocketImpl.write(NioSocketImpl.java:440)
+        at java.base/sun.nio.ch.NioSocketImpl$2.write(NioSocketImpl.java:819)
+        at java.base/java.net.Socket$SocketOutputStream.write(Socket.java:1195)
+        at java.base/java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:125)
+        at java.base/java.io.BufferedOutputStream.implFlush(BufferedOutputStream.java:252)
+        at java.base/java.io.BufferedOutputStream.flush(BufferedOutputStream.java:240)
+        at java.base/java.io.DataOutputStream.flush(DataOutputStream.java:131)
+        at knot//net.minecraft.class_117$1.run(class_117.java:116)
+2026-03-18 19:56:01 [INFO] FinniTheFox lost connection: disconnect.genericReason
+java.net.SocketException: Socket closed
+        at java.base/sun.nio.ch.NioSocketImpl.ensureOpenAndConnected(NioSocketImpl.java:163)
+        at java.base/sun.nio.ch.NioSocketImpl.beginWrite(NioSocketImpl.java:362)
+        at java.base/sun.nio.ch.NioSocketImpl.implWrite(NioSocketImpl.java:407)
+        at java.base/sun.nio.ch.NioSocketImpl.write(NioSocketImpl.java:440)
+        at java.base/sun.nio.ch.NioSocketImpl$2.write(NioSocketImpl.java:819)
+        at java.base/java.net.Socket$SocketOutputStream.write(Socket.java:1195)
+        at java.base/java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:125)
+        at java.base/java.io.BufferedOutputStream.implFlush(BufferedOutputStream.java:252)
+        at java.base/java.io.BufferedOutputStream.flush(BufferedOutputStream.java:240)
+        at java.base/java.io.DataOutputStream.flush(DataOutputStream.java:131)
+        at knot//net.minecraft.class_117$1.run(class_117.java:116)
+2026-03-18 19:56:01 [INFO] NotaNaN lost connection: disconnect.genericReason
+2026-03-18 19:56:04 [INFO] NotaNaN [/71.35.24.222:64126] logged in with entity id 8744 at (-43.51962878760924, 22.0, 38.94885582222866)
+2026-03-18 19:56:05 [INFO] FinniTheFox [/192.168.1.64:64338] logged in with entity id 8898 at (-46.69999998807907, 23.0, 40.549459295822636)
+2026-03-18 19:56:10 [INFO] <FinniTheFox> x333
+2026-03-18 19:56:12 [INFO] <FinniTheFox> Derggy
+2026-03-18 19:56:15 [INFO] <FinniTheFox> I am sorry for the end of streams
+java.lang.NullPointerException: Cannot read the array length because "this.ints" is null
+        at knot//net.modificationstation.stationapi.api.network.packet.MessagePacket.method_807(MessagePacket.java:403)
+        at knot//net.minecraft.class_169.method_801(class_169.java:170)
+        at knot//net.minecraft.class_117.method_1137(class_117.java:166)
+        at knot//net.minecraft.class_117.method_1134(class_117.java:17)
+        at knot//net.minecraft.class_117$1.run(class_117.java:107)
+java.lang.NullPointerException: Cannot read the array length because "this.ints" is null
+        at knot//net.modificationstation.stationapi.api.network.packet.MessagePacket.method_807(MessagePacket.java:403)
+        at knot//net.minecraft.class_169.method_801(class_169.java:170)
+        at knot//net.minecraft.class_117.method_1137(class_117.java:166)
+        at knot//net.minecraft.class_117.method_1134(class_117.java:17)
+        at knot//net.minecraft.class_117$1.run(class_117.java:107)
+java.net.SocketException: Socket closed
+        at java.base/sun.nio.ch.NioSocketImpl.ensureOpenAndConnected(NioSocketImpl.java:163)
+        at java.base/sun.nio.ch.NioSocketImpl.beginWrite(NioSocketImpl.java:362)
+        at java.base/sun.nio.ch.NioSocketImpl.implWrite(NioSocketImpl.java:407)
+        at java.base/sun.nio.ch.NioSocketImpl.write(NioSocketImpl.java:440)
+        at java.base/sun.nio.ch.NioSocketImpl$2.write(NioSocketImpl.java:819)
+        at java.base/java.net.Socket$SocketOutputStream.write(Socket.java:1195)
+        at java.base/java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:125)
+        at java.base/java.io.BufferedOutputStream.implFlush(BufferedOutputStream.java:252)
+        at java.base/java.io.BufferedOutputStream.flush(BufferedOutputStream.java:240)
+        at java.base/java.io.DataOutputStream.flush(DataOutputStream.java:131)
+        at knot//net.minecraft.class_117$1.run(class_117.java:116)
+2026-03-18 19:59:01 [INFO] NotaNaN lost connection: disconnect.genericReason
+java.net.SocketException: Socket closed
+        at java.base/sun.nio.ch.NioSocketImpl.ensureOpenAndConnected(NioSocketImpl.java:163)
+        at java.base/sun.nio.ch.NioSocketImpl.beginWrite(NioSocketImpl.java:362)
+        at java.base/sun.nio.ch.NioSocketImpl.implWrite(NioSocketImpl.java:407)
+        at java.base/sun.nio.ch.NioSocketImpl.write(NioSocketImpl.java:440)
+        at java.base/sun.nio.ch.NioSocketImpl$2.write(NioSocketImpl.java:819)
+        at java.base/java.net.Socket$SocketOutputStream.write(Socket.java:1195)
+        at java.base/java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:125)
+        at java.base/java.io.BufferedOutputStream.implFlush(BufferedOutputStream.java:252)
+        at java.base/java.io.BufferedOutputStream.flush(BufferedOutputStream.java:240)
+        at java.base/java.io.DataOutputStream.flush(DataOutputStream.java:131)
+        at knot//net.minecraft.class_117$1.run(class_117.java:116)
+2026-03-18 19:59:01 [INFO] FinniTheFox lost connection: disconnect.genericReason
+2026-03-18 19:59:03 [INFO] FinniTheFox [/192.168.1.64:64395] logged in with entity id 11815 at (-19.42182463628593, 15.0, 1.7636118657013204)
+2026-03-18 19:59:04 [INFO] NotaNaN [/71.35.24.222:64142] logged in with entity id 12006 at (-16.317785761505142, 15.0, 1.3544162790183618)
+2026-03-18 19:59:06 [INFO] <FinniTheFox> nwn
+2026-03-18 19:59:18 [INFO] <FinniTheFox> Ooooohhh :3c
+2026-03-18 19:59:55 [INFO] <FinniTheFox> OwO
+2026-03-18 19:59:57 [INFO] <FinniTheFox> Derggy
+2026-03-18 20:00:00 [INFO] <FinniTheFox> Dats crazy
+2026-03-18 20:00:02 [INFO] <FinniTheFox> X3
+2026-03-18 20:00:04 [INFO] <FinniTheFox> Meowwwww!!
+2026-03-18 20:00:17 [INFO] <FinniTheFox> X333
+2026-03-18 20:00:22 [INFO] <FinniTheFox> I sawwy for da silly :3
+2026-03-18 20:00:32 [INFO] <FinniTheFox> Da twue owo
+2026-03-18 20:00:50 [INFO] <FinniTheFox> Mrewww!
+2026-03-18 20:00:58 [INFO] <FinniTheFox> OwO
+2026-03-18 20:00:59 [INFO] <FinniTheFox> Meoww!
+2026-03-18 20:01:06 [INFO] <FinniTheFox> Da mrew nwn
+2026-03-18 20:01:13 [INFO] <FinniTheFox> ^W^
+2026-03-18 20:01:14 [INFO] <FinniTheFox> I wub derggy!!!
+java.lang.NullPointerException: Cannot read the array length because "this.ints" is null
+        at knot//net.modificationstation.stationapi.api.network.packet.MessagePacket.method_807(MessagePacket.java:403)
+        at knot//net.minecraft.class_169.method_801(class_169.java:170)
+        at knot//net.minecraft.class_117.method_1137(class_117.java:166)
+        at knot//net.minecraft.class_117.method_1134(class_117.java:17)
+        at knot//net.minecraft.class_117$1.run(class_117.java:107)
+java.lang.NullPointerException: Cannot read the array length because "this.ints" is null
+        at knot//net.modificationstation.stationapi.api.network.packet.MessagePacket.method_807(MessagePacket.java:403)
+        at knot//net.minecraft.class_169.method_801(class_169.java:170)
+        at knot//net.minecraft.class_117.method_1137(class_117.java:166)
+        at knot//net.minecraft.class_117.method_1134(class_117.java:17)
+        at knot//net.minecraft.class_117$1.run(class_117.java:107)
+java.net.SocketException: Socket closed
+        at java.base/sun.nio.ch.NioSocketImpl.ensureOpenAndConnected(NioSocketImpl.java:163)
+        at java.base/sun.nio.ch.NioSocketImpl.beginWrite(NioSocketImpl.java:362)
+        at java.base/sun.nio.ch.NioSocketImpl.implWrite(NioSocketImpl.java:407)
+        at java.base/sun.nio.ch.NioSocketImpl.write(NioSocketImpl.java:440)
+        at java.base/sun.nio.ch.NioSocketImpl$2.write(NioSocketImpl.java:819)
+        at java.base/java.net.Socket$SocketOutputStream.write(Socket.java:1195)
+        at java.base/java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:125)
+        at java.base/java.io.BufferedOutputStream.implFlush(BufferedOutputStream.java:252)
+        at java.base/java.io.BufferedOutputStream.flush(BufferedOutputStream.java:240)
+        at java.base/java.io.DataOutputStream.flush(DataOutputStream.java:131)
+        at knot//net.minecraft.class_117$1.run(class_117.java:116)
+2026-03-18 20:01:21 [INFO] FinniTheFox lost connection: disconnect.genericReason
+java.net.SocketException: Socket closed
+        at java.base/sun.nio.ch.NioSocketImpl.ensureOpenAndConnected(NioSocketImpl.java:163)
+        at java.base/sun.nio.ch.NioSocketImpl.beginWrite(NioSocketImpl.java:362)
+        at java.base/sun.nio.ch.NioSocketImpl.implWrite(NioSocketImpl.java:407)
+        at java.base/sun.nio.ch.NioSocketImpl.write(NioSocketImpl.java:440)
+        at java.base/sun.nio.ch.NioSocketImpl$2.write(NioSocketImpl.java:819)
+        at java.base/java.net.Socket$SocketOutputStream.write(Socket.java:1195)
+        at java.base/java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:125)
+        at java.base/java.io.BufferedOutputStream.implFlush(BufferedOutputStream.java:252)
+        at java.base/java.io.BufferedOutputStream.flush(BufferedOutputStream.java:240)
+        at java.base/java.io.DataOutputStream.flush(DataOutputStream.java:131)
+        at knot//net.minecraft.class_117$1.run(class_117.java:116)
+2026-03-18 20:01:21 [INFO] NotaNaN lost connection: disconnect.genericReason
+2026-03-18 20:01:23 [INFO] FinniTheFox [/192.168.1.64:50457] logged in with entity id 13354 at (-14.700066778128235, 15.0, 1.6582936209538632)
+2026-03-18 20:01:24 [INFO] NotaNaN [/71.35.24.222:64155] logged in with entity id 13536 at (-12.264051817589579, 14.0, 1.8901594153289787)
+2026-03-18 20:01:25 [INFO] <FinniTheFox> X3
+2026-03-18 20:01:28 [INFO] <FinniTheFox> Dat be fixed too nwn
+2026-03-18 20:01:37 [INFO] <FinniTheFox> Foppy twy owo
+2026-03-18 20:02:04 [INFO] <FinniTheFox> Oki owo
+2026-03-18 20:02:06 [INFO] <FinniTheFox> Meowww!
+2026-03-18 20:02:09 [INFO] <FinniTheFox> :333
+2026-03-18 20:02:23 [INFO] <FinniTheFox> Derggy foppy looked
+2026-03-18 20:02:25 [INFO] <FinniTheFox> apparently
+2026-03-18 20:02:27 [INFO] <FinniTheFox> we were hallucinating :3
+2026-03-18 20:02:44 [INFO] <FinniTheFox> nwn
+2026-03-18 20:02:46 [INFO] <FinniTheFox> Meowwwww!
+2026-03-18 20:02:55 [INFO] <FinniTheFox> nwn
+2026-03-18 20:02:57 [INFO] <FinniTheFox> Meowww!! >W<
+2026-03-18 20:03:13 [INFO] <FinniTheFox> Dere is but we dont hab da materials yet :3
+2026-03-18 20:03:20 [INFO] <FinniTheFox> yus :3
+2026-03-18 20:03:23 [INFO] <FinniTheFox> Oooh .w.
+2026-03-18 20:03:26 [INFO] <FinniTheFox> Dat still bwoken :3
+2026-03-18 20:03:53 [INFO] <FinniTheFox> Yus
+2026-03-18 20:04:03 [INFO] <FinniTheFox> QWQ
+2026-03-18 20:04:07 [INFO] <FinniTheFox> ;w;
+2026-03-18 20:04:15 [INFO] <FinniTheFox> We dooo
+2026-03-18 20:04:17 [INFO] <FinniTheFox> but they expensive
+2026-03-18 20:04:53 [INFO] <FinniTheFox> OwO
+2026-03-18 20:04:54 [INFO] <FinniTheFox> Derggy
+2026-03-18 20:04:56 [INFO] <FinniTheFox> did derggy notice
+java.lang.NullPointerException: Cannot read the array length because "this.ints" is null
+        at knot//net.modificationstation.stationapi.api.network.packet.MessagePacket.method_807(MessagePacket.java:403)
+        at knot//net.minecraft.class_169.method_801(class_169.java:170)
+        at knot//net.minecraft.class_117.method_1137(class_117.java:166)
+        at knot//net.minecraft.class_117.method_1134(class_117.java:17)
+        at knot//net.minecraft.class_117$1.run(class_117.java:107)
+java.lang.NullPointerException: Cannot read the array length because "this.ints" is null
+        at knot//net.modificationstation.stationapi.api.network.packet.MessagePacket.method_807(MessagePacket.java:403)
+        at knot//net.minecraft.class_169.method_801(class_169.java:170)
+        at knot//net.minecraft.class_117.method_1137(class_117.java:166)
+        at knot//net.minecraft.class_117.method_1134(class_117.java:17)
+        at knot//net.minecraft.class_117$1.run(class_117.java:107)
+java.net.SocketException: Socket closed
+        at java.base/sun.nio.ch.NioSocketImpl.ensureOpenAndConnected(NioSocketImpl.java:163)
+        at java.base/sun.nio.ch.NioSocketImpl.beginWrite(NioSocketImpl.java:362)
+        at java.base/sun.nio.ch.NioSocketImpl.implWrite(NioSocketImpl.java:407)
+        at java.base/sun.nio.ch.NioSocketImpl.write(NioSocketImpl.java:440)
+        at java.base/sun.nio.ch.NioSocketImpl$2.write(NioSocketImpl.java:819)
+        at java.base/java.net.Socket$SocketOutputStream.write(Socket.java:1195)
+        at java.base/java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:125)
+        at java.base/java.io.BufferedOutputStream.implFlush(BufferedOutputStream.java:252)
+        at java.base/java.io.BufferedOutputStream.flush(BufferedOutputStream.java:240)
+        at java.base/java.io.DataOutputStream.flush(DataOutputStream.java:131)
+        at knot//net.minecraft.class_117$1.run(class_117.java:116)
+2026-03-18 20:05:06 [INFO] FinniTheFox lost connection: disconnect.genericReason
+java.net.SocketException: Socket closed
+        at java.base/sun.nio.ch.NioSocketImpl.ensureOpenAndConnected(NioSocketImpl.java:163)
+        at java.base/sun.nio.ch.NioSocketImpl.beginWrite(NioSocketImpl.java:362)
+        at java.base/sun.nio.ch.NioSocketImpl.implWrite(NioSocketImpl.java:407)
+        at java.base/sun.nio.ch.NioSocketImpl.write(NioSocketImpl.java:440)
+        at java.base/sun.nio.ch.NioSocketImpl$2.write(NioSocketImpl.java:819)
+        at java.base/java.net.Socket$SocketOutputStream.write(Socket.java:1195)
+        at java.base/java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:125)
+        at java.base/java.io.BufferedOutputStream.implFlush(BufferedOutputStream.java:252)
+        at java.base/java.io.BufferedOutputStream.flush(BufferedOutputStream.java:240)
+        at java.base/java.io.DataOutputStream.flush(DataOutputStream.java:131)
+        at knot//net.minecraft.class_117$1.run(class_117.java:116)
+2026-03-18 20:05:06 [INFO] NotaNaN lost connection: disconnect.genericReason
+2026-03-18 20:05:09 [INFO] NotaNaN [/71.35.24.222:64183] logged in with entity id 16027 at (-23.25, 15.0, -5.96875)
+2026-03-18 20:05:09 [INFO] FinniTheFox [/192.168.1.64:50529] logged in with entity id 16208 at (-23.15625, 15.0, -7.0)
+2026-03-18 20:05:20 [INFO] <FinniTheFox> Da buckets do!! ^W^
+2026-03-18 20:05:21 [INFO] <FinniTheFox> Also
+2026-03-18 20:06:20 [INFO] <FinniTheFox> We also hab container sorting now :3
+2026-03-18 20:06:50 [INFO] <FinniTheFox> Meowwwww!! ^W^
+2026-03-18 20:06:57 [INFO] <FinniTheFox> Me too :3c
+2026-03-18 20:07:00 [INFO] <FinniTheFox> FOppy fix dat pawby
+[20:07:19] [Server thread/INFO] (derggycraft|Mod) Golden Compass locked target 'NotaNaN' (runtime id 16027).
+[20:07:30] [Server thread/INFO] (derggycraft|Mod) Golden Compass locked target 'NotaNaN' (runtime id 16027).
+2026-03-18 20:07:35 [INFO] <FinniTheFox> owo
+2026-03-18 20:07:37 [INFO] <FinniTheFox> Mrrrewowww
+2026-03-18 20:07:37 [INFO] <FinniTheFox> :3
+2026-03-18 20:07:40 [INFO] <FinniTheFox> As of now
+2026-03-18 20:07:43 [INFO] <FinniTheFox> Only minor bug fixes I fink
+2026-03-18 20:07:44 [INFO] <FinniTheFox> :3
+2026-03-18 20:08:14 [INFO] <FinniTheFox> Dat wus me testing da inventowy owo
+java.lang.NullPointerException: Cannot read the array length because "this.ints" is null
+        at knot//net.modificationstation.stationapi.api.network.packet.MessagePacket.method_807(MessagePacket.java:403)
+        at knot//net.minecraft.class_169.method_801(class_169.java:170)
+        at knot//net.minecraft.class_117.method_1137(class_117.java:166)
+        at knot//net.minecraft.class_117.method_1134(class_117.java:17)
+        at knot//net.minecraft.class_117$1.run(class_117.java:107)
+java.lang.NullPointerException: Cannot read the array length because "this.ints" is null
+        at knot//net.modificationstation.stationapi.api.network.packet.MessagePacket.method_807(MessagePacket.java:403)
+        at knot//net.minecraft.class_169.method_801(class_169.java:170)
+        at knot//net.minecraft.class_117.method_1137(class_117.java:166)
+        at knot//net.minecraft.class_117.method_1134(class_117.java:17)
+        at knot//net.minecraft.class_117$1.run(class_117.java:107)
+java.net.SocketException: Socket closed
+        at java.base/sun.nio.ch.NioSocketImpl.ensureOpenAndConnected(NioSocketImpl.java:163)
+        at java.base/sun.nio.ch.NioSocketImpl.beginWrite(NioSocketImpl.java:362)
+        at java.base/sun.nio.ch.NioSocketImpl.implWrite(NioSocketImpl.java:407)
+        at java.base/sun.nio.ch.NioSocketImpl.write(NioSocketImpl.java:440)
+        at java.base/sun.nio.ch.NioSocketImpl$2.write(NioSocketImpl.java:819)
+        at java.base/java.net.Socket$SocketOutputStream.write(Socket.java:1195)
+        at java.base/java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:125)
+        at java.base/java.io.BufferedOutputStream.implFlush(BufferedOutputStream.java:252)
+        at java.base/java.io.BufferedOutputStream.flush(BufferedOutputStream.java:240)
+        at java.base/java.io.DataOutputStream.flush(DataOutputStream.java:131)
+        at knot//net.minecraft.class_117$1.run(class_117.java:116)
+2026-03-18 20:08:18 [INFO] NotaNaN lost connection: disconnect.genericReason
+java.net.SocketException: Socket closed
+        at java.base/sun.nio.ch.NioSocketImpl.ensureOpenAndConnected(NioSocketImpl.java:163)
+        at java.base/sun.nio.ch.NioSocketImpl.beginWrite(NioSocketImpl.java:362)
+        at java.base/sun.nio.ch.NioSocketImpl.implWrite(NioSocketImpl.java:407)
+        at java.base/sun.nio.ch.NioSocketImpl.write(NioSocketImpl.java:440)
+        at java.base/sun.nio.ch.NioSocketImpl$2.write(NioSocketImpl.java:819)
+        at java.base/java.net.Socket$SocketOutputStream.write(Socket.java:1195)
+        at java.base/java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:125)
+        at java.base/java.io.BufferedOutputStream.implFlush(BufferedOutputStream.java:252)
+        at java.base/java.io.BufferedOutputStream.flush(BufferedOutputStream.java:240)
+        at java.base/java.io.DataOutputStream.flush(DataOutputStream.java:131)
+        at knot//net.minecraft.class_117$1.run(class_117.java:116)
+2026-03-18 20:08:18 [INFO] FinniTheFox lost connection: disconnect.genericReason
+2026-03-18 20:08:21 [INFO] NotaNaN [/71.35.24.222:64229] logged in with entity id 19473 at (-23.03125, 15.0, -6.65625)
+2026-03-18 20:08:22 [INFO] FinniTheFox [/192.168.1.64:63938] logged in with entity id 19698 at (-22.30000001192093, 15.0, -7.699999988079075)
+2026-03-18 20:08:24 [INFO] <FinniTheFox> X3
+2026-03-18 20:08:29 [INFO] <FinniTheFox> Da end of streams really add to da experience nwn
+2026-03-18 20:08:33 [INFO] <FinniTheFox> Honestly :3c
+2026-03-18 20:08:34 [INFO] <FinniTheFox> I nawt sure
+2026-03-18 20:08:36 [INFO] <FinniTheFox> nwn
+2026-03-18 20:08:41 [INFO] <FinniTheFox> X3
+2026-03-18 20:09:04 [INFO] <FinniTheFox> I wub chu too my wuv ;w; <3
+2026-03-18 20:09:08 [INFO] <FinniTheFox> I sawwy for keeping chu x3
+2026-03-18 20:09:46 [INFO] <FinniTheFox> I wub chu too derggy! ^W^
+2026-03-18 20:09:52 [INFO] <FinniTheFox> Foppy going to twy and get a wittle more sewing done pawby :3
+2026-03-18 20:09:56 [INFO] <FinniTheFox> Maybe I wiww shower and go bed early d
+2026-03-18 20:09:59 [INFO] <FinniTheFox> I nawt sure yet mreww nwn
+2026-03-18 20:10:29 [INFO] <FinniTheFox> Famk you so much my love nwn
+2026-03-18 20:10:33 [INFO] <FinniTheFox> I adore you so much~
+2026-03-18 20:10:52 [INFO] <FinniTheFox> Me too ;w; <3
+2026-03-18 20:10:55 [INFO] <FinniTheFox> I wub you my sweethearmt
+java.net.SocketException: Socket closed
+        at java.base/sun.nio.ch.NioSocketImpl.ensureOpenAndConnected(NioSocketImpl.java:163)
+        at java.base/sun.nio.ch.NioSocketImpl.beginWrite(NioSocketImpl.java:362)
+        at java.base/sun.nio.ch.NioSocketImpl.implWrite(NioSocketImpl.java:407)
+        at java.base/sun.nio.ch.NioSocketImpl.write(NioSocketImpl.java:440)
+        at java.base/sun.nio.ch.NioSocketImpl$2.write(NioSocketImpl.java:819)
+        at java.base/java.net.Socket$SocketOutputStream.write(Socket.java:1195)
+        at java.base/java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:125)
+        at java.base/java.io.BufferedOutputStream.implFlush(BufferedOutputStream.java:252)
+        at java.base/java.io.BufferedOutputStream.flush(BufferedOutputStream.java:240)
+        at java.base/java.io.DataOutputStream.flush(DataOutputStream.java:131)
+        at knot//net.minecraft.class_117$1.run(class_117.java:116)
+2026-03-18 20:11:00 [INFO] NotaNaN lost connection: disconnect.quitting
+java.net.SocketException: Socket closed
+        at java.base/sun.nio.ch.NioSocketImpl.ensureOpenAndConnected(NioSocketImpl.java:163)
+        at java.base/sun.nio.ch.NioSocketImpl.beginWrite(NioSocketImpl.java:362)
+        at java.base/sun.nio.ch.NioSocketImpl.implWrite(NioSocketImpl.java:407)
+        at java.base/sun.nio.ch.NioSocketImpl.write(NioSocketImpl.java:440)
+        at java.base/sun.nio.ch.NioSocketImpl$2.write(NioSocketImpl.java:819)
+        at java.base/java.net.Socket$SocketOutputStream.write(Socket.java:1195)
+        at java.base/java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:125)
+        at java.base/java.io.BufferedOutputStream.implFlush(BufferedOutputStream.java:252)
+        at java.base/java.io.BufferedOutputStream.flush(BufferedOutputStream.java:240)
+        at java.base/java.io.DataOutputStream.flush(DataOutputStream.java:131)
+        at knot//net.minecraft.class_117$1.run(class_117.java:116)
+2026-03-18 20:11:03 [INFO] FinniTheFox lost connection: disconnect.quitting
+java.io.IOException: Bad packet id 108
+        at knot//net.minecraft.class_169.method_803(class_169.java:135)
+        at knot//net.minecraft.class_117.method_1139(class_117.java:197)
+        at knot//net.minecraft.class_117.method_1132(class_117.java:17)
+        at knot//net.minecraft.class_117$4.run(class_117.java:84)

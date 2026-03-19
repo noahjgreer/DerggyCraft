@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.noahsarch.derggycraft.sound.BackportedVanillaSounds;
+import net.noahsarch.derggycraft.sound.BucketSoundStatus;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -77,6 +78,13 @@ public abstract class BucketItemStackingMixin {
 
         float pitch = basePitch + (world.random.nextFloat() - world.random.nextFloat()) * 0.1F;
         world.playSound(user, playbackId, 1.0F, pitch);
+
+        if (!world.isRemote) {
+            byte status = BucketSoundStatus.toStatus(playbackId);
+            if (status != 0) {
+                world.broadcastEntityEvent(user, status);
+            }
+        }
 
         // In some singleplayer flows world event listeners don't forward custom sounds reliably.
         // This client fallback keeps local bucket audio consistent without affecting dedicated servers.

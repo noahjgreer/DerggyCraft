@@ -9,4 +9,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface SlotAccessor {
     @Accessor("inventory")
     Inventory derggycraft$getInventory();
+
+    @Accessor("index")
+    int derggycraft$getInventoryIndex();
 }

@@ -6,6 +6,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "BucketItemStackingMixin",
+    "CPMPlayerAnimHealthSyncMixin",
     "ChatMessagePacketMixin",
     "ChestBlockMixin",
     "EntityCollarJingleMixin",
@@ -49,6 +50,7 @@
     "client.DrawContextInvoker",
     "client.HandledScreenDragMixin",
     "client.HandledScreenSortMixin",
+    "client.InGameHudChatDedupMixin",
     "client.InGameHudChatLayoutMixin",
     "client.InGameHudStaminaMixin",
     "client.InventoryScreenMixin",

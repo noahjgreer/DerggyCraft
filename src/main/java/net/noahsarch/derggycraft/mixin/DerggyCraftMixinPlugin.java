@@ -14,6 +14,8 @@ public class DerggyCraftMixinPlugin implements IMixinConfigPlugin {
     private static final String CPM_CONFIG_ENTRY_CLASS = "com.tom.cpl.config.ConfigEntry";
     private static final String CPM_SINGLEPLAYER_COMMAND_MIXIN = "net.noahsarch.derggycraft.mixin.client.CPMSinglePlayerCommandSafetyMixin";
     private static final String CPM_SINGLEPLAYER_COMMAND_CLASS = "com.tom.cpm.client.SinglePlayerCommands";
+    private static final String CPM_PLAYER_ANIM_HEALTH_MIXIN = "net.noahsarch.derggycraft.mixin.CPMPlayerAnimHealthSyncMixin";
+    private static final String CPM_PLAYER_ANIM_UPDATER_CLASS = "com.tom.cpm.common.PlayerAnimUpdater";
 
     @Override
     public void onLoad(String mixinPackage) {
@@ -31,6 +33,9 @@ public class DerggyCraftMixinPlugin implements IMixinConfigPlugin {
         }
         if (CPM_SINGLEPLAYER_COMMAND_MIXIN.equals(mixinClassName)) {
             return this.derggycraft$isCpmLoaded();
+        }
+        if (CPM_PLAYER_ANIM_HEALTH_MIXIN.equals(mixinClassName)) {
+            return this.derggycraft$isCpmLoaded() && this.derggycraft$classExists(CPM_PLAYER_ANIM_UPDATER_CLASS);
         }
         return true;
     }
