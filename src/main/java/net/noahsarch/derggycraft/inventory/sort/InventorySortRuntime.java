@@ -99,11 +99,50 @@ public final class InventorySortRuntime {
             return Integer.compare(right.count, left.count);
         });
 
-        while (sorted.size() < sortableSlots.size()) {
-            sorted.add(null);
+        List<ItemStack> merged = new ArrayList<>(sorted.size());
+        for (ItemStack stack : sorted) {
+            if (stack == null || stack.count <= 0) {
+                continue;
+            }
+
+            int remaining = stack.count;
+            while (remaining > 0) {
+                ItemStack tail = merged.isEmpty() ? null : merged.get(merged.size() - 1);
+                if (tail != null && derggycraft$canMergeStacks(tail, stack) && tail.count < tail.getMaxCount()) {
+                    int moved = Math.min(remaining, tail.getMaxCount() - tail.count);
+                    tail.count += moved;
+                    remaining -= moved;
+                    continue;
+                }
+
+                ItemStack chunk = stack.copy();
+                chunk.count = Math.min(remaining, chunk.getMaxCount());
+                merged.add(chunk);
+                remaining -= chunk.count;
+            }
         }
 
-        return sorted;
+        while (merged.size() < sortableSlots.size()) {
+            merged.add(null);
+        }
+
+        return merged;
+    }
+
+    private static boolean derggycraft$canMergeStacks(ItemStack left, ItemStack right) {
+        if (left == null || right == null) {
+            return false;
+        }
+
+        if (!left.isStackable() || !right.isStackable()) {
+            return false;
+        }
+
+        if (left.itemId != right.itemId) {
+            return false;
+        }
+
+        return !left.hasSubtypes() || left.getDamage() == right.getDamage();
     }
 
     private static List<Integer> getSortableSlotIds(ScreenHandler handler, SortTarget target) {
@@ -126,7 +165,7 @@ public final class InventorySortRuntime {
         List<Integer> slotIds = new ArrayList<>();
         for (int i = 0; i < handler.slots.size(); ++i) {
             Slot slot = (Slot) handler.slots.get(i);
-            if (slot == null || slot.id < 0 || slot.getMaxItemCount() <= 1) {
+            if (slot == null || slot.getMaxItemCount() <= 1) {
                 continue;
             }
 
@@ -143,7 +182,8 @@ public final class InventorySortRuntime {
                 }
             }
 
-            slotIds.add(slot.id);
+            // ScreenHandler APIs address slots by list position, not inventory-local slot id.
+            slotIds.add(i);
         }
 
         return slotIds;

@@ -14,6 +14,7 @@ import java.util.Locale;
 
 public class DerggyCraftUpdateScreen extends Screen {
     private static final int CONTINUE_BUTTON_ID = 0;
+    private static final int UPDATE_BUTTON_ID = 1;
 
     private final Screen nextScreen;
 
@@ -23,16 +24,22 @@ public class DerggyCraftUpdateScreen extends Screen {
     private volatile String installedVersion = "";
     private volatile String latestVersion = "";
     private volatile String errorText = "";
+    private volatile String updateAssetFileName = "";
 
     private volatile long downloadedBytes;
     private volatile long totalBytes = -1L;
 
     private volatile boolean showContinueButton;
+    private volatile boolean showUpdateChoiceButtons;
     private volatile boolean requestShutdown;
 
     private boolean workerStarted;
+    private boolean updateWorkerStarted;
     private boolean continueButtonAdded;
+    private boolean updateButtonAdded;
     private boolean shutdownTriggered;
+
+    private volatile DerggyCraftAutoUpdater.UpdateCheckResult pendingUpdate;
 
     private long autoContinueAtMillis = -1L;
 
@@ -44,11 +51,12 @@ public class DerggyCraftUpdateScreen extends Screen {
     public void init() {
         this.buttons.clear();
         this.continueButtonAdded = false;
-        this.addContinueButtonIfNeeded();
+        this.updateButtonAdded = false;
+        this.addButtonsIfNeeded();
 
         if (!this.workerStarted) {
             this.workerStarted = true;
-            Thread workerThread = new Thread(this::runUpdateWorkflow, "DerggyCraft-Updater");
+            Thread workerThread = new Thread(this::runUpdateCheckWorkflow, "DerggyCraft-Updater");
             workerThread.setDaemon(true);
             workerThread.start();
         }
@@ -61,9 +69,7 @@ public class DerggyCraftUpdateScreen extends Screen {
 
     @Override
     public void tick() {
-        if (this.showContinueButton) {
-            this.addContinueButtonIfNeeded();
-        }
+        this.addButtonsIfNeeded();
 
         if (this.requestShutdown && !this.shutdownTriggered) {
             this.shutdownTriggered = true;
@@ -78,13 +84,18 @@ public class DerggyCraftUpdateScreen extends Screen {
 
     @Override
     protected void keyPressed(char character, int keyCode) {
-        if (this.showContinueButton && (keyCode == Keyboard.KEY_RETURN || keyCode == Keyboard.KEY_NUMPADENTER)) {
+        if ((this.showContinueButton || this.showUpdateChoiceButtons) && (keyCode == Keyboard.KEY_RETURN || keyCode == Keyboard.KEY_NUMPADENTER)) {
             this.minecraft.setScreen(this.nextScreen);
         }
     }
 
     @Override
     protected void buttonClicked(ButtonWidget button) {
+        if (button.id == UPDATE_BUTTON_ID) {
+            this.startUpdateInstallWorkflow();
+            return;
+        }
+
         if (button.id == CONTINUE_BUTTON_ID) {
             this.minecraft.setScreen(this.nextScreen);
         }
@@ -158,7 +169,7 @@ public class DerggyCraftUpdateScreen extends Screen {
         this.drawCenteredTextWithShadow(this.textRenderer, progressText, centerX, y + 10, 0xD0D0D0);
     }
 
-    private void runUpdateWorkflow() {
+    private void runUpdateCheckWorkflow() {
         try {
             this.headerText = "Checking for updates";
             this.statusText = "Searching GitHub releases...";
@@ -176,29 +187,13 @@ public class DerggyCraftUpdateScreen extends Screen {
                 return;
             }
 
-            Path installedJarPath = DerggyCraftAutoUpdater.resolveInstalledModJarPath();
-
             this.headerText = "Update found: " + checkResult.latestTag();
-            this.statusText = "Downloading " + checkResult.assetFileName() + "...";
-            this.stage = Stage.DOWNLOADING;
-            this.downloadedBytes = 0L;
-            this.totalBytes = -1L;
-
-            Path downloadedJarPath = DerggyCraftAutoUpdater.downloadUpdate(installedJarPath, checkResult, (downloaded, total) -> {
-                this.downloadedBytes = downloaded;
-                this.totalBytes = total;
-            });
-
-            this.headerText = "Applying update";
-            this.statusText = "Preparing restart and jar replacement...";
-            this.stage = Stage.APPLYING;
-
-            DerggyCraftAutoUpdater.scheduleInstallAndRestart(installedJarPath, downloadedJarPath);
-
-            this.headerText = "Update downloaded";
-            this.statusText = "Restarting client to load " + checkResult.latestTag() + "...";
-            this.stage = Stage.RESTARTING;
-            this.requestShutdown = true;
+            this.statusText = "Choose whether to install now or continue without updating.";
+            this.stage = Stage.UPDATE_FOUND;
+            this.pendingUpdate = checkResult;
+            this.updateAssetFileName = checkResult.assetFileName();
+            this.showUpdateChoiceButtons = true;
+            this.showContinueButton = true;
         } catch (Exception exception) {
             if (DerggyCraft.LOGGER != null) {
                 DerggyCraft.LOGGER.warn("DerggyCraft updater failed; allowing player to continue.", exception);
@@ -215,13 +210,80 @@ public class DerggyCraftUpdateScreen extends Screen {
         }
     }
 
-    private void addContinueButtonIfNeeded() {
-        if (this.continueButtonAdded) {
+    private void startUpdateInstallWorkflow() {
+        if (this.updateWorkerStarted || this.pendingUpdate == null) {
             return;
         }
 
-        this.buttons.add(new ButtonWidget(CONTINUE_BUTTON_ID, this.width / 2 - 100, this.height / 2 + 44, "Continue"));
-        this.continueButtonAdded = true;
+        this.updateWorkerStarted = true;
+        this.showUpdateChoiceButtons = false;
+        this.showContinueButton = false;
+        this.buttons.clear();
+        this.continueButtonAdded = false;
+        this.updateButtonAdded = false;
+
+        Thread workerThread = new Thread(this::runUpdateInstallWorkflow, "DerggyCraft-Updater-Install");
+        workerThread.setDaemon(true);
+        workerThread.start();
+    }
+
+    private void runUpdateInstallWorkflow() {
+        try {
+            DerggyCraftAutoUpdater.UpdateCheckResult update = this.pendingUpdate;
+            if (update == null) {
+                throw new IllegalStateException("No update information is available.");
+            }
+
+            Path installedJarPath = DerggyCraftAutoUpdater.resolveInstalledModJarPath();
+
+            this.headerText = "Downloading update";
+            this.statusText = "Downloading " + this.updateAssetFileName + "...";
+            this.stage = Stage.DOWNLOADING;
+            this.downloadedBytes = 0L;
+            this.totalBytes = -1L;
+
+            Path downloadedJarPath = DerggyCraftAutoUpdater.downloadUpdate(installedJarPath, update, (downloaded, total) -> {
+                this.downloadedBytes = downloaded;
+                this.totalBytes = total;
+            });
+
+            this.headerText = "Applying update";
+            this.statusText = "Preparing restart and jar replacement...";
+            this.stage = Stage.APPLYING;
+
+            DerggyCraftAutoUpdater.scheduleInstallAndRestart(installedJarPath, downloadedJarPath);
+
+            this.headerText = "Update downloaded";
+            this.statusText = "Restarting client to load " + update.latestTag() + "...";
+            this.stage = Stage.RESTARTING;
+            this.requestShutdown = true;
+        } catch (Exception exception) {
+            if (DerggyCraft.LOGGER != null) {
+                DerggyCraft.LOGGER.warn("DerggyCraft updater install failed; allowing player to continue.", exception);
+            }
+
+            this.headerText = "Update install failed";
+            this.statusText = "Could not download/apply latest build.";
+            String message = exception.getMessage();
+            this.errorText = message == null || message.isBlank()
+                    ? "Unknown updater error. You can continue and play normally."
+                    : message + "  Press Continue to keep playing.";
+            this.stage = Stage.ERROR;
+            this.showContinueButton = true;
+        }
+    }
+
+    private void addButtonsIfNeeded() {
+        if (this.showUpdateChoiceButtons && !this.updateButtonAdded) {
+            this.buttons.add(new ButtonWidget(UPDATE_BUTTON_ID, this.width / 2 - 100, this.height / 2 + 20, "Update and restart"));
+            this.updateButtonAdded = true;
+        }
+
+        if (this.showContinueButton && !this.continueButtonAdded) {
+            int continueY = this.showUpdateChoiceButtons ? this.height / 2 + 44 : this.height / 2 + 20;
+            this.buttons.add(new ButtonWidget(CONTINUE_BUTTON_ID, this.width / 2 - 100, continueY, "Continue without updating"));
+            this.continueButtonAdded = true;
+        }
     }
 
     private static float clamp01(float value) {
@@ -284,6 +346,7 @@ public class DerggyCraftUpdateScreen extends Screen {
 
     private enum Stage {
         CHECKING,
+        UPDATE_FOUND,
         DOWNLOADING,
         APPLYING,
         UP_TO_DATE,
