@@ -1,0 +1,260 @@
+<-------------> 0% CONFIGURING [279ms]
+<-------------> 0% CONFIGURING [577ms]iguration 'classpat
+
+> Configure project :
+Fabric Loom: 1.15.3
+Babric loom: 1.15.3
+<-------------> 0% EXECUTING [2s]
+
+> Task :runClient
+2026-03-19 21:27:11,160 main ERROR Error processing element Queue ([Appenders: null]): CLASS_NOT_FOUND
+2026-03-19 21:27:11,304 main ERROR Unable to locate appender "ServerGuiConsole" for logger config "root"
+[21:27:11] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft Beta 1.7.3 with Fabric Loader 0.18.4
+[21:27:11] [ForkJoinPool-1-worker-5/WARN] (FabricLoader/Metadata) Mod cpm uses the version 0.6.25a which isn't compatible with Loader's extended semantic version format (Could not parse version number component '25a'!), SemVer is recommended for reliably evaluating dependencies and prioritizing newer version
+[21:27:11] [main/INFO] (FabricLoader) Loading 48 mods:
+        - cpm 0.6.25a
+           \-- com_google_guava_failureaccess 1.0.1
+        - derggycraft 1.3.2-g
+        - fabricloader 0.18.4
+        - gambac 1.3.1
+        - java 21
+        - minecraft 1.0.0-beta.7.3
+        - mixinextras 0.5.0
+        - modmenu 1.1.1
+        - spasm 0.2.2
+        - station-achievements-v0 2.0.0-alpha.5.4
+        - station-api-base 2.0.0-alpha.5.4
+        - station-api-configuration 2.0.0-alpha.5.4
+        - station-armor-api-v0 2.0.0-alpha.5.4
+        - station-audio-loader-v0 2.0.0-alpha.5.4
+        - station-biome-events-v0 2.0.0-alpha.5.4
+        - station-blockentities-v0 2.0.0-alpha.5.4
+        - station-blockitems-v0 2.0.0-alpha.5.4
+        - station-blocks-v0 2.0.0-alpha.5.4
+        - station-container-api-v0 2.0.0-alpha.5.4
+        - station-datafixer-v0 2.0.0-alpha.5.4
+        - station-dimensions-v0 2.0.0-alpha.5.4
+        - station-effects-api-v0 2.0.0-alpha.5.4
+        - station-entities-v0 2.0.0-alpha.5.4
+        - station-flattening-v0 2.0.0-alpha.5.4
+        - station-gui-api-v0 2.0.0-alpha.5.4
+        - station-items-v0 2.0.0-alpha.5.4
+        - station-keybindings-v0 2.0.0-alpha.5.4
+        - station-lifecycle-events-v0 2.0.0-alpha.5.4
+        - station-localization-api-v0 2.0.0-alpha.5.4
+        - station-maths-v0 2.0.0-alpha.5.4
+        - station-nbt-v0 2.0.0-alpha.5.4
+        - station-networking-v0 2.0.0-alpha.5.4
+        - station-player-api-v0 2.0.0-alpha.5.4
+        - station-recipes-v0 2.0.0-alpha.5.4
+        - station-registry-api-v0 2.0.0-alpha.5.4
+        - station-registry-sync-v0 2.0.0-alpha.5.4
+        - station-renderer-api-v0 2.0.0-alpha.5.4
+        - station-renderer-arsenic 2.0.0-alpha.5.4
+        - station-resource-loader-v0 2.0.0-alpha.5.4
+        - station-templates-v0 2.0.0-alpha.5.4
+        - station-tools-api-v1 2.0.0-alpha.5.4
+        - station-transitive-access-wideners-v0 2.0.0-alpha.5.4
+        - station-vanilla-checker-v0 2.0.0-alpha.5.4
+        - station-vanilla-fix-v0 2.0.0-alpha.5.4
+        - station-world-events-v0 2.0.0-alpha.5.4
+        - station-worldgen-api-v0 2.0.0-alpha.5.4
+        - stationapi 2.0.0-alpha.5.4
+   [21:27:15] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/Admin/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.17.0+mixin.0.8.7/cf31463202f72d03b0ef1e1e38e8ee71[21:27:15] [main/INFO] (FabricLoader/Mixin) Loaded Fabric[21:27:15] [main/INFO] (FabricLoader/Mixin) Compatibility[21:27:17] [main/INFO] (Station|API) Initializing Station API...==--> 90% EXECUTING [10s]
+[21:27:17] [main/INFO] (Station|API) Loading entrypoints... [21:27:17] [main/INFO] (Station|API) Setting up "station-registry-api-v0" "stationapi:event_bus" "net.modification[21:27:18] [main/INFO] (Station|API) Setting up "station-registry-api-v0" "stationapi:event_bus" "net.modification[21:27:18] [main/INFO] (Station|API) Setting up "station-vanilla-checker-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.network.VanillaChecker" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-registry-sync-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.network.RegistryNetworkingInit" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "derggycraft" "stationapi:event_bus" "net.noahsarch.derggycraft.DerggyCraft" entrypoint...
+[21:27:18] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.0).
+   [21:27:18] [main/INFO] (Station|API) Setting up "station-networking-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.network.packet.StationNetworkingInit" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-worldgen-api-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.worldgen.WorldgenListener" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-effects-api-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.effect.EffectsRegisterListener" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-resource-loader-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.resource.DataReloaderImpl" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-api-base" "stationapi:event_bus" "net.modificationstation.stationapi.impl.mod.DeprecatedInitEventsImpl" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-tools-api-v1" "stationapi:event_bus" "net.modificationstation.stationapi.impl.item.HijackShearsImplV1" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-recipes-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.recipe.json.JsonRecipeParserRegisterImpl" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-recipes-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.recipe.JsonRecipeParserInit" entrypoint...
+   [21:27:18] [main/INFO] (Station|API) Setting up "station-recipes-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.recipe.JsonRecipesLoader" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-recipes-v0" "stationapi:event_bus" "net.modificationstation.stationapi.api.recipe.FuelRegistry" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-blockitems-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.block.HasMetaBlockItemImpl" entrypoint...
+   [21:27:18] [main/INFO] (Station|API) Setting up "station-blockitems-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.block.HasMetaNamedBlockItemImpl" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-blockitems-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.block.HasCustomBlockItemFactoryImpl" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-blockitems-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.block.BlockFormOnlyHandler" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-items-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.entity.player.ItemCustomReachImpl" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-items-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.dispenser.CustomDispenseBehaviorImpl" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-flattening-v0" "stationapi:event_bus" "net.modificationstation.stationapi.api.block.States" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-flattening-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.block.PlacementStateImpl" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-flattening-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.world.WorldDataVersionImpl" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-flattening-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.block.BlockInteractionImpl" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-vanilla-fix-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.vanillafix.block.VanillaBlockFixImpl" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-vanilla-fix-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.vanillafix.item.VanillaItemFixImpl" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-vanilla-fix-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.vanillafix.dimension.VanillaDimensionFixImpl" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-vanilla-fix-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.vanillafix.recipe.VanillaFuelItemFixImpl" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-vanilla-fix-v0" "stationapi:event_bus" "net.modificationstation.stationapi.impl.vanillafix.datafixer.VanillaDataFixerImpl" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-vanilla-checker-v0" "stationapi:event_bus_client" "net.modificationstation.stationapi.impl.client.network.ClientVanillaChecker" entrypoint...
+   [21:27:18] [main/INFO] (Station|API) Setting up "station-renderer-arsenic" "stationapi:event_bus_client" "net.modificationstation.stationapi.impl.client.arsenic.Arsenic" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "station-registry-sync-v0" "stationapi:event_bus_client" "net.modificationstation.stationapi.impl.client.registry.ClientServer[21:27:18] [main/INFO] (Station|API) Setting up "station-registry-sync-v0" "stationapi:event_bus_client" "net.modificationstation.stationapi.impl.client.registry.ClientRegistryRestorer" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "derggycraft" "stationapi:event_bus_client" "net.noahsarch.derggycraft.client.TextureRegistry" entrypoint...
+[21:27:18] [main/INFO] (Station|API) Setting up "derggycraft" "stationapi:event_bus_client" "net.noahsarch.derggycraft.client.network.ClientMusicSyncNetworking" entrypoint...
+[21:27:19] [main/INFO] (Station|API) Setting up "station-renderer-api-v0" "stationapi:event_bus_client" "net.modificationstation.stationapi.impl.client.texture.StationRenderImpl" entrypoint...
+   [21:27:19] [main/INFO] (Station|API) Setting up "station-localization-api-v0" "stationapi:event_bus_client" "net.modificationstation.stationapi.api.resource.language.LanguageManager" entrypoint...
+[21:27:19] [main/INFO] (Station|API) Setting up "station-resource-loader-v0" "stationapi:event_bus_client" "net.modificationstation.stationapi.impl.client.resource.AssetsRelo[21:27:19] [main/INFO] (Station|API) Setting up "station-entities-v0" "stationapi:event_bus_client" "net.modificationstation.stationapi.impl.client.network.EntityClientNetworkHandler" entrypoint...
+[21:27:19] [main/INFO] (Station|API) Setting up "station-gui-api-v0" "stationapi:event_bus_client" "net.modificationstation.stationapi.impl.client.gui.screen.EditWorldScreenImpl" entrypoint...
+[21:27:19] [main/INFO] (Station|API) Setting up "station-achievements-v0" "stationapi:event_bus_client" "net.modificationstation.stationapi.impl.client.gui.screen.achievement.AchievementPageImpl" entrypoint...
+[21:27:19] [main/INFO] (Station|API) Setting up "station-items-v0" "stationapi:event_bus_client" "net.modificationstation.stationapi.impl.client.render.item.CustomItemOverlayImpl" entrypoint...
+[21:27:19] [main/INFO] (Station|API) Setting up "station-items-v0" "stationapi:event_bus_client" "net.modificationstation.stationapi.impl.client.gui.screen.container.CustomTooltipRendererImpl" entrypoint...
+[21:27:19] [main/INFO] (Station|API) Setting up "station-container-api-v0" "stationapi:event_bus_client" "net.modificationstation.stationapi.impl.client.network.GuiClientNetworkHandler" entrypoint...
+   [21:27:19] [main/INFO] (Station|API) Setting up "cpm" "stationapi:event_bus_client" "com.tom.cpm.client.CPMClient" entrypoint...
+[21:27:19] [main/INFO] (Station|API) Setting up "station-vanilla-fix-v0" "stationapi:event_bus_client" "net.modificationstation.stationapi.impl.vanillafix.client.gui.screen.EditWorldScreenImpl" entrypoint...
+[21:27:19] [main/INFO] (Station|API) Setting up "station-vanilla-fix-v0" "stationapi:event_bus_client" "net.modificationstation.stationapi.impl.vanillafix.client.color.block.VanillaBlockColorProviders" entrypoint...
+   [21:27:19] [main/INFO] (Station|API) Invoking Init event.[21:27:19] [main/INFO] (Station|API) Gathering mods that require client verification...s]
+[21:27:19] [main/INFO] (Station|API) Searching for JSON reci[21:27:19] [main/INFO] (Arsenic) Registering Arsenic renderer!====--> 90% EXECUTING [12s]
+[21:27:19] [main/INFO] (Station|API) Finished Station API se[21:27:23] [AWT-EventQueue-0/INFO] (Station|API) Added va[21:27:23] [AWT-EventQueue-0/INFO] (Station|API) Added va16 achievementsthe registry.16s]
+156 recipes
+[21:27:24] [AWT-EventQueue-0/INFO] (CPM) Customizable Player Models Initialized
+[21:27:24] [AWT-EventQueue-0/INFO] (CPM) Loaded plugins: (0)
+
+   [21:27:24] [CPM Background Loading Thread/INFO] (CPM) [Ve[21:27:24] [AWT-EventQueue-0/INFO] (CPM) Loaded 0 built-in, 0 custom block tagsTING [17s]
+[21:27:24] [AWT-EventQueue-0/INFO] (CPM) Loaded 6 built-in, 0 custom item tags
+[21:27:24] [AWT-EventQueue-0/INFO] (CPM) Loaded 0 built-in, 0 custom entity tags
+[21:27:24] [AWT-EventQueue-0/INFO] (CPM) Loaded 0 built-in, 0 custom biome tags
+Setting user: NotaNaN
+[LWJGL] Detected environment: Os:windows Arch: amd64 Java[21:27:27] [CPM Background Loading Thread/INFO] (CPM) [Versi[21:27:29] [Thread-3/INFO] (Station|API) Reloading Resour[21:27:29] [Thread-3/INFO] (Station|API) Reloading Resour[21:27:31] [AWT-EventQueue-0/INFO] (StationRenderer|API) Created: 512x512 minecraft:textures/atlas/game.png-atlas:runClient
+[21:27:32] [AWT-EventQueue-0/INFO] (Station|API) Resource reload finished after 2025 ms
+[21:27:32] [AWT-EventQueue-0/INFO] (Station|API) LanguageManager took approximately 357 ms (352 ms preparing, 5 ms applying)
+[21:27:32] [AWT-EventQueue-0/INFO] (Station|API) BakedModelManager took approximately 1576 ms (1571 ms preparing, 5 ms applying)
+[21:27:32] [AWT-EventQueue-0/INFO] (Station|API) ItemModels took approximately 2 ms (0 ms preparing, 2 ms applying)
+[21:27:32] [AWT-EventQueue-0/INFO] (Station|API) BlockDestructionTextures took approximately 2 ms (0 ms preparing, 2 ms applying)
+[21:27:32] [AWT-EventQueue-0/INFO] (Station|API) ModTextures took approximately 94 ms (29 ms preparing, 65 ms applying)
+[21:27:32] [AWT-EventQueue-0/INFO] (Station|API) Total blocking time: 79 ms
+   [21:27:32] [AWT-EventQueue-0/INFO] (Station|API) Resource reload finished after 2056 mss]
+[21:27:32] [AWT-EventQueue-0/INFO] (Station|API) TagManagerLoader took approximately 175 ms (160 ms preparing, 15 ms applying)
+[21:27:32] [AWT-EventQueue-0/INFO] (Station|API) Total blocking time: 15 ms
+
+Starting up SoundSystem...
+Initializing LWJGL OpenAL
+    (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+OpenAL initialized.
+
+[21:27:35] [AWT-EventQueue-0/INFO] (derggycraft|Mod) Registered intro logo sound derggycraft:intro.ogg from file:/F:/DerggyCraft/build/resources/main/assets/derggycraft/stationapi/sounds/intro.ogg
+[21:27:35] [AWT-EventQueue-0/INFO] (derggycraft|Mod) Registered flare loop sound derggycraft:flare/flare_loop.ogg from file:/F:/DerggyCraft/build/resources/main/assets/derggycraft/stationapi/sounds/flare/flare_loop.ogg
+   [21:27:35] [AWT-EventQueue-0/INFO] (derggycraft|Mod) TrigFailed to add pack.mcmetalayback id derggycraft:intro
+Failed to add READ_ME_I_AM_VERY_IMPORTANT
+Connecting to muffinmode.net, 25566
+[21:27:56] [Thread-11/WARN] (FabricLoader/Mixin) @Inject(@At("FIELD")) Shift.BY=5 on station-entities-v0.mixins.json:client.ClientNetworkHandlerMixin from mod station-entities-v0::handler$zhi000$station-entities-v0$stationapi_captureCoords exceeds the maximum allowed value: 0. Increase t[21:27:57] [AWT-EventQueue-0/WARN] (FabricLoader/Mixin) @Inject(@At("INVOKE")) Shift.BY=2 on station-items-v0.mixins.json:PlayerInventoryMixin from mod station-items-v0::handler$zje000$station-items-v0$stationapi_newItemStack exceeds the maximum allowed value: 0. Increase the value of maxShiftBy to suppress this warning.
+[21:27:57] [AWT-EventQueue-0/WARN] (FabricLoader/Mixin) @Inject(@At("INVOKE")) Shift.BY=2 on station-recipes-v0.mixins.json:CraftingResultMixin from mod station-recipes-v0::handler$zif000$station-recipes-v0$stationapi_onCrafted exceeds the maximum allowed value: 0. Increase the value of [21:27:58] [AWT-EventQueue-0/WARN] (FabricLoader/Mixin) @ModifyVariable(@At("FIELD")) Shift.BY=3 on station-achievements-v0.mixins.json:client.AchievementsScreenMixin from mod station-achievements-v0::localvar$zid000$station-achievements-v0$stationapi_renderBackgroundTexture exceeds tStopping!m allowed value: 0. Increase the value of max
+
+SoundSystem shutting down...
+    Author: Paul Lamb, www.paulscode.com
+
+<===========--> 90% EXECUTING [3m 12s]
+> :runClient
+Mar 19, 2026 9:27:34 PM net.java.games.input.DefaultControllerEnvironment getControllers
+WARNING: Found unknown Windows version: Windows 11
+Mar 19, 2026 9:27:34 PM net.java.games.input.DefaultControllerEnvironment getControllers
+INFO: Attempting to use default windows plug-in.
+Mar 19, 2026 9:27:34 PM net.java.games.input.DefaultControllerEnvironment getControllers
+INFO: Loading: net.java.games.input.DirectAndRawInputEnvironmentPlugin
+java.lang.UnsatisfiedLinkError: no jinput-dx8_64 in java.library.path: C:\Program Files\Eclipse Adoptium\jdk-21.0.10.7-hotspot\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Eclipse Adoptium\jdk-21.0.10.7-hotspot\bin;C:\Program Files\Eclipse Adoptium\jdk-17.0.18.8-hotspot\bin;C:\Program Files\Eclipse Adoptium\jdk-25.0.2.10-hotspot\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Apollo;C:\Program Files\Apollo\tools;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\SQLite;C:\Program Files\FFMpeg\bin;C:\Program Files\dotnet\;C:\Program Files\Sunshine;C:\Program Files\Sunshine\tools;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\Wiimm\WIT;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Users\Admin\AppData\Local\Programs\Python\Python313\Scripts\;C:\Users\Admin\AppData\Local\Programs\Python\Python313\;C:\Users\Admin\AppData\Local\Microsoft\WindowsApps;C:\Users\Admin\AppData\Roaming\npm;C:\Program Files\FFMpeg\bin;C:\Users\Admin\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Admin\AppData\Local\GitHubDesktop\bin;C:\Users\Admin\.dotnet\tools;C:\Program Files\JetBrains\IntelliJ IDEA 2025.3.1\bin;C:\Program Files\Wiimm\WIT;C:\Users\Admin\AppData\Local\Python\bin;.
+        at java.base/java.lang.ClassLoader.loadLibrary(ClassLoader.java:2458)
+        at java.base/java.lang.Runtime.loadLibrary0(Runtime.java:916)
+        at java.base/java.lang.System.loadLibrary(System.java:2063)
+        at knot//net.java.games.input.DirectInputEnvironmentPlugin$1.run(DirectInputEnvironmentPlugin.java:75)
+        at java.base/java.security.AccessController.doPrivileged(AccessController.java:319)
+        at knot//net.java.games.input.DirectInputEnvironmentPlugin.loadLibrary(DirectInputEnvironmentPlugin.java:67)
+        at knot//net.java.games.input.DirectInputEnvironmentPlugin.<clinit>(DirectInputEnvironmentPlugin.java:109)
+        at knot//net.java.games.input.DirectAndRawInputEnvironmentPlugin.<init>(DirectAndRawInputEnvironmentPlugin.java:45)
+        at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+        at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+        at java.base/java.lang.reflect.ReflectAccess.newInstance(ReflectAccess.java:128)
+        at java.base/jdk.internal.reflect.ReflectionFactory.newInstance(ReflectionFactory.java:304)
+        at java.base/java.lang.Class.newInstance(Class.java:727)
+        at knot//net.java.games.input.DefaultControllerEnvironment.getControllers(DefaultControllerEnvironment.java:160)
+        at knot//org.lwjgl.input.Controllers.create(Controllers.java:71)
+        at knot//net.minecraft.client.Minecraft.init(Minecraft.java:335)
+        at knot//net.danygames2014.gambac.BrnoMinecraft.init(BrnoMinecraft.java:57)
+        at knot//net.minecraft.client.Minecraft.run(Minecraft.java:716)
+        at knot//net.minecraft.client.MinecraftApplet.startThread(MinecraftApplet.java:606)
+        at knot//net.minecraft.client.MinecraftApplet.init(MinecraftApplet.java:577)
+        at net.fabricmc.loader.impl.game.minecraft.applet.AppletLauncher.init(AppletLauncher.java:138)
+        at net.fabricmc.loader.impl.game.minecraft.applet.AppletFrame.launch(AppletFrame.java:127)
+        at net.fabricmc.loader.impl.game.minecraft.applet.AppletMain.run(AppletMain.java:44)
+        at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:318)
+        at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:773)
+        at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
+        at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
+        at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+        at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:87)
+        at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:742)
+        at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+        at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+        at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+        at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+        at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+        at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+java.lang.UnsatisfiedLinkError: no jinput-raw_64 in java.library.path: C:\Program Files\Eclipse Adoptium\jdk-21.0.10.7-hotspot\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Eclipse Adoptium\jdk-21.0.10.7-hotspot\bin;C:\Program Files\Eclipse Adoptium\jdk-17.0.18.8-hotspot\bin;C:\Program Files\Eclipse Adoptium\jdk-25.0.2.10-hotspot\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Apollo;C:\Program Files\Apollo\tools;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\SQLite;C:\Program Files\FFMpeg\bin;C:\Program Files\dotnet\;C:\Program Files\Sunshine;C:\Program Files\Sunshine\tools;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\Wiimm\WIT;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Users\Admin\AppData\Local\Programs\Python\Python313\Scripts\;C:\Users\Admin\AppData\Local\Programs\Python\Python313\;C:\Users\Admin\AppData\Local\Microsoft\WindowsApps;C:\Users\Admin\AppData\Roaming\npm;C:\Program Files\FFMpeg\bin;C:\Users\Admin\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Admin\AppData\Local\GitHubDesktop\bin;C:\Users\Admin\.dotnet\tools;C:\Program Files\JetBrains\IntelliJ IDEA 2025.3.1\bin;C:\Program Files\Wiimm\WIT;C:\Users\Admin\AppData\Local\Python\bin;.
+        at java.base/java.lang.ClassLoader.loadLibrary(ClassLoader.java:2458)
+        at java.base/java.lang.Runtime.loadLibrary0(Runtime.java:916)
+        at java.base/java.lang.System.loadLibrary(System.java:2063)
+        at knot//net.java.games.input.RawInputEnvironmentPlugin$1.run(RawInputEnvironmentPlugin.java:75)
+        at java.base/java.security.AccessController.doPrivileged(AccessController.java:319)
+        at knot//net.java.games.input.RawInputEnvironmentPlugin.loadLibrary(RawInputEnvironmentPlugin.java:67)
+        at knot//net.java.games.input.RawInputEnvironmentPlugin.<clinit>(RawInputEnvironmentPlugin.java:109)
+        at knot//net.java.games.input.DirectAndRawInputEnvironmentPlugin.<init>(DirectAndRawInputEnvironmentPlugin.java:46)
+        at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+        at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+        at java.base/java.lang.reflect.ReflectAccess.newInstance(ReflectAccess.java:128)
+        at java.base/jdk.internal.reflect.ReflectionFactory.newInstance(ReflectionFactory.java:304)
+        at java.base/java.lang.Class.newInstance(Class.java:727)
+        at knot//net.java.games.input.DefaultControllerEnvironment.getControllers(DefaultControllerEnvironment.java:160)
+        at knot//org.lwjgl.input.Controllers.create(Controllers.java:71)
+        at knot//net.minecraft.client.Minecraft.init(Minecraft.java:335)
+        at knot//net.danygames2014.gambac.BrnoMinecraft.init(BrnoMinecraft.java:57)
+        at knot//net.minecraft.client.Minecraft.run(Minecraft.java:716)
+        at knot//net.minecraft.client.MinecraftApplet.startThread(MinecraftApplet.java:606)
+        at knot//net.minecraft.client.MinecraftApplet.init(MinecraftApplet.java:577)
+        at net.fabricmc.loader.impl.game.minecraft.applet.AppletLauncher.init(AppletLauncher.java:138)
+        at net.fabricmc.loader.impl.game.minecraft.applet.AppletFrame.launch(AppletFrame.java:127)
+        at net.fabricmc.loader.impl.game.minecraft.applet.AppletMain.run(AppletMain.java:44)
+        at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:318)
+        at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:773)
+        at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
+        at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
+        at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+        at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:87)
+        at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:742)
+        at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+        at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+        at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+        at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+        at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+        at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+Mar 19, 2026 9:27:34 PM net.java.games.input.ControllerEnvironment log
+INFO: net.java.games.input.DirectAndRawInputEnvironmentPlugin is not supported
+
+java.io.FileNotFoundException: http://s3.amazonaws.com/MinecraftResources/
+        at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:2024)
+        at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1629)
+        at java.base/java.net.URL.openStream(URL.java:1325)
+        at knot//net.minecraft.client.resource.ResourceDownloadThread.run(ResourceDownloadThread.java:28)
+java.io.IOException: Received string length is less than zero! Weird string!
+        at knot//net.minecraft.network.packet.Packet.readString(Packet.java:190)
+        at knot//net.minecraft.network.packet.login.LoginHelloPacket.read(LoginHelloPacket.java:30)
+        at knot//net.minecraft.network.packet.Packet.read(Packet.java:141)
+        at knot//net.minecraft.network.Connection.read(Connection.java:197)
+        at knot//net.minecraft.network.Connection.method_1132(Connection.java:17)
+        at knot//net.minecraft.network.Connection$4.run(Connection.java:84)
+java.net.SocketException: Socket closed
+        at java.base/sun.nio.ch.NioSocketImpl.ensureOpenAndConnected(NioSocketImpl.java:163)
+        at java.base/sun.nio.ch.NioSocketImpl.beginWrite(NioSocketImpl.java:362)
+        at java.base/sun.nio.ch.NioSocketImpl.implWrite(NioSocketImpl.java:407)
+        at java.base/sun.nio.ch.NioSocketImpl.write(NioSocketImpl.java:440)
+        at java.base/sun.nio.ch.NioSocketImpl$2.write(NioSocketImpl.java:819)
+        at java.base/java.net.Socket$SocketOutputStream.write(Socket.java:1195)
+        at java.base/java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:125)
+        at java.base/java.io.BufferedOutputStream.implFlush(BufferedOutputStream.java:252)
+        at java.base/java.io.BufferedOutputStream.flush(BufferedOutputStream.java:240)
+        at java.base/java.io.DataOutputStream.flush(DataOutputStream.java:131)
+
+BUILD SUCCESSFUL in 3m 12s
+8 actionable tasks: 1 executed, 7 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.3.0/userguide/configuration_cache_enabling.html

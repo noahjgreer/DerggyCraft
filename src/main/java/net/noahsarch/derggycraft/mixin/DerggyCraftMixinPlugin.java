@@ -29,13 +29,13 @@ public class DerggyCraftMixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         if (CPM_CONFIG_MIXIN.equals(mixinClassName)) {
-            return this.derggycraft$isCpmLoaded() && this.derggycraft$classExists(CPM_CONFIG_ENTRY_CLASS);
+            return this.derggycraft$isCpmLoaded() && this.derggycraft$classResourceExists(CPM_CONFIG_ENTRY_CLASS);
         }
         if (CPM_SINGLEPLAYER_COMMAND_MIXIN.equals(mixinClassName)) {
-            return this.derggycraft$isCpmLoaded();
+            return this.derggycraft$isCpmLoaded() && this.derggycraft$classResourceExists(CPM_SINGLEPLAYER_COMMAND_CLASS);
         }
         if (CPM_PLAYER_ANIM_HEALTH_MIXIN.equals(mixinClassName)) {
-            return this.derggycraft$isCpmLoaded() && this.derggycraft$classExists(CPM_PLAYER_ANIM_UPDATER_CLASS);
+            return this.derggycraft$isCpmLoaded() && this.derggycraft$classResourceExists(CPM_PLAYER_ANIM_UPDATER_CLASS);
         }
         return true;
     }
@@ -57,26 +57,22 @@ public class DerggyCraftMixinPlugin implements IMixinConfigPlugin {
     public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
     }
 
-    private boolean derggycraft$classExists(String className) {
+    private boolean derggycraft$classResourceExists(String className) {
+        String resourcePath = className.replace('.', '/') + ".class";
         ClassLoader contextLoader = Thread.currentThread().getContextClassLoader();
-        try {
-            Class.forName(className, false, contextLoader);
+        if (contextLoader != null && contextLoader.getResource(resourcePath) != null) {
             return true;
-        } catch (Throwable ignored) {
-            try {
-                Class.forName(className, false, this.getClass().getClassLoader());
-                return true;
-            } catch (Throwable ignoredToo) {
-                return false;
-            }
         }
+
+        ClassLoader pluginLoader = this.getClass().getClassLoader();
+        return pluginLoader != null && pluginLoader.getResource(resourcePath) != null;
     }
 
     private boolean derggycraft$isCpmLoaded() {
         try {
             return FabricLoader.getInstance().isModLoaded(CPM_MOD_ID);
         } catch (Throwable ignored) {
-            return this.derggycraft$classExists(CPM_SINGLEPLAYER_COMMAND_CLASS);
+            return this.derggycraft$classResourceExists(CPM_SINGLEPLAYER_COMMAND_CLASS);
         }
     }
 }

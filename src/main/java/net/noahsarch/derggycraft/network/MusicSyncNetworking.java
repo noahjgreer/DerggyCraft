@@ -18,10 +18,10 @@ public final class MusicSyncNetworking {
             String[] candidateTrackIds
     ) {
         MessagePacket packet = new MessagePacket(START_SYNC_MESSAGE_ID);
-        // StationAPI 2.0.0-alpha.5.4 MessagePacket writer reads ints.length when writing longs.
-        // Keep ints non-null whenever longs are present to avoid network thread crashes/end-of-stream disconnects.
-        packet.ints = new int[0];
+        // StationAPI 2.0.0-alpha.5.4 MessagePacket writes the long count from ints.length.
+        // Keep ints length aligned with longs length so downstream packet decoding stays synchronized.
         packet.longs = new long[]{triggerId, startAtMillis};
+        packet.ints = new int[packet.longs.length];
         packet.booleans = new boolean[]{streaming};
         packet.floats = new float[]{volume, pitch};
         packet.strings = candidateTrackIds;

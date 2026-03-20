@@ -1,6 +1,8 @@
 package net.noahsarch.derggycraft.mixin.server;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.play.ChatMessagePacket;
 import net.minecraft.server.MinecraftServer;
@@ -44,6 +46,13 @@ public abstract class ServerPlayNetworkHandlerChatMixin {
         if ("/gamerule".equalsIgnoreCase(args[0])) {
             this.derggycraft$handleGameRuleCommand(args);
             ci.cancel();
+            return;
+        }
+
+        if ("/give".equalsIgnoreCase(args[0])) {
+            if (this.derggycraft$handleSelfGiveCommand(args)) {
+                ci.cancel();
+            }
             return;
         }
 
@@ -130,5 +139,81 @@ public abstract class ServerPlayNetworkHandlerChatMixin {
 
         DerggyCraftGameRules.set(overworld, rule, value);
         this.sendPacket(new ChatMessagePacket("\u00a7aSet " + DerggyCraftGameRules.formatRuleName(rule) + " = " + value));
+    }
+
+    private boolean derggycraft$handleSelfGiveCommand(String[] args) {
+        if (args.length < 2) {
+            this.sendPacket(new ChatMessagePacket("\u00a7cUsage: /give <id> [amount] [meta]"));
+            return true;
+        }
+
+        // Keep vanilla handling for '/give <player> <id> ...'.
+        if (!this.derggycraft$isInteger(args[1])) {
+            return false;
+        }
+
+        if (this.server == null || this.server.playerManager == null || this.player == null) {
+            this.sendPacket(new ChatMessagePacket("\u00a7cGive command unavailable right now."));
+            return true;
+        }
+
+        if (!this.server.playerManager.isOperator(this.player.name)) {
+            this.sendPacket(new ChatMessagePacket("\u00a7cYou don't have permission to use /give."));
+            return true;
+        }
+
+        int itemId = Integer.parseInt(args[1]);
+        if (itemId < 0 || itemId >= Item.ITEMS.length || Item.ITEMS[itemId] == null) {
+            this.sendPacket(new ChatMessagePacket("\u00a7cThere's no item with id " + itemId));
+            return true;
+        }
+
+        int amount = 1;
+        if (args.length > 2 && this.derggycraft$isInteger(args[2])) {
+            amount = Integer.parseInt(args[2]);
+        }
+
+        int meta = 0;
+        if (args.length > 3 && this.derggycraft$isInteger(args[3])) {
+            meta = Integer.parseInt(args[3]);
+        }
+
+        if (amount < 1) {
+            amount = 1;
+        }
+
+        Item item = Item.ITEMS[itemId];
+        int maxCount = Math.max(1, item.getMaxCount());
+
+        while (amount > 0) {
+            int stackSize = Math.min(amount, maxCount);
+            ItemStack stack = new ItemStack(itemId, stackSize, meta);
+            if (!this.player.inventory.addStack(stack)) {
+                this.player.dropItem(stack, false);
+            }
+            amount -= stackSize;
+        }
+
+        this.sendPacket(new ChatMessagePacket("\u00a7aGiven " + args[1] + " to " + this.player.name));
+        return true;
+    }
+
+    private boolean derggycraft$isInteger(String value) {
+        if (value == null || value.isBlank()) {
+            return false;
+        }
+
+        int start = (value.charAt(0) == '-' || value.charAt(0) == '+') ? 1 : 0;
+        if (start >= value.length()) {
+            return false;
+        }
+
+        for (int i = start; i < value.length(); ++i) {
+            if (!Character.isDigit(value.charAt(i))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

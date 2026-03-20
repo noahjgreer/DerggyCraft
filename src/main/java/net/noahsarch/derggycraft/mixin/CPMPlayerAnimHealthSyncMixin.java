@@ -12,7 +12,15 @@ import java.lang.reflect.Field;
 public abstract class CPMPlayerAnimHealthSyncMixin {
     private static Field derggycraft$cpmHealthField;
 
-    @Inject(method = "accept(Lnet/minecraft/entity/player/PlayerEntity;Lcom/tom/cpm/shared/animation/ServerAnimationState;)V", at = @At("TAIL"), remap = false, require = 0)
+        @Inject(
+            method = {
+                "accept(Lnet/minecraft/entity/player/PlayerEntity;Lcom/tom/cpm/shared/animation/ServerAnimationState;)V",
+                "accept(Lnet/minecraft/class_69;Lcom/tom/cpm/shared/animation/ServerAnimationState;)V"
+            },
+            at = @At("TAIL"),
+            remap = false,
+            require = 0
+        )
     private void derggycraft$normalizeHealthState(PlayerEntity player, Object state, CallbackInfo ci) {
         if (player == null || state == null) {
             return;
@@ -26,12 +34,28 @@ public abstract class CPMPlayerAnimHealthSyncMixin {
     private void derggycraft$setHealth(Object state, float value) {
         try {
             if (derggycraft$cpmHealthField == null || derggycraft$cpmHealthField.getDeclaringClass() != state.getClass()) {
-                Field healthField = state.getClass().getField("health");
-                healthField.setAccessible(true);
-                derggycraft$cpmHealthField = healthField;
+                derggycraft$cpmHealthField = this.derggycraft$findHealthField(state.getClass());
+            }
+            if (derggycraft$cpmHealthField == null) {
+                return;
             }
             derggycraft$cpmHealthField.setFloat(state, value);
         } catch (ReflectiveOperationException ignored) {
         }
+    }
+
+    private Field derggycraft$findHealthField(Class<?> type) {
+        Class<?> current = type;
+        while (current != null) {
+            try {
+                Field healthField = current.getDeclaredField("health");
+                healthField.setAccessible(true);
+                return healthField;
+            } catch (NoSuchFieldException ignored) {
+                current = current.getSuperclass();
+            }
+        }
+
+        return null;
     }
 }

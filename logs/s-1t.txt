@@ -1,0 +1,50 @@
+[20:33:10] [Server thread/INFO] (Station|API) Remapping "stationapi:dimensions" registry...
+[20:33:10] [Server thread/INFO] (Station|API) Remapping "stationapi:dimensions" registry...
+[20:33:10] [Server thread/INFO] (Station|API) Remapping "stationapi:dimensions" registry...
+[20:33:10] [Server thread/INFO] (Station|API) Remapping "stationapi:dimensions" registry...
+[20:33:10] [Server thread/INFO] (Station|API) Remapping "stationapi:dimensions" registry...
+[20:33:10] [Server thread/INFO] (Station|API) Remapping "stationapi:dimensions" registry...
+[20:33:10] [Server thread/INFO] (Station|API) Remapping "stationapi:dimensions" registry...
+[20:33:10] [Server thread/INFO] (Station|API) Remapping "stationapi:dimensions" registry...
+[20:33:10] [Server thread/INFO] (Station|API) Remapping "stationapi:dimensions" registry...
+2026-03-19 20:33:10 [INFO] Preparing start region for level 0
+2026-03-19 20:33:11 [INFO] Preparing start region for level 1
+2026-03-19 20:33:11 [INFO] Preparing spawn area: 61%
+2026-03-19 20:33:11 [INFO] Preparing start region for level 2
+2026-03-19 20:33:11 [INFO] Done (2002268200ns)! For help, type "help" or "?"
+[20:35:28] [Listen thread/WARN] (FabricLoader/Mixin) @Inject(@At("INVOKE")) Shift.BY=2 on station-vanilla-checker-v0.mixins.json:server.ServerLoginNetworkHandlerMixin from mod station-vanilla-checker-v0::handler$zhl000$station-vanilla-checker-v0$stationapi_checkModded exceeds the maximum allowed value: 0. Increase the value of maxShiftBy to suppress this warning.
+[20:35:28] [Server thread/WARN] (FabricLoader/Mixin) @Inject(@At("INVOKE")) Shift.BY=2 on station-items-v0.mixins.json:PlayerInventoryMixin from mod station-items-v0::handler$zfh000$station-items-v0$stationapi_newItemStack exceeds the maximum allowed value: 0. Increase the value of maxShiftBy to suppress this warning.
+[20:35:28] [Server thread/WARN] (FabricLoader/Mixin) @Inject(@At("INVOKE")) Shift.BY=2 on station-recipes-v0.mixins.json:CraftingResultMixin from mod station-recipes-v0::handler$zgl000$station-recipes-v0$stationapi_onCrafted exceeds the maximum allowed value: 0. Increase the value of maxShiftBy to suppress this warning.
+2026-03-19 20:35:28 [INFO] NotaNaN [/192.168.1.64:53871] logged in with entity id 6 at (-224.5, 70.62000000476837, 165.5)
+2026-03-19 20:35:34 [INFO] FinniTheFox [/192.168.1.64:53879] logged in with entity id 1578 at (128.77681659802738, 65.02442408821369, 159.30000001192093)
+2026-03-19 20:35:48 [INFO] FinniTheFox issued server command: give
+2026-03-19 20:35:48 [INFO] Unknown console command. Type "help" for help.
+2026-03-19 20:35:56 [INFO] FinniTheFox issued server command: give 12
+2026-03-19 20:38:06 [INFO] FinniTheFox issued server command: time set 0
+2026-03-19 20:38:06 [INFO] FinniTheFox: Set time to 0
+java.net.SocketException: Socket closed
+        at java.base/sun.nio.ch.NioSocketImpl.ensureOpenAndConnected(NioSocketImpl.java:163)
+        at java.base/sun.nio.ch.NioSocketImpl.beginWrite(NioSocketImpl.java:362)
+        at java.base/sun.nio.ch.NioSocketImpl.implWrite(NioSocketImpl.java:407)
+        at java.base/sun.nio.ch.NioSocketImpl.write(NioSocketImpl.java:440)
+        at java.base/sun.nio.ch.NioSocketImpl$2.write(NioSocketImpl.java:819)
+        at java.base/java.net.Socket$SocketOutputStream.write(Socket.java:1195)
+        at java.base/java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:125)
+        at java.base/java.io.BufferedOutputStream.implFlush(BufferedOutputStream.java:252)
+        at java.base/java.io.BufferedOutputStream.flush(BufferedOutputStream.java:240)
+        at java.base/java.io.DataOutputStream.flush(DataOutputStream.java:131)
+        at knot//net.minecraft.class_117$1.run(class_117.java:116)
+2026-03-19 20:39:24 [INFO] NotaNaN lost connection: disconnect.endOfStream
+2026-03-19 20:39:24 [INFO] FinniTheFox lost connection: disconnect.endOfStream
+java.net.SocketException: Socket closed
+        at java.base/sun.nio.ch.NioSocketImpl.ensureOpenAndConnected(NioSocketImpl.java:163)
+        at java.base/sun.nio.ch.NioSocketImpl.beginWrite(NioSocketImpl.java:362)
+        at java.base/sun.nio.ch.NioSocketImpl.implWrite(NioSocketImpl.java:407)
+        at java.base/sun.nio.ch.NioSocketImpl.write(NioSocketImpl.java:440)
+        at java.base/sun.nio.ch.NioSocketImpl$2.write(NioSocketImpl.java:819)
+        at java.base/java.net.Socket$SocketOutputStream.write(Socket.java:1195)
+        at java.base/java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:125)
+        at java.base/java.io.BufferedOutputStream.implFlush(BufferedOutputStream.java:252)
+        at java.base/java.io.BufferedOutputStream.flush(BufferedOutputStream.java:240)
+        at java.base/java.io.DataOutputStream.flush(DataOutputStream.java:131)
+        at knot//net.minecraft.class_117$1.run(class_117.java:116)
