@@ -18,13 +18,13 @@ public abstract class ServerWorldGamerulesInitMixin {
     private MinecraftServer server;
 
     @Unique
-    private long derggycraft$nextMusicSyncAtMillis = -1L;
+    private long derggycraft$nextMusicRollAtMillis = -1L;
 
     @Unique
-    private static final long DERGGYCRAFT_MUSIC_MIN_INTERVAL_MS = 120_000L;
+    private static final long DERGGYCRAFT_MUSIC_ROLL_INTERVAL_MS = 30_000L;
 
     @Unique
-    private static final long DERGGYCRAFT_MUSIC_MAX_INTERVAL_MS = 240_000L;
+    private static final int DERGGYCRAFT_MUSIC_ROLL_DENOMINATOR = 30;
 
     @Unique
     private static final long DERGGYCRAFT_MUSIC_LEAD_MS = 1400L;
@@ -45,35 +45,33 @@ public abstract class ServerWorldGamerulesInitMixin {
         }
 
         if (this.server.playerManager.players == null || this.server.playerManager.players.isEmpty()) {
-            this.derggycraft$nextMusicSyncAtMillis = -1L;
+            this.derggycraft$nextMusicRollAtMillis = -1L;
             return;
         }
 
         long now = System.currentTimeMillis();
-        if (this.derggycraft$nextMusicSyncAtMillis < 0L) {
-            this.derggycraft$scheduleNextMusicSync(world, now);
+        if (this.derggycraft$nextMusicRollAtMillis < 0L) {
+            this.derggycraft$nextMusicRollAtMillis = now + DERGGYCRAFT_MUSIC_ROLL_INTERVAL_MS;
             return;
         }
 
-        if (now < this.derggycraft$nextMusicSyncAtMillis) {
+        if (now < this.derggycraft$nextMusicRollAtMillis) {
+            return;
+        }
+
+        this.derggycraft$nextMusicRollAtMillis = now + DERGGYCRAFT_MUSIC_ROLL_INTERVAL_MS;
+        if (DERGGYCRAFT_MUSIC_ROLL_DENOMINATOR > 1
+                && world.random.nextInt(DERGGYCRAFT_MUSIC_ROLL_DENOMINATOR) != 0) {
             return;
         }
 
         ServerMusicSync.broadcastSynchronizedPlayback(
-                this.server,
-                DERGGYCRAFT_MUSIC_LEAD_MS,
-                true,
-                1.0F,
-                1.0F,
-                VanillaMusicTracks.TRACK_KEYS
+            this.server,
+            DERGGYCRAFT_MUSIC_LEAD_MS,
+            true,
+            1.0F,
+            1.0F,
+            VanillaMusicTracks.TRACK_KEYS
         );
-        this.derggycraft$scheduleNextMusicSync(world, now);
-    }
-
-    @Unique
-    private void derggycraft$scheduleNextMusicSync(ServerWorld world, long now) {
-        long range = DERGGYCRAFT_MUSIC_MAX_INTERVAL_MS - DERGGYCRAFT_MUSIC_MIN_INTERVAL_MS;
-        long randomOffset = range <= 0L ? 0L : (long) (world.random.nextDouble() * (double) (range + 1L));
-        this.derggycraft$nextMusicSyncAtMillis = now + DERGGYCRAFT_MUSIC_MIN_INTERVAL_MS + randomOffset;
     }
 }
