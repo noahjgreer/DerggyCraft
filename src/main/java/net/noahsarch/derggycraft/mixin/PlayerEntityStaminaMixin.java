@@ -38,7 +38,8 @@ public abstract class PlayerEntityStaminaMixin implements StaminaAccessor {
         boolean activelySwimming = inWater && (moving || player.velocityY > 0.02);
         boolean climbingLadder = player.isOnLadder() && (Math.abs(player.velocityY) > 0.02 || moving);
 
-        if (this.derggycraft$sprinting && moving) {
+        boolean sprintIntent = StaminaSprintState.isSprintHeld() && StaminaSprintState.isForwardDown();
+        if (this.derggycraft$sprinting && sprintIntent && moving) {
             this.derggycraft$drain(StaminaConfig.SPRINT_DRAIN_PER_TICK);
         }
 
@@ -119,7 +120,7 @@ public abstract class PlayerEntityStaminaMixin implements StaminaAccessor {
         boolean inWater = player.isSubmergedInWater() || player.isInFluid(Material.WATER);
         boolean canMaintainSprint = player.health > 0 && !player.isSneaking() && !inWater && this.derggycraft$stamina > 0.0;
         boolean canStartSprint = canMaintainSprint && player.onGround;
-        boolean movingForward = StaminaSprintState.isForwardDown() || Math.abs(player.velocityX) + Math.abs(player.velocityZ) > 0.03;
+        boolean movingForward = StaminaSprintState.isForwardDown();
 
         boolean sprintHeld = StaminaSprintState.isSprintHeld();
 

@@ -46,6 +46,7 @@
     "client.CPMClientNetworkHandlerCompatMixin",
     "client.CPMSinglePlayerCommandSafetyMixin",
     "client.ClientDropShortcutMixin",
+    "client.ClientPlayerEntityDeathMessageMixin",
     "client.ClientPlayerEntityChatMixin",
     "client.DrawContextInvoker",
     "client.HandledScreenDragMixin",

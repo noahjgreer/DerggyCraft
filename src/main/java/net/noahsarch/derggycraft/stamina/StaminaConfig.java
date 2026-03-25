@@ -2,7 +2,6 @@ package net.noahsarch.derggycraft.stamina;
 
 public final class StaminaConfig {
     public static final double MAX_STAMINA = 100.0;
-    public static final double SPRINT_DRAIN_PER_TICK = MAX_STAMINA / (5.0 * 20.0);
     public static final double ATTACK_DRAIN_PER_HIT = 8.0;
     public static final double JUMP_DRAIN_PER_JUMP = 2.5;
     public static final double LADDER_DRAIN_PER_TICK = MAX_STAMINA / (14.0 * 20.0);
@@ -11,7 +10,9 @@ public final class StaminaConfig {
     public static final double IDLE_WATER_REGEN_PER_TICK = MAX_STAMINA / (30.0 * 20.0);
     public static final int REGEN_DELAY_TICKS = 20;
     // Tweak this value for easier sprint-speed balancing.
-    public static final double SPRINT_SPEED_MULTIPLIER = 1.45;
+    public static final double SPRINT_SPEED_MULTIPLIER = 1.7;
+    // Drain scales directly with sprint speed so movement and stamina stay coupled.
+    public static final double SPRINT_DRAIN_PER_TICK = (MAX_STAMINA / (5.0 * 20.0)) * (1.0 + (SPRINT_SPEED_MULTIPLIER - 1.0) * 2.0);
     public static final double SPRINT_AIR_CONTROL_MULTIPLIER = 1.2;
     public static final double SPRINT_JUMP_HORIZONTAL_BOOST = 0.2 * (SPRINT_SPEED_MULTIPLIER / 1.3);
     public static final double SPRINT_JUMP_VERTICAL_BOOST = 0.04 * (SPRINT_SPEED_MULTIPLIER - 1.0);
